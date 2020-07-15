@@ -100,7 +100,7 @@ def colect_girl_images(limit,init=0,num=0):
 
             i+=1
 
-        step-=40
+        step+=40
 
         if len(os.listdir("../DataSets/Images_for_GAN/Real_Images/Girl0"+str(num)+"/"))>=limit:
             break
