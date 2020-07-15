@@ -15,7 +15,7 @@ import os
 
 #画像に顔があるか確認
 def get_face(img_path,real_path):
-    classifier = cv2.CascadeClassifier(r'D:\CODING\Project\SIGNATE\OpenCV\Casscade model\lbpcascade_animeface.xml')
+    classifier = cv2.CascadeClassifier(r'lbpcascade_animeface.xmlの場所')
 
     image = cv2.imread(img_path, cv2.IMREAD_COLOR)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
