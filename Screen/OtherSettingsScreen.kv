@@ -1,0 +1,48 @@
+<OtherSettingsScreen>:
+    BoxLayout:
+        orientation: 'vertical'     # 'horizontal'だと横一列
+        size: root.size
+        Label: #タイトル
+            size_hint_y: 0.2
+            text: 'GANIMATION'
+            color: 0,1,0,1
+            font_size: 80
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        BoxLayout: #選択ボタン
+            size_hint_y: 0.1
+            Button:
+                text: 'image setting'
+                color: 0,1,0,1
+                font_size: 40
+                on_press: root.manager.current = 'settings'
+            Button:
+                text: 'other settings'
+                color: 0,1,0,1
+                font_size: 40
+                on_press: root.manager.current = 'other_settings'
+        BoxLayout: #その他設定
+            size_hint_y: 0.6
+            Label:
+                text: 'other settings'
+                color: 0,1,0,1
+                font_size: 50
+        BoxLayout:
+            size_hint_y: 0.1
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Button:
+                size: 150, 75
+                text: 'video start'
+                color: 0,1,0,1
+                font_size: 40
+                on_press: root.manager.current = 'video'
+

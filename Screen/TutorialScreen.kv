@@ -1,0 +1,38 @@
+<TutorialScreen>:
+    BoxLayout:
+        orientation: 'vertical'     # 'horizontal'だと横一列
+        size: root.size
+        Label: #タイトル
+            size_hint_y: 0.1
+            text: 'GANIMATION'
+            color: 0,1,0,1
+            font_size: 80
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        BoxLayout: #チュートリアルを行う
+            size_hint_y: 0.7
+            Label:
+                text: 'tutorial'
+                color: 0,1,0,1
+                font_size: 50
+        BoxLayout:
+            size_hint_y: 0.1
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            Button:
+                pos_hint: {'right': 1}
+                size: 150, 75
+                text: 'close'
+                color: 0,1,0,1
+                font_size: 40
+                on_press: root.manager.current = 'settings'
+
+
