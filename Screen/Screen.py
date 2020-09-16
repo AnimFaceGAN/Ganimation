@@ -1,13 +1,12 @@
-'''
-  Author      髙橋
-  LastUpdate  2020/08/27
-  Since       2020/08/27
-  Contents    画面遷移
-'''
-
+import cv2
+import sys
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.widget import Widget
+from kivy.graphics.texture import Texture
+from kivy.graphics import Rectangle
 from kivy.uix.screenmanager import (ScreenManager, Screen, NoTransition, SlideTransition, CardTransition, SwapTransition, FadeTransition, WipeTransition, FallOutTransition, RiseInTransition)
+#from kivy.uix.anchorlayout
 
 # 日本語フォント表示対応
 from kivy.core.text import LabelBase, DEFAULT_FONT
