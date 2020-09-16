@@ -5,21 +5,27 @@
         BoxLayout: #画面移動ボタン
             size_hint_y: 0.1
             Button:
-                text: 'settings'
-                color: 0,1,0,1
+                text: 'back to settings'
+                color: 1,1,1,1
                 font_size: 40
+                background_color: (0.5, 1.0, 0.0, 1.0)
                 on_press: root.manager.current = 'settings'
-            Button:
-                text: 'tutorial'
-                color: 0,1,0,1
-                font_size: 40
-                on_press: root.manager.current = 'tutorial'
         BoxLayout: #アニメ顔画像を表示する
             size_hint_y: 0.8
-            Label:
-                text: 'video'
-                color: 0,1,0,1
-                font_size: 50
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'center'
+                padding: 100
+                Label:
+                    text: 'video'
+                    color: 0,1,0,1
+                    font_size: 50
+                    canvas.before:
+                        Color:
+                            rgba: 0.2, 0.2, 0.2, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
         BoxLayout:
             size_hint_y: 0.1
             Button:
