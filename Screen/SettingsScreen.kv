@@ -3,57 +3,127 @@
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
         Label: #タイトル
-            size_hint_y: 0.2
+            size_hint_y: 0.1
             text: 'GANIMATION'
-            color: 0,1,0,1
-            font_size: 80
+            color: 1, 0.5, 0, 1
+            font_size: 70
             canvas.before:
                 Color:
-                    rgba: 0, 0, 1, 1
+                    rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
+        Label:
+            size_hint_y:0.002
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
         BoxLayout: #選択ボタン
             size_hint_y: 0.1
+
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
             Button:
                 text: 'image setting'
-                color: 0,1,0,1
+                color: 1,1,1,1
                 font_size: 40
-                on_press: root.manager.current = 'settings'
+                background_color: (0.0, 1.0, 1.0, 1.0)
+                #on_press: root.manager.current = 'settings'
+
             Button:
                 text: 'other settings'
-                color: 0,1,0,1
+                color: 1,1,1,1
                 font_size: 40
+                background_color: (0.0, 1.0, 1.0, 1.0)
                 on_press: root.manager.current = 'other_settings'
+
         BoxLayout: #画像読み込み画面
             size_hint_y: 0.6
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
             BoxLayout:
-                canvas.before:
-                    Color:
-                        rgba: 0, 1, 0, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
-                Label:
-                    text: '成功したら画像を表示する'
-                    color: 0,0,0,1
-                    font_size: 50
-            Label:
-                text: '注意書き・やり方'
-                color: 0,1,0,1
-                font_size: 50
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    padding: 40
+                    Label:
+                        text: '画像をドラッグ&ドロップ'
+                        color: 1,1,1,1
+                        font_size: 50
+                        canvas.before:
+                            Color:
+                                rgba: 0.3, 0.3, 0, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+            BoxLayout:
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    padding: 40
+                    Label:
+                        text: '注意書き・やり方'
+                        color: 1,1,1,1
+                        font_size: 50
+                        canvas.before:
+                            Color:
+                                rgba: 0.15, 0.15, 0.15, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
         BoxLayout:
             size_hint_y: 0.1
             canvas.before:
                 Color:
-                    rgba: 0, 0, 1, 1
+                    rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
-            Button:
-                size: 150, 75
-                text: 'video start'
-                color: 0,1,0,1
-                font_size: 40
-                on_press: root.manager.current = 'video'
+            BoxLayout:
+                size_hint_x: 0.1
+            BoxLayout:
+                size_hint_x: 0.8
+                orientation: 'vertical'
 
+                BoxLayout:
+                    size_hint_y: 0.4
+
+                    Button:
+                        pos_hint: {'right': 1}
+                        size: 150, 75
+                        text: 'tutorial'
+                        color: 1,1,1,1
+                        font_size: 40
+                        background_color: (0.5, 1.0, 0.0, 1.0)
+                        on_press: root.manager.current = 'tutorial'
+
+                    BoxLayout:
+                        size_hint_x: 0.6
+
+                    Button:
+                        pos_hint: {'right': 1}
+                        size: 150, 75
+                        text: 'video start'
+                        color: 1,1,1,1
+                        font_size: 40
+                        background_color: (0.5, 1.0, 0.0, 1.0)
+                        on_press: root.manager.current = 'video'
+
+                BoxLayout:
+                    size_hint_y: 0.4
+
+            BoxLayout:
+                size_hint_x: 0.1
