@@ -16,7 +16,7 @@ from kivy.resources import resource_add_path
 #resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
 #LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
 
-resource_add_path('../../Font')
+resource_add_path('./Font')
 LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 
 Builder.load_file('TutorialScreen.kv')
