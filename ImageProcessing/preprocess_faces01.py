@@ -1,3 +1,4 @@
+#Requires : https://github.com/kanosawa/anime_face_landmark_detection
 import cv2
 import  os
 import sys
