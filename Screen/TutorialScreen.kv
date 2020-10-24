@@ -1,4 +1,5 @@
 <TutorialScreen>:
+
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
@@ -23,7 +24,7 @@
                     size: self.size
 
         BoxLayout: #チュートリアル
-            size_hint_y: 0.698
+            size_hint_y: 0.7998
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
@@ -49,34 +50,25 @@
 
         BoxLayout:
             size_hint_y: 0.1
+
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
-            BoxLayout:
-                size_hint_x: 0.33
-            BoxLayout:
-                size_hint_x: 0.33
-                orientation: 'vertical'
-
-                BoxLayout:
-                    size_hint_y: 0.4
-
-                    Button:
-                        pos_hint: {'right': 1}
-                        size: 150, 75
-                        text: 'close'
-                        color: 1,1,1,1
-                        font_size: 40
-                        background_color: (0.5, 1.0, 0.0, 1.0)
-                        on_press: root.manager.current = 'settings'
-
-                BoxLayout:
-                    size_hint_y: 0.4
 
             BoxLayout:
-                size_hint_x: 0.33
+                size_hint_x: 0.9
 
+            BoxLayout:
+                size_hint_x: 0.1
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_press: root.manager.current = 'settings'
 
+                    Image:
+                        source: './UI_images/next.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True

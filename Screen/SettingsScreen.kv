@@ -1,8 +1,11 @@
 <SettingsScreen>:
+    drop_area_image: drop_area_image
+    drop_area_label: drop_area_label
+
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
-        Label: #タイトル
+        Label: #Title Part
             size_hint_y: 0.1
             text: 'GANIMATION'
             color: 1, 0.5, 0, 1
@@ -13,7 +16,7 @@
                 Rectangle:
                     pos: self.pos
                     size: self.size
-        Label:
+        Label: #Narrow gap
             size_hint_y:0.002
             canvas.before:
                 Color:
@@ -22,32 +25,34 @@
                     pos: self.pos
                     size: self.size
 
-        BoxLayout: #選択ボタン
+        BoxLayout: #Select Buttons(image setting and other settings)
             size_hint_y: 0.1
 
+            Button:
+                text: '画像設定'
+                color: 1,1,1,1
+                font_size: 40
+                background_color: (0.3, 0.3, 0.3, 1)
+                #on_press: root.manager.current = 'settings'
+
+            Button:
+                text: '詳細設定'
+                color: (0.6, 0.6, 0.6, 1.0)
+                font_size: 40
+                background_color: (0.2, 0.2, 0.2, 1.0)
+                on_press: root.manager.current = 'other_settings'
+
+        Label: #Narrow gap
+            size_hint_y:0.002
             canvas.before:
                 Color:
-                    rgba: 0.1, 0.1, 0.1, 1
+                    rgba: 0, 0, 0, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
 
-            Button:
-                text: 'image setting'
-                color: 1,1,1,1
-                font_size: 40
-                background_color: (0.0, 1.0, 1.0, 1.0)
-                #on_press: root.manager.current = 'settings'
-
-            Button:
-                text: 'other settings'
-                color: 1,1,1,1
-                font_size: 40
-                background_color: (0.0, 1.0, 1.0, 1.0)
-                on_press: root.manager.current = 'other_settings'
-
-        BoxLayout: #画像読み込み画面
-            size_hint_y: 0.6
+        BoxLayout: #Main Part
+            size_hint_y: 0.6996
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
@@ -55,20 +60,31 @@
                     pos: self.pos
                     size: self.size
             BoxLayout:
+
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'center'
                     padding: 40
                     Label:
+                        id: drop_area_label
                         text: '画像をドラッグ&ドロップ'
                         color: 1,1,1,1
                         font_size: 50
                         canvas.before:
+
                             Color:
                                 rgba: 0.3, 0.3, 0, 1
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
+
+                    Image:
+                        id: drop_area_image
+                        source: root.image_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
             BoxLayout:
                 AnchorLayout:
                     anchor_x: 'center'
@@ -84,46 +100,43 @@
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
-        BoxLayout:
+
+        BoxLayout: #画像読み込み画面
             size_hint_y: 0.1
+
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
+
             BoxLayout:
                 size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'tutorial'
+
+                    Image:
+                        source: './UI_images/back.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+
             BoxLayout:
                 size_hint_x: 0.8
-                orientation: 'vertical'
-
-                BoxLayout:
-                    size_hint_y: 0.4
-
-                    Button:
-                        pos_hint: {'right': 1}
-                        size: 150, 75
-                        text: 'tutorial'
-                        color: 1,1,1,1
-                        font_size: 40
-                        background_color: (0.5, 1.0, 0.0, 1.0)
-                        on_press: root.manager.current = 'tutorial'
-
-                    BoxLayout:
-                        size_hint_x: 0.6
-
-                    Button:
-                        pos_hint: {'right': 1}
-                        size: 150, 75
-                        text: 'video start'
-                        color: 1,1,1,1
-                        font_size: 40
-                        background_color: (0.5, 1.0, 0.0, 1.0)
-                        on_press: root.manager.current = 'video'
-
-                BoxLayout:
-                    size_hint_y: 0.4
 
             BoxLayout:
                 size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'video'
+
+                    Image:
+                        source: './UI_images/next.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
