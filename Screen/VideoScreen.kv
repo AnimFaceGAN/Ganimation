@@ -2,16 +2,10 @@
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
-        BoxLayout: #画面移動ボタン
-            size_hint_y: 0.1
-            Button:
-                text: 'back to settings'
-                color: 1,1,1,1
-                font_size: 40
-                background_color: (0.5, 1.0, 0.0, 1.0)
-                on_press: root.manager.current = 'settings'
+
+
         BoxLayout: #アニメ顔画像を表示する
-            size_hint_y: 0.8
+            size_hint_y: 0.9
             AnchorLayout:
                 anchor_x: 'center'
                 anchor_y: 'center'
@@ -26,10 +20,43 @@
                         Rectangle:
                             pos: self.pos
                             size: self.size
+
         BoxLayout:
             size_hint_y: 0.1
-            Button:
-                size: 150, 75
-                text: 'video on/off'
-                color: 0,1,0,1
-                font_size: 40
+
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                size_hint_x: 0.1
+
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'settings'
+
+                    Image:
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        #allow_stretch: True
+                        source: './UI_images/back.png'
+            BoxLayout:
+                size_hint_x: 0.2
+
+            BoxLayout:
+                size_hint_x: 0.4
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'video'
+
+                    Image:
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        #allow_stretch: True
+                        source: './UI_images/start.png'
+
+            BoxLayout:
+                size_hint_x: 0.3

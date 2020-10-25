@@ -6,15 +6,14 @@ import cv2
 cascade_path = '../models/lbpcascade_animeface.xml'
 input_path = '../images/input.png'
 output_path = '../images/output.png'
+failure_path = '../images/failure.png'
 resize_lenght = 280
 
 # --------------------------------
 # アニメ画像から顔を検出する関数　引き数：対象の画像
-# 画像から顔が検出された場合　　　戻り値：顔だけ切り抜いた画像
-# 画像から複数顔が検出された場合　戻り値：最も大きい顔だけ切り抜いた画像
-# 画像から顔が検出されない場合　　戻り値：None
 # --------------------------------
 def anime_face_detect(img):
+    print('start detecting anime face')
 
     output_img = None
 
@@ -22,6 +21,7 @@ def anime_face_detect(img):
     cascade = cv2.CascadeClassifier(cascade_path)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = cv2.equalizeHist(gray)
+
 
     faces = cascade.detectMultiScale(gray,
                                      scaleFactor=1.1,
@@ -38,11 +38,14 @@ def anime_face_detect(img):
             max_w = w
 
     if output_img is not None:
-        #cv2.imwrite(output_path, output_img)
-        return None
-
-    return output_img
-
+        cv2.imwrite(output_path, output_img)
+        print('->success')
+        return True
+    else:
+        fail_img = cv2.imread(failure_path, cv2.IMREAD_COLOR)
+        cv2.imwrite(output_path, fail_img)
+        print('->fail')
+        return False
 
 # --------------------------------
 # アニメ顔画像の入力
@@ -51,6 +54,3 @@ if __name__ == "__main__":
 
     img = cv2.imread(input_path, cv2.IMREAD_COLOR)
     anime_face_detect(img)
-
-
-
