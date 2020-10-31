@@ -1,10 +1,10 @@
 import os
-
 import PIL.Image
 import numpy
+import numpy as np
 import torch
 from torch import Tensor
-
+import  cv2
 
 def is_power2(x):
     return x != 0 and ((x & (x - 1)) == 0)
@@ -74,8 +74,13 @@ def rgba_to_numpy_image(torch_image: Tensor):
 
 def extract_pytorch_image_from_filelike(file):
     pil_image = PIL.Image.open(file)
+    pil_image=pil_image.resize((256, 256))
     image_size = pil_image.width
-    image = (numpy.asarray(pil_image) / 255.0).reshape(image_size, image_size, 4)
+    if np.shape(pil_image)[2]==3:
+        image=rgb2rgba(pil_image)
+    else:
+        image = (numpy.asarray(pil_image) / 255.0).reshape(image_size, image_size, 4)
+
     image[:, :, 0:3] = srgb_to_linear(image[:, :, 0:3])
     image = image \
         .reshape(image_size * image_size, 4) \
@@ -92,6 +97,33 @@ def extract_numpy_image_from_filelike(file):
     image[:, :, 0:3] = srgb_to_linear(image[:, :, 0:3])
     return image
 
+def rgb2rgba(image):
+    image = (numpy.asarray(image) / 255.0).reshape(256, 256, 3)
+    #image=face2center(image)
+    new_image=np.zeros((256,256,4))
+    for i in range(len(image)):
+        for j in range(len(image)):
+            img=np.append(image[i][j],1)
+            new_image[i][j]=img
+    #new_image[:, :, 3] = np.where(np.all(new_image == 0, axis=-1), 0, 1)
+    return new_image
 
 def create_parent_dir(file_name):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
+
+def face2center(image):
+    center = (int(np.shape(image)[0] / 2), int(np.shape(image)[0] / 2))
+    # スケールを指定
+    scale = 128/np.shape(image)[0]
+    # getRotationMatrix2D関数を使用
+    trans = cv2.getRotationMatrix2D(center, 0, scale)
+    image2 = cv2.warpAffine(image, trans, np.shape(image)[:2], borderValue=(255, 255, 255))
+
+    #image2=cv2.cvtColor(image2.astype("float32"), cv2.COLOR_BGR2RGB)
+
+    return  image2
+
+def show_img(img,title=""):
+    cv2.imshow(title, img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()

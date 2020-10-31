@@ -1,11 +1,18 @@
-from  Foward2Back import  Foward2Back
-from  Back2Forward import Back2Foward
-from  DataBase import  DataBase
+
+from  .Foward2Back import  Foward2Back
+from  .Back2Forward import Back2Foward
+from  .DataBase import  DataBase
 
 def GetDataLoarder():
     return  DataLoarder()
 
-class DataLoarder:
+class Singleton(object):
+    def __new__(cls, *args, **kargs):
+        if not hasattr(cls, "_instance"):
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance
+
+class DataLoarder(Singleton):
     def __init__(self):
         self.database=DataBase()
         self.foward2back=Foward2Back()
@@ -21,5 +28,7 @@ class DataLoarder:
 
     def create_database(self):
         return  self.database
+
+
 
 

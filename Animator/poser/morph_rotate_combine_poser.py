@@ -6,7 +6,7 @@ from torch import Tensor
 from poser.poser import Poser, PoseParameter
 from tha.batch_input_module import BatchInputModuleSpec
 from util import torch_load
-
+import  numpy as np
 
 class MorphRotateCombinePoser(Poser):
     def __init__(self,

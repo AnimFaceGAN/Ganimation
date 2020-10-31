@@ -1,4 +1,4 @@
-from  BaseDataCenter import BaseDataCenter
+from  .BaseDataCenter import BaseDataCenter
 
 
 class Foward2Back(BaseDataCenter):
@@ -11,3 +11,6 @@ class Foward2Back(BaseDataCenter):
 
     def GetData(self):
         return self.database.GetAnimeFaces()
+
+    def SetSettingImage(self,image):
+        self.database.SetSettingImage(image)
