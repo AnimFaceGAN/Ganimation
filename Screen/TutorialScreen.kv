@@ -1,0 +1,74 @@
+<TutorialScreen>:
+
+    BoxLayout:
+        orientation: 'vertical'     # 'horizontal'だと横一列
+        size: root.size
+        Label: #タイトル
+            size_hint_y: 0.1
+            text: 'GANIMATION'
+            color: 1, 0.5, 0, 1
+            font_size: 70
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Label:
+            size_hint_y:0.002
+            canvas.before:
+                Color:
+                    rgba: 0, 0, 0, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout: #チュートリアル
+            size_hint_y: 0.7998
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            AnchorLayout:
+                anchor_x: 'center'
+                anchor_y: 'center'
+                padding: 50
+
+                Label:
+                    text: 'tutorial'
+                    color: 1,1,1,1
+                    font_size: 50
+                    canvas.before:
+                        Color:
+                            rgba: 0.15, 0.15, 0.15, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+        BoxLayout:
+            size_hint_y: 0.1
+
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                size_hint_x: 0.9
+
+            BoxLayout:
+                size_hint_x: 0.1
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_press: root.manager.current = 'settings'
+
+                    Image:
+                        source: './UI_images/next.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
