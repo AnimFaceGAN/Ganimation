@@ -8,15 +8,23 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 import  numpy  as np
 from  Animator.Animator import CreateAnimator
 
-class DataBase:
+class Singleton(object):
+    def __new__(cls, *args, **kargs):
+        if not hasattr(cls, "_instance"):
+            cls._instance = super(Singleton, cls).__new__(cls)
+        return cls._instance
+
+
+class DataBase(Singleton):
     def __name__(self):
         return  "DataBase"
 
     def __init__(self):
         self.AnimeFaces=[]
         self.RealFaces=[]
-        self.SettingImage=r"C:\Codding\Ganimation\Ganimation\AnimFaceGan\Animator\data\illust\waifu_02_256.png"
-        self.animator=CreateAnimator()
+        self.SettingImage=r"C:\Users\kisuk\Downloads\girl_30-removebg-preview (1).png"
+
+        #self.animator=CreateAnimator()
         pass
 
     def GetAnimeFaces(self):
@@ -33,9 +41,9 @@ class DataBase:
 
     def SetSettingImage(self,image):
         self.SettingImage=image
+        #self.animator.update_base_image()
 
-    def update(self):
-        self.animator.update_image()
+
 
 
 

@@ -17,7 +17,7 @@ def torch_save(content, file_name):
 
 
 def torch_load(file_name, **kwargs):
-    with open(file_name, 'rb') as f:
+    with open(os.path.dirname(os.path.abspath(__file__))+"/"+file_name, 'rb') as f:
         return torch.load(f, **kwargs)
 
 
@@ -76,10 +76,12 @@ def extract_pytorch_image_from_filelike(file):
     pil_image = PIL.Image.open(file)
     pil_image=pil_image.resize((256, 256))
     image_size = pil_image.width
+    print(np.shape(pil_image))
     if np.shape(pil_image)[2]==3:
-        image=rgb2rgba(pil_image)
+        image=rgb2rgba(np.asarray(pil_image))
     else:
         image = (numpy.asarray(pil_image) / 255.0).reshape(image_size, image_size, 4)
+    #image[:, :, 3] = np.where(np.all(image == 1, axis=-1), 0, 1)
 
     image[:, :, 0:3] = srgb_to_linear(image[:, :, 0:3])
     image = image \
@@ -105,40 +107,44 @@ def create_parent_dir(file_name):
 
 
 def process_image(path):
-    image=cv2.imread(path)
-    image=cv2.resize(image,(256,256))
-    image=face2center(image)
+    save_path = os.path.dirname(os.path.abspath(__file__)) + "/data/illust/image/face.png"
+    save_path = "./face.png"
+    image = cv2.imread(path)
+    # image=remove_bg(path)
+    image = cv2.resize(image, (256, 256))
+    image = face2center(image)
     black = [0, 0, 0]
     white = [255, 255, 255]
     image[np.where((image == black).all(axis=2))] = white
-    image=rgb2rgba(image)
-    save_path=r"Ganimation/AnimFaceGan/Animator/data/illust/image/face.png"
+    # image[:, :, 2] = np.where(np.all(image == 0, axis=-1), 0, 255)
+    image = rgb2rgba(image)
     cv2.imwrite(save_path, image)
-
 
 
 def face2center(image):
     center = (int(np.shape(image)[0] / 2), int(np.shape(image)[0] / 2))
     # スケールを指定
-    scale = 128/np.shape(image)[0]
+    scale = 128 / np.shape(image)[0]
     # getRotationMatrix2D関数を使用
     trans = cv2.getRotationMatrix2D(center, 0, scale)
     image2 = cv2.warpAffine(image, trans, np.shape(image)[:2], borderValue=(255, 255, 255))
 
-    #image2=cv2.cvtColor(image2.astype("float32"), cv2.COLOR_BGR2RGB)
+    # image2=cv2.cvtColor(image2.astype("float32"), cv2.COLOR_BGR2RGB)
 
-    return  image2
+    return image2
+
+
 
 def rgb2rgba(image):
     image = (np.asarray(image) / 255.0).reshape(256, 256, 3)
-    new_image=np.zeros((256,256,4))
+    new_image = np.zeros((256, 256, 4))
     for i in range(len(image)):
         for j in range(len(image)):
-            img=np.append(image[i][j],1)
-            new_image[i][j]=img
-    a=np.all(new_image == 1, axis=-1)
+            img = np.append(image[i][j], 1)
+            new_image[i][j] = img
+    a = np.all(new_image == 1, axis=-1)
     new_image[:, :, 3] = np.where(np.all(new_image == 1, axis=-1), 0, 1)
-    new_image=np.array(new_image)*255
+    new_image = np.array(new_image)
     return new_image
 
 def show_img(img,title=""):

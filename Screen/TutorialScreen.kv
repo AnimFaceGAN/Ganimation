@@ -1,9 +1,9 @@
 <TutorialScreen>:
 
     BoxLayout:
-        orientation: 'vertical'     # 'horizontal'だと横一列
+        orientation: 'vertical'     # 'horizontal'���Ɖ����
         size: root.size
-        Label: #タイトル
+        Label: #�^�C�g��
             size_hint_y: 0.1
             text: 'Ganimation'
             color: 1, 0.5, 0, 1
@@ -23,7 +23,7 @@
                     pos: self.pos
                     size: self.size
 
-        BoxLayout: #チュートリアル
+        BoxLayout: #�`���[�g���A��
             size_hint_y: 0.7998
             canvas.before:
                 Color:
@@ -66,7 +66,7 @@
                     size_hint_y: 0.1
 
                     Label:
-                        text: 'Ganimationとは？'
+                        text: 'Ganimation�Ƃ́H'
                         color: 1,1,1,0.8
                         font_size: 50
                         canvas.before:
@@ -101,7 +101,7 @@
                             size: self.size
 
                     Label:
-                        text: 'このアプリを使えばアニメキャラクターの顔でZoomやDiscordなどのビデオ会議に\n参加することができます。寝癖がひどい時でも問題なくビデオ通話出来るようになります。\n使い方は簡単でアニメ顔画像を一枚用意するだけでアニメーションの準備が完了します。\nユーザの顔認識はwebカメラだけで出来るのでお手軽に利用できます。\nこのアプリではＧＡＮというAI技術を用いてアニメ顔画像を動かすことができます。'
+                        text: '���̃A�v�����g���΃A�j���L�����N�^�[�̊��Zoom��Discord�Ȃǂ̃r�f�I��c��\n�Q�����邱�Ƃ��ł��܂��B�Q�Ȃ��Ђǂ����ł����Ȃ��r�f�I�ʘb�o����悤�ɂȂ�܂��B\n�g�����͊ȒP�ŃA�j����摜���ꖇ�p�ӂ��邾���ŃA�j���[�V�����̏������������܂��B\n���[�U�̊�F����web�J���������ŏo����̂ł���y�ɗ��p�ł��܂��B\n���̃A�v���ł͂f�`�m�Ƃ���AI�Z�p��p���ăA�j����摜�𓮂������Ƃ��ł��܂��B'
                         color: 1,1,1,0.8
                         font_size: 30
                         canvas.before:

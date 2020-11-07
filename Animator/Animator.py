@@ -1,9 +1,9 @@
 import os
 import sys
-
 sys.path.append(os.getcwd())
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+
 from tkinter import Tk, Frame, LEFT, Label, BOTH, GROOVE, Button, filedialog, PhotoImage, messagebox
 
 import numpy as np
@@ -21,11 +21,11 @@ from Animator.puppet.util import compute_left_eye_normalized_ratio, compute_righ
 from Animator.tha.combiner import CombinerSpec
 from Animator.tha.face_morpher import FaceMorpherSpec
 from Animator.tha.two_algo_face_rotator import TwoAlgoFaceRotatorSpec
-from Animator.util import rgba_to_numpy_image, extract_pytorch_image_from_filelike,process_image
+from Animator.util import rgba_to_numpy_image, extract_pytorch_image_from_filelike,process_image,show_img
 
 from msvcrt import getch
 
-from database import *
+import  database
 
 class Animator:
 
@@ -35,8 +35,7 @@ class Animator:
                  landmark_locator,
                  video_capture,
                  torch_device: torch.device):
-        self.database=DataLoarder().create_database()
-
+        self.database=database.DataLoarder().create_database()
         self.poser = poser
         self.face_detector = face_detector
         self.landmark_locator = landmark_locator
@@ -50,22 +49,22 @@ class Animator:
         self.current_pose = None
         self.last_pose = None
 
-        self.image_path=r"Ganimation/AnimFaceGan/Animator/data/illust/image/face.png"
+        #self.image_path=os.path.dirname(os.path.abspath(__file__))+"/data/illust/image/face.png"
+        self.image_path="./face.png"
 
         self.update_base_image()
 
     def update_base_image(self):
-        process_image(self.database.SettingImage())
-        self.source_image = extract_pytorch_image_from_filelike(self.image_path).to(self.torch_device).unsqueeze(dim=0)
-
+        #process_image(self.database.SettingImage)
+        self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
 
     def update_image(self):
-        self.update_base_image()
-        there_is_frame,frame=self.video_capture.read()
-        #frame = self.database.GetRealFaces()#self.video_capture.read()
-        #there_is_frame=frame==None
-        if not there_is_frame:
-            return
+        #self.update_base_image()
+        #there_is_frame,frame=self.video_capture.read()
+        frame = self.database.GetRealFaces()#self.video_capture.read()
+        there_is_frame=len(frame)==0
+        if there_is_frame:
+            return self.source_image,False
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         faces = self.face_detector(rgb_frame)
         euler_angles = None
@@ -114,8 +113,8 @@ class Animator:
             numpy_image = rgba_to_numpy_image(posed_image[0])
             pil_image = PIL.Image.fromarray(np.uint8(np.rint(numpy_image * 255.0)), mode='RGBA')
 
-            self.database.SetAnimeFaces(numpy_image)
-            return pil_image
+            self.database.SetAnimeFaces(np.array(numpy_image*255,dtype=np.uint8))
+            return pil_image,True
 
 
     def draw_face_box(self, frame, face_box_points):
@@ -145,7 +144,7 @@ def CreateAnimator():
         device=cuda)
 
     face_detector = dlib.get_frontal_face_detector()
-    landmark_locator = dlib.shape_predictor("data/shape_predictor_68_face_landmarks.dat")
+    landmark_locator = dlib.shape_predictor(os.path.dirname(os.path.abspath(__file__))+"\data\shape_predictor_68_face_landmarks.dat")
 
     video_capture = cv2.VideoCapture(0)
 
