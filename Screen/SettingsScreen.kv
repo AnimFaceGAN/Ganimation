@@ -7,7 +7,7 @@
         size: root.size
         Label: #Title Part
             size_hint_y: 0.1
-            text: 'GANIMATION'
+            text: 'Ganimation'
             color: 1, 0.5, 0, 1
             font_size: 70
             canvas.before:
@@ -65,15 +65,11 @@
                     anchor_x: 'center'
                     anchor_y: 'center'
                     padding: 40
-                    Label:
-                        id: drop_area_label
-                        text: '画像をドラッグ&ドロップ'
-                        color: 1,1,1,1
-                        font_size: 50
-                        canvas.before:
 
+                    Label:
+                        canvas.before:
                             Color:
-                                rgba: 0.3, 0.3, 0, 1
+                                rgba: 0.2, 0.2, 0.2, 0.2
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
@@ -85,15 +81,22 @@
                         center_y: self.parent.center_y
                         allow_stretch: True
 
+                    Label:
+                        id: drop_area_label
+                        bold: True
+                        text: 'ファイルをドラッグ＆ドロップ'
+                        color: 1,1,1,1
+                        font_size: 20
+
             BoxLayout:
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'center'
                     padding: 40
                     Label:
-                        text: '注意書き・やり方'
-                        color: 1,1,1,1
-                        font_size: 50
+                        text: '　　使い方・注意点　　\n\n・画像サイズは256×256\n\n・RGBA形式で背景は透明\n\n・頭は中央128×128\n\n・目と口は大きく開いている\n\n・頭が正面を向いている'
+                        color: 1,1,1,0.8
+                        font_size: 45
                         canvas.before:
                             Color:
                                 rgba: 0.15, 0.15, 0.15, 1
@@ -134,6 +137,7 @@
                 Button:
                     background_color: (0.3, 0.3, 0.3, 1.0)
                     on_press: root.manager.current = 'video'
+                    on_release: root.to_video()
 
                     Image:
                         source: './UI_images/next.png'

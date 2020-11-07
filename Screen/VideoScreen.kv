@@ -1,35 +1,27 @@
 <VideoScreen>:
+    canvas.before:
+        Rectangle:
+            source: './UI_images/bg.jpg'
+            pos: self.pos
+            size: self.size
+
+    VideoManager:
+        id: camera_preview
+        size: root.size
+        allow_stretch: True
+
+    #Image:
+    #    source: './UI_images/demo_after.png'
+    #    allow_stretch: True
+
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
-        size: root.size
-
 
         BoxLayout: #アニメ顔画像を表示する
             size_hint_y: 0.9
-            AnchorLayout:
-                anchor_x: 'center'
-                anchor_y: 'center'
-                padding: 100
-                Label:
-                    text: 'video'
-                    color: 0,1,0,1
-                    font_size: 50
-                    canvas.before:
-                        Color:
-                            rgba: 0.2, 0.2, 0.2, 1
-                        Rectangle:
-                            pos: self.pos
-                            size: self.size
 
         BoxLayout:
             size_hint_y: 0.1
-
-            canvas.before:
-                Color:
-                    rgba: 0.1, 0.1, 0.1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
 
             BoxLayout:
                 size_hint_x: 0.1
@@ -44,19 +36,7 @@
                         #allow_stretch: True
                         source: './UI_images/back.png'
             BoxLayout:
-                size_hint_x: 0.2
-
-            BoxLayout:
-                size_hint_x: 0.4
-                Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'video'
-
-                    Image:
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        #allow_stretch: True
-                        source: './UI_images/start.png'
+                size_hint_x: 0.6
 
             BoxLayout:
                 size_hint_x: 0.3

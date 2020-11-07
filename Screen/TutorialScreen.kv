@@ -5,7 +5,7 @@
         size: root.size
         Label: #タイトル
             size_hint_y: 0.1
-            text: 'GANIMATION'
+            text: 'Ganimation'
             color: 1, 0.5, 0, 1
             font_size: 70
             canvas.before:
@@ -32,22 +32,92 @@
                     pos: self.pos
                     size: self.size
 
-            AnchorLayout:
-                anchor_x: 'center'
-                anchor_y: 'center'
-                padding: 50
+            BoxLayout:
+                size_hint_x: 0.1
 
-                Label:
-                    text: 'tutorial'
-                    color: 1,1,1,1
-                    font_size: 50
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_x: 0.8
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 1.0, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                BoxLayout:
+                    size_hint_y: 0.1
                     canvas.before:
                         Color:
-                            rgba: 0.15, 0.15, 0.15, 1
+                            rgba: 0.1, 0.1, 0.1, 1
                         Rectangle:
                             pos: self.pos
                             size: self.size
 
+                BoxLayout:
+                    size_hint_y: 0.1
+
+                    Label:
+                        text: 'Ganimationとは？'
+                        color: 1,1,1,0.8
+                        font_size: 50
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.2, 0.2, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+
+                BoxLayout:
+                    size_hint_y: 0.4
+
+                    canvas.before:
+                        Color:
+                            rgba: 0.2, 0.2, 0.2, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Image:
+                        source: './UI_images/demo_tutorial.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: 100, 200
+                        allow_stretch: True
+                BoxLayout:
+                    size_hint_y: 0.4
+                    canvas.before:
+                        Color:
+                            rgba: 0.2, 0.2, 0.2, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    Label:
+                        text: 'このアプリを使えばアニメキャラクターの顔でZoomやDiscordなどのビデオ会議に\n参加することができます。寝癖がひどい時でも問題なくビデオ通話出来るようになります。\n使い方は簡単でアニメ顔画像を一枚用意するだけでアニメーションの準備が完了します。\nユーザの顔認識はwebカメラだけで出来るのでお手軽に利用できます。\nこのアプリではＧＡＮというAI技術を用いてアニメ顔画像を動かすことができます。'
+                        color: 1,1,1,0.8
+                        font_size: 30
+                        canvas.before:
+                            Color:
+                                rgba: 0.2, 0.2, 0.2, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+            BoxLayout:
+                size_hint_x: 0.1
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
         BoxLayout:
             size_hint_y: 0.1
 
