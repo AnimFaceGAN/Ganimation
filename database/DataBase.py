@@ -1,4 +1,5 @@
 import  numpy  as np
+from  Animator import CreateAnimator
 
 class DataBase:
     def __name__(self):
@@ -8,6 +9,7 @@ class DataBase:
         self.AnimeFaces=[]
         self.RealFaces=[]
         self.SettingImage=r"C:\Codding\Ganimation\Ganimation\AnimFaceGan\Animator\data\illust\waifu_02_256.png"
+        self.animator=CreateAnimator()
         pass
 
     def GetAnimeFaces(self):
@@ -24,6 +26,9 @@ class DataBase:
 
     def SetSettingImage(self,image):
         self.SettingImage=image
+
+    def update(self):
+        self.animator.update_image()
 
 
 

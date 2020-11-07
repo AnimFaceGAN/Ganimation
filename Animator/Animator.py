@@ -21,14 +21,14 @@ from puppet.util import compute_left_eye_normalized_ratio, compute_right_eye_nor
 from tha.combiner import CombinerSpec
 from tha.face_morpher import FaceMorpherSpec
 from tha.two_algo_face_rotator import TwoAlgoFaceRotatorSpec
-from util import rgba_to_numpy_image, extract_pytorch_image_from_filelike
+from util import rgba_to_numpy_image, extract_pytorch_image_from_filelike,process_image
 
 from msvcrt import getch
 
 from database import *
 
 class Animator:
-    
+
     def __init__(self,
                  poser: Poser,
                  face_detector,
@@ -50,12 +50,20 @@ class Animator:
         self.current_pose = None
         self.last_pose = None
 
-        if not self.database.SettingImage == None:
-            self.source_image=extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
+        self.image_path=r"Ganimation/AnimFaceGan/Animator/data/illust/image/face.png"
+
+        self.update_base_image()
+
+    def update_base_image(self):
+        process_image(self.database.SettingImage())
+        self.source_image = extract_pytorch_image_from_filelike(self.image_path).to(self.torch_device).unsqueeze(dim=0)
 
 
     def update_image(self):
-        there_is_frame, frame = self.video_capture.read()
+        self.update_base_image()
+        there_is_frame,frame=self.video_capture.read()
+        #frame = self.database.GetRealFaces()#self.video_capture.read()
+        #there_is_frame=frame==None
         if not there_is_frame:
             return
         rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -106,11 +114,9 @@ class Animator:
             numpy_image = rgba_to_numpy_image(posed_image[0])
             pil_image = PIL.Image.fromarray(np.uint8(np.rint(numpy_image * 255.0)), mode='RGBA')
 
+            self.database.SetAnimeFaces(numpy_image)
             return pil_image
 
-
-    def on_closing(self):
-        self.video_capture.release()
 
     def draw_face_box(self, frame, face_box_points):
         line_pairs = [[0, 1], [1, 2], [2, 3], [3, 0],
@@ -143,15 +149,17 @@ def CreateAnimator():
 
     video_capture = cv2.VideoCapture(0)
 
-    animator = Animator(poser, face_detector, landmark_locator, video_capture, cuda)
+    animator = Animator(poser, face_detector, landmark_locator,video_capture,  cuda)
     return animator
 
 if __name__ == "__main__":
     animator=CreateAnimator()
+    print("--- Ready OK !! ---")
 
     while True:
-        print("--- Ready OK !! ---")
         key = ord(getch())
         if key==13:
             animator.update_image().show()
+        if key==27:
+            break
 

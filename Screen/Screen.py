@@ -2,6 +2,13 @@ import pathlib
 from anime_face_landmark.AnimeFaceDetect import anime_face_detect
 import cv2
 import os.path
+import sys
+import os
+
+sys.path.append(os.getcwd())
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.widget import Widget
@@ -12,18 +19,21 @@ from kivy.clock import Clock
 from kivy.config import Config
 from kivy.core.window import Window
 from kivy.uix.screenmanager import (ScreenManager, Screen, NoTransition, SlideTransition, CardTransition, SwapTransition, FadeTransition, WipeTransition, FallOutTransition, RiseInTransition)
-
 # 日本語フォント表示対応
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
+from  Animator import CreateAnimator
+
+#animator=CreateAnimator()
+#animator.update_image().show()
 
 # フォント読み込み Windows用
-#resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
-#LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
+resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
+LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
 
 # フォント読み込み Mac用
-resource_add_path('./Font')
-LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
+#resource_add_path('./Font')
+#LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 
 # Kivyファイルの読み込み
 Builder.load_file('TutorialScreen.kv')

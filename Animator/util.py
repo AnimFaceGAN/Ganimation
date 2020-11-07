@@ -97,19 +97,25 @@ def extract_numpy_image_from_filelike(file):
     image[:, :, 0:3] = srgb_to_linear(image[:, :, 0:3])
     return image
 
-def rgb2rgba(image):
-    image = (numpy.asarray(image) / 255.0).reshape(256, 256, 3)
-    #image=face2center(image)
-    new_image=np.zeros((256,256,4))
-    for i in range(len(image)):
-        for j in range(len(image)):
-            img=np.append(image[i][j],1)
-            new_image[i][j]=img
-    #new_image[:, :, 3] = np.where(np.all(new_image == 0, axis=-1), 0, 1)
-    return new_image
+
 
 def create_parent_dir(file_name):
     os.makedirs(os.path.dirname(file_name), exist_ok=True)
+
+
+
+def process_image(path):
+    image=cv2.imread(path)
+    image=cv2.resize(image,(256,256))
+    image=face2center(image)
+    black = [0, 0, 0]
+    white = [255, 255, 255]
+    image[np.where((image == black).all(axis=2))] = white
+    image=rgb2rgba(image)
+    save_path=r"Ganimation/AnimFaceGan/Animator/data/illust/image/face.png"
+    cv2.imwrite(save_path, image)
+
+
 
 def face2center(image):
     center = (int(np.shape(image)[0] / 2), int(np.shape(image)[0] / 2))
@@ -122,6 +128,18 @@ def face2center(image):
     #image2=cv2.cvtColor(image2.astype("float32"), cv2.COLOR_BGR2RGB)
 
     return  image2
+
+def rgb2rgba(image):
+    image = (np.asarray(image) / 255.0).reshape(256, 256, 3)
+    new_image=np.zeros((256,256,4))
+    for i in range(len(image)):
+        for j in range(len(image)):
+            img=np.append(image[i][j],1)
+            new_image[i][j]=img
+    a=np.all(new_image == 1, axis=-1)
+    new_image[:, :, 3] = np.where(np.all(new_image == 1, axis=-1), 0, 1)
+    new_image=np.array(new_image)*255
+    return new_image
 
 def show_img(img,title=""):
     cv2.imshow(title, img)
