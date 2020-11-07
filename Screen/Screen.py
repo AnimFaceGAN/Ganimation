@@ -1,8 +1,3 @@
-import pathlib
-from anime_face_landmark.AnimeFaceDetect import anime_face_detect
-from database.DataBase import DataBase
-import cv2
-import os.path
 import sys
 import os
 
@@ -10,29 +5,33 @@ sys.path.append(os.getcwd())
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
+import pathlib
+from anime_face_landmark.AnimeFaceDetect import anime_face_detect
+from  database import  *
+import cv2
+import os.path
+
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
 from kivy.core.window import Window
-<<<<<<< HEAD
 from kivy.uix.screenmanager import (ScreenManager, Screen, NoTransition, SlideTransition, CardTransition, SwapTransition, FadeTransition, WipeTransition, FallOutTransition, RiseInTransition)
-=======
+
 from kivy.uix.image import Image
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
 from kivy.uix.screenmanager import (ScreenManager, Screen, NoTransition, SlideTransition, CardTransition,
                                     SwapTransition, FadeTransition, WipeTransition, FallOutTransition, RiseInTransition)
 
->>>>>>> takahashi
 # 日本語フォント表示対応
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
-from  Animator import CreateAnimator
+#from  Animator.Animator import CreateAnimator
 
 #animator=CreateAnimator()
 #animator.update_image().show()
 
-<<<<<<< HEAD
 # フォント読み込み Windows用
 resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
 LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
@@ -40,24 +39,27 @@ LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
 # フォント読み込み Mac用
 #resource_add_path('./Font')
 #LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
-=======
 # フォント読み込み
 resource_add_path('./Font')
 LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
->>>>>>> takahashi
 
 # Kivyファイルの読み込み
-Builder.load_file('TutorialScreen.kv')
-Builder.load_file('SettingsScreen.kv')
-Builder.load_file('VideoScreen.kv')
-Builder.load_file('OtherSettingsScreen.kv')
+Builder.load_file('TutorialScreen.kv', encoding="utf-8")
+Builder.load_file('SettingsScreen.kv', encoding="utf-8")
+Builder.load_file('VideoScreen.kv', encoding="utf-8")
+Builder.load_file('OtherSettingsScreen.kv', encoding="utf-8")
 
 # アニメ顔画像のパス
 output_path = '../images/output.png'
 null_path = '../images/faceset.png'  # 画像未入力時に表示する
 
 # DataBaseのインスタンス化
-DB = DataBase()
+#DataLoarderクラスのインスタンス化
+loarder=GetDataLoarder()
+#それぞれのインスタンスを読み込む
+f2b=loarder.create_foward2back()
+b2f=loarder.create_back2foward()
+DB=loarder.create_database()
 
 
 # チュートリアル画面

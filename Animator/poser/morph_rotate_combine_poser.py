@@ -3,9 +3,9 @@ from typing import List
 import torch
 from torch import Tensor
 
-from poser.poser import Poser, PoseParameter
-from tha.batch_input_module import BatchInputModuleSpec
-from util import torch_load
+from Animator.poser.poser import Poser, PoseParameter
+from Animator.tha.batch_input_module import BatchInputModuleSpec
+from Animator.util import torch_load
 import  numpy as np
 
 class MorphRotateCombinePoser(Poser):

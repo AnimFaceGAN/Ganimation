@@ -1,7 +1,7 @@
 from torch import relu
 from torch.nn import Module, InstanceNorm2d
 
-from nn.conv import Conv3
+from Animator.nn.conv import Conv3
 
 
 class ResNetBlock(Module):

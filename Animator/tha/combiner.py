@@ -2,9 +2,9 @@ import torch
 from torch import Tensor
 from torch.nn import Sequential, Sigmoid, Tanh
 
-from tha.batch_input_module import BatchInputModule, BatchInputModuleSpec
-from nn.conv import Conv7
-from nn.u_net_module import UNetModule
+from Animator.tha.batch_input_module import BatchInputModule, BatchInputModuleSpec
+from Animator.nn.conv import Conv7
+from Animator.nn.u_net_module import UNetModule
 
 
 class Combiner(BatchInputModule):

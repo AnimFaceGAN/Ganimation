@@ -13,15 +13,15 @@ import cv2
 import dlib
 import torch
 
-from poser.morph_rotate_combine_poser import MorphRotateCombinePoser256Param6
-from puppet.head_pose_solver import HeadPoseSolver
-from poser.poser import Poser
-from puppet.util import compute_left_eye_normalized_ratio, compute_right_eye_normalized_ratio, \
+from Animator.poser.morph_rotate_combine_poser import MorphRotateCombinePoser256Param6
+from Animator.puppet.head_pose_solver import HeadPoseSolver
+from Animator.poser.poser import Poser
+from Animator.puppet.util import compute_left_eye_normalized_ratio, compute_right_eye_normalized_ratio, \
     compute_mouth_normalized_ratio
-from tha.combiner import CombinerSpec
-from tha.face_morpher import FaceMorpherSpec
-from tha.two_algo_face_rotator import TwoAlgoFaceRotatorSpec
-from util import rgba_to_numpy_image, extract_pytorch_image_from_filelike,process_image
+from Animator.tha.combiner import CombinerSpec
+from Animator.tha.face_morpher import FaceMorpherSpec
+from Animator.tha.two_algo_face_rotator import TwoAlgoFaceRotatorSpec
+from Animator.util import rgba_to_numpy_image, extract_pytorch_image_from_filelike,process_image
 
 from msvcrt import getch
 

@@ -1,4 +1,9 @@
+import sys
+import os
 
+sys.path.append(os.getcwd())
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 from  .Foward2Back import  Foward2Back
 from  .Back2Forward import Back2Foward
 from  .DataBase import  DataBase

@@ -1,8 +1,8 @@
 import torch
 from torch.nn import Module, ModuleList
 
-from nn.conv import Conv7Block, DownsampleBlock, UpsampleBlock
-from nn.resnet_block import ResNetBlock
+from Animator.nn.conv import Conv7Block, DownsampleBlock, UpsampleBlock
+from Animator.nn.resnet_block import ResNetBlock
 
 
 class UNetModule(Module):

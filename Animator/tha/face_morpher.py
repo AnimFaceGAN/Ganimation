@@ -2,9 +2,9 @@ import torch
 from torch import Tensor
 from torch.nn import Sequential, Tanh, Sigmoid
 
-from tha.batch_input_module import BatchInputModule, BatchInputModuleSpec
-from nn.conv import Conv7
-from nn.encoder_decoder_module import EncoderDecoderModule
+from Animator.tha.batch_input_module import BatchInputModule, BatchInputModuleSpec
+from Animator.nn.conv import Conv7
+from Animator.nn.encoder_decoder_module import EncoderDecoderModule
 
 
 class FaceMorpher(BatchInputModule):

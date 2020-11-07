@@ -1,6 +1,6 @@
 from torch.nn import Conv2d, Module, Sequential, InstanceNorm2d, ReLU, ConvTranspose2d
 
-from nn.init_function import create_init_function
+from Animator.nn.init_function import create_init_function
 
 
 def Conv7(in_channels: int, out_channels: int, initialization_method='he') -> Module:
