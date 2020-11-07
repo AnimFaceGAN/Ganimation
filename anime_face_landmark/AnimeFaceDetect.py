@@ -11,6 +11,9 @@ resize_lenght = 280
 
 # --------------------------------
 # アニメ画像から顔を検出する関数　引き数：対象の画像
+# 画像から顔が検出された場合　　　戻り値：顔だけ切り抜いた画像
+# 画像から複数顔が検出された場合　戻り値：最も大きい顔だけ切り抜いた画像
+# 画像から顔が検出されない場合　　戻り値：None
 # --------------------------------
 def anime_face_detect(img):
     print('start detecting anime face')
@@ -28,14 +31,16 @@ def anime_face_detect(img):
                                      minNeighbors=5,
                                      minSize=(25, 25))
 
-    # 顔の切り抜き、リサイズ
     max_w = 0 # wの最大値を格納する
     for (x, y, w, h) in faces:
+        output_img = img
+        '''
         # 顔が複数検出された場合、サイズが最も大きいものを出力
         if(max_w < w):
             output_img = img[y:y + h, x:x + w]
             output_img = cv2.resize(output_img, (resize_lenght, resize_lenght))
             max_w = w
+        '''
 
     if output_img is not None:
         cv2.imwrite(output_path, output_img)
