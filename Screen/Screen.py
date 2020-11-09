@@ -1,8 +1,10 @@
 import pathlib
+import imghdr
 from anime_face_landmark.AnimeFaceDetect import anime_face_detect
 from database.DataBase import DataBase
 import cv2
 import os.path
+import numpy as np
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
@@ -21,6 +23,10 @@ from kivy.resources import resource_add_path
 resource_add_path('./Font')
 LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 
+# フォント読み込み Windows用
+#resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
+#LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
+
 # Kivyファイルの読み込み
 Builder.load_file('TutorialScreen.kv')
 Builder.load_file('SettingsScreen.kv')
@@ -33,7 +39,6 @@ null_path = '../images/faceset.png'  # 画像未入力時に表示する
 
 # DataBaseのインスタンス化
 DB = DataBase()
-
 
 # チュートリアル画面
 class TutorialScreen(Screen):
@@ -82,7 +87,6 @@ class SettingsScreen(Screen):
 
     # ビデオ画面へ移ると同時にカメラ起動
     def to_video(self):
-        #VideoManager.start_animation()
         pass
 
 
@@ -106,12 +110,12 @@ class VideoManager(Image):
         self.is_animation = True
         self.capture = cv2.VideoCapture(1)
 
-    def off_animation(self):
+    def stop_animation(self):
         self.is_animating = False
         self.cap.release()
 
     def update(self, dt):
-        #if self.is_animation == True: #上手くいかないので一旦コメントアウト
+        #if self.is_animation == True:
             ret, self.frame = self.capture.read()
 
             # リアル顔画像をデータベースにセット
@@ -119,65 +123,17 @@ class VideoManager(Image):
 
             #アニメ顔画像のデータベースから取得
             #self.animeface = DB.GetAnimeFaces()
-            self.animeface = self.frame #ビデオ表示テスト
+
+            # ビデオ表示テスト
+            self.animeface = self.frame
+            self.animeface = cv2.resize(self.frame, (280, 280))
 
             # Kivy Textureに変換
             buf = cv2.flip(self.animeface, -1).tostring()
-            texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='bgr')
+            texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='bgra')
             texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
             # インスタンスのtextureを変更
             self.texture = texture
-
-
-    '''
-    image_texture = ObjectProperty(None)
-    is_animating = False
-    capture = None
-    frame = None
-    texture = None
-    count = 0
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        Clock.schedule_interval(self.update, 0.01)
-        Clock.schedule_interval(self.update_anime, 0.01)
-        Clock.schedule_interval(self.update_display, 0.01)
-
-    # アニメーションを開始する
-    @classmethod
-    def on_animation(cls):
-        cls.capture = cv2.VideoCapture(1)
-        cls.is_animating = True
-
-    # アニメーションを終了する
-    @classmethod
-    def off_animation(cls):
-        cls.cap.release()
-        cls.is_animating = False
-
-    @classmethod
-    def update(cls, dt):
-        if cls.is_animating:
-            ret, cls.frame = cls.capture.read()
-
-            # リアル顔画像をデータベースにセット
-            DB.SetRealFaces(cls.frame)
-
-    @classmethod
-    def update_anime(cls, dt):
-        # フレームを読み込み
-        if cls.is_animating:
-            # Kivy Textureに変換
-            buf = cv2.flip(cls.frame, 0).tostring()
-            texture = Texture.create(size=(cls.frame.shape[1], cls.frame.shape[0]), colorfmt='bgr')
-            texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
-            # インスタンスのtextureを変更
-            cls.texture = texture
-            cls.update_display(texture)
-
-    def update_display(self, texture):
-        self.image_texture.texture = texture
-    '''
 
 
 sm = ScreenManager(transition=WipeTransition())
@@ -187,10 +143,10 @@ sm.add_widget(VideoScreen(name='video'))
 sm.add_widget(OtherSettingsScreen(name='other_settings'))
 
 
-class TestApp(App):
+class GanimationApp(App):
     def build(self):
         return sm
 
 
 if __name__ == '__main__':
-    TestApp().run()
+    GanimationApp().run()

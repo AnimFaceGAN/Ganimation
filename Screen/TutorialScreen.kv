@@ -3,17 +3,22 @@
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
-        Label: #タイトル
+        BoxLayout:
             size_hint_y: 0.1
-            text: 'Ganimation'
-            color: 1, 0.5, 0, 1
-            font_size: 70
+
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
+
+            Image:
+                source: './UI_images/title.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
+
         Label:
             size_hint_y:0.002
             canvas.before:
@@ -54,7 +59,7 @@
                         size: self.size
 
                 BoxLayout:
-                    size_hint_y: 0.1
+                    size_hint_y: 0.05
                     canvas.before:
                         Color:
                             rgba: 0.1, 0.1, 0.1, 1
@@ -68,20 +73,24 @@
                     Label:
                         text: 'Ganimationとは？'
                         color: 1,1,1,0.8
-                        font_size: 50
+                        font_size: dp(25)
+                        text_size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
                         canvas.before:
                             Color:
-                                rgba: 0.2, 0.2, 0.2, 1
+                                rgba: 0.3, 0.3, 0.3, 1
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
 
                 BoxLayout:
-                    size_hint_y: 0.4
+                    size_hint_y: 0.45
 
                     canvas.before:
                         Color:
-                            rgba: 0.2, 0.2, 0.2, 1
+                            rgba: 0.3, 0.3, 0.3, 1
                         Rectangle:
                             pos: self.pos
                             size: self.size
@@ -93,23 +102,36 @@
                         allow_stretch: True
                 BoxLayout:
                     size_hint_y: 0.4
+                    orientation: 'horizontal'
+
                     canvas.before:
                         Color:
-                            rgba: 0.2, 0.2, 0.2, 1
+                            rgba: 0.3, 0.3, 0.3, 1
                         Rectangle:
                             pos: self.pos
                             size: self.size
 
-                    Label:
-                        text: 'このアプリを使えばアニメキャラクターの顔でZoomやDiscordなどのビデオ会議に\n参加することができます。寝癖がひどい時でも問題なくビデオ通話出来るようになります。\n使い方は簡単でアニメ顔画像を一枚用意するだけでアニメーションの準備が完了します。\nユーザの顔認識はwebカメラだけで出来るのでお手軽に利用できます。\nこのアプリではＧＡＮというAI技術を用いてアニメ顔画像を動かすことができます。'
-                        color: 1,1,1,0.8
-                        font_size: 30
-                        canvas.before:
-                            Color:
-                                rgba: 0.2, 0.2, 0.2, 1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+                    BoxLayout:
+                        size_hint_x: 0.1
+
+                    BoxLayout:
+                        size_hint_x: 0.8
+                        Label:
+                            text: '　このアプリでは一枚の顔イラストからビデオ会議で使えるアバターを生成できます。具体的には、機械学習の応用技術を使用して、図のように顔イラストを利用者の顔の動きに模倣させています。\n　このアプリを使えば、アニメキャラクターの顔でZoomやDiscordなどのビデオ会議に参加することができるので、寝癖がひどい時でも問題なくビデオ会議の参加できます。 \n　使い方は簡単で、ガイドラインに沿った形式の顔イラストを一枚用意し、設定画面でセットするだけです。ユーザの顔認識はwebカメラのみで行えるでとてもお手軽です。是非ご体験ください！'
+                            color: 1,1,1,0.8
+                            text_size: self.size
+                            halign: 'left'
+                            valign: 'middle'
+                            font_size: dp(22)
+
+                            canvas.before:
+                                Color:
+                                    rgba: 0.3, 0.3, 0.3, 1
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                    BoxLayout:
+                        size_hint_x: 0.1
             BoxLayout:
                 size_hint_x: 0.1
                 canvas.before:
@@ -129,16 +151,47 @@
                     size: self.size
 
             BoxLayout:
-                size_hint_x: 0.9
+                size_hint_x: 0.35
 
             BoxLayout:
                 size_hint_x: 0.1
+                orientation:'horizontal'
                 Button:
-                    background_color: (0.3, 0.3, 0.3, 1)
-                    on_press: root.manager.current = 'settings'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'tutorial'
 
                     Image:
-                        source: './UI_images/next.png'
+                        source: './UI_images/orange_question.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
                         allow_stretch: True
+
+
+            BoxLayout:
+                size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'settings'
+
+                    Image:
+                        source: './UI_images/white_gear.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+            BoxLayout:
+                size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'video'
+
+                    Image:
+                        source: './UI_images/white_video.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+            BoxLayout:
+                size_hint_x: 0.35
