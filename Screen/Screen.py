@@ -6,12 +6,15 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
 import pathlib
+import imghdr
 from anime_face_landmark.AnimeFaceDetect import anime_face_detect
 from  database import  *
 import cv2
 import os.path
 import  numpy as np
 
+
+import numpy as np
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.properties import StringProperty, ObjectProperty
@@ -43,6 +46,10 @@ LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
 resource_add_path('./Font')
 LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 
+# フォント読み込み Windows用
+#resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
+#LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
+
 # Kivyファイルの読み込み
 Builder.load_file('TutorialScreen.kv', encoding="utf-8")
 Builder.load_file('SettingsScreen.kv', encoding="utf-8")
@@ -60,7 +67,6 @@ loarder=DataLoarder()
 f2b=loarder.create_foward2back()
 b2f=loarder.create_back2foward()
 DB=loarder.create_database()
-
 
 # チュートリアル画面
 class TutorialScreen(Screen):
@@ -110,7 +116,6 @@ class SettingsScreen(Screen):
 
     # ビデオ画面へ移ると同時にカメラ起動
     def to_video(self):
-        #VideoManager.start_animation()
         pass
 
 
@@ -136,7 +141,7 @@ class VideoManager(Image):
         self.is_animation = True
         self.capture = cv2.VideoCapture(0)
 
-    def off_animation(self):
+    def stop_animation(self):
         self.is_animating = False
         self.cap.release()
 
@@ -222,7 +227,28 @@ def show_img(img, title=""):
 
     def update_display(self, texture):
         self.image_texture.texture = texture
+        
+        #if self.is_animation == True:
+            ret, self.frame = self.capture.read()
+
+            # リアル顔画像をデータベースにセット
+            DB.SetRealFaces(self.frame)
+
+            #アニメ顔画像のデータベースから取得
+            #self.animeface = DB.GetAnimeFaces()
+
+            # ビデオ表示テスト
+            self.animeface = self.frame
+            self.animeface = cv2.resize(self.frame, (280, 280))
+
+            # Kivy Textureに変換
+            buf = cv2.flip(self.animeface, -1).tostring()
+            texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='bgra')
+            texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
+            # インスタンスのtextureを変更
+            self.texture = texture
     '''
+
 
 
 sm = ScreenManager(transition=WipeTransition())
@@ -232,10 +258,10 @@ sm.add_widget(VideoScreen(name='video'))
 sm.add_widget(OtherSettingsScreen(name='other_settings'))
 
 
-class TestApp(App):
+class GanimationApp(App):
     def build(self):
         return sm
 
 
 if __name__ == '__main__':
-    TestApp().run()
+    GanimationApp().run()

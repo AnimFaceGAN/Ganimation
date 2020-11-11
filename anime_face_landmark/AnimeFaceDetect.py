@@ -43,7 +43,7 @@ def anime_face_detect(img):
         '''
 
     if output_img is not None:
-        cv2.imwrite(output_path, output_img)
+        cv2.imwrite(output_path, img)
         print('->success')
         return True
     else:

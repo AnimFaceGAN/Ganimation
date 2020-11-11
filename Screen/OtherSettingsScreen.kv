@@ -2,17 +2,21 @@
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'ÇæÇ∆â°àÍóÒ
         size: root.size
-        Label: #É^ÉCÉgÉã
+        BoxLayout:
             size_hint_y: 0.1
-            text: 'GANIMATION'
-            color: 1, 0.5, 0, 1
-            font_size: 70
+
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
+
+            Image:
+                source: './UI_images/title.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
         Label:
             size_hint_y:0.002
             canvas.before:
@@ -27,16 +31,16 @@
 
             Button:
                 text: 'âÊëúê›íË'
-                color: (0.6, 0.6, 0.6, 1.0)
-                font_size: 40
-                background_color: (0.2, 0.2, 0.2, 1.0)
+                color: 1,1,1,1
+                font_size: dp(30)
+                background_color: (0.3, 0.3, 0.3, 1.0)
                 on_press: root.manager.current = 'settings'
 
             Button:
                 text: 'è⁄ç◊ê›íË'
                 color: (1.0, 1.0, 1.0, 1.0)
-                font_size: 40
-                background_color: (0.3, 0.3, 0.3, 1)
+                font_size: dp(30)
+                background_color: (0.0, 0.6, 0.7, 1)
                 #on_press: root.manager.current = 'other_settings'
 
         Label:
@@ -84,28 +88,47 @@
                     size: self.size
 
             BoxLayout:
+                size_hint_x: 0.35
+
+            BoxLayout:
                 size_hint_x: 0.1
+                orientation:'horizontal'
                 Button:
                     background_color: (0.3, 0.3, 0.3, 1.0)
                     on_press: root.manager.current = 'tutorial'
 
                     Image:
+                        source: './UI_images/white_question.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
-                        #allow_stretch: True
-                        source: './UI_images/back.png'
+                        allow_stretch: True
 
-            BoxLayout:
-                size_hint_x: 0.8
 
             BoxLayout:
                 size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'settings'
+
+                    Image:
+                        source: './UI_images/orange_gear.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+            BoxLayout:
+                size_hint_x: 0.1
+                orientation:'horizontal'
                 Button:
                     background_color: (0.3, 0.3, 0.3, 1.0)
                     on_press: root.manager.current = 'video'
 
                     Image:
+                        source: './UI_images/white_video.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
-                        #allow_stretch: True
-                        source: './UI_images/next.png'
+                        allow_stretch: True
+
+            BoxLayout:
+                size_hint_x: 0.35

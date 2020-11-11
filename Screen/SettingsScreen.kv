@@ -5,18 +5,23 @@
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
-        Label: #Title Part
+        BoxLayout:
             size_hint_y: 0.1
-            text: 'Ganimation'
-            color: 1, 0.5, 0, 1
-            font_size: 70
+
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
-        Label: #Narrow gap
+
+            Image:
+                source: './UI_images/title.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
+
+        Label:
             size_hint_y:0.002
             canvas.before:
                 Color:
@@ -31,15 +36,15 @@
             Button:
                 text: '画像設定'
                 color: 1,1,1,1
-                font_size: 40
-                background_color: (0.3, 0.3, 0.3, 1)
+                font_size: dp(30)
+                background_color: (0.0, 0.6, 0.7, 1)
                 #on_press: root.manager.current = 'settings'
 
             Button:
                 text: '詳細設定'
-                color: (0.6, 0.6, 0.6, 1.0)
-                font_size: 40
-                background_color: (0.2, 0.2, 0.2, 1.0)
+                color: 1,1,1,1
+                font_size: dp(30)
+                background_color: (0.3, 0.3, 0.3, 1.0)
                 on_press: root.manager.current = 'other_settings'
 
         Label: #Narrow gap
@@ -86,23 +91,217 @@
                         bold: True
                         text: 'ファイルをドラッグ＆ドロップ'
                         color: 1,1,1,1
-                        font_size: 20
+                        font_size: dp(20)
 
             BoxLayout:
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'center'
                     padding: 40
-                    Label:
-                        text: '　　使い方・注意点　　\n\n・画像サイズは256×256\n\n・RGBA形式で背景は透明\n\n・頭は中央128×128\n\n・目と口は大きく開いている\n\n・頭が正面を向いている'
-                        color: 1,1,1,0.8
-                        font_size: 45
-                        canvas.before:
-                            Color:
-                                rgba: 0.15, 0.15, 0.15, 1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+
+                    BoxLayout:
+                        orientation: 'vertical'
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '使い方'
+                                color: 1,1,1,0.8
+                                font_size: dp(25)
+                                text_size: self.size
+                                halign: 'center'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.2, 0.2, 0.2, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　1. 使用したいキャラクターの顔画像を準備してください'
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                color: 1,1,1,0.8
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　2. 左の四角形に用意した画像をドラッグ&ドロップしてください'
+                                color: 1,1,1,0.8
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　3. 画像の読み込みに成功するとアバターの使用を開始できます'
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                color: 1,1,1,0.8
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '使用できる画像'
+                                font_size: dp(25)
+                                color: 1,1,1,0.8
+                                text_size: self.size
+                                halign: 'center'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.2, 0.2, 0.2, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　・画像サイズは256px×256px'
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                color: 1,1,1,0.8
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　・キャラクターの頭は中央128px×128px内に収める'
+                                color: 1,1,1,0.8
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　・目と口は大きく開いている'
+                                color: 1,1,1,0.8
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　・頭が正面を向いている'
+                                color: 1,1,1,0.8
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　・画像はRGBA形式で背景は透過されている'
+                                color: 1,1,1,0.8
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                markup: True
+                                text: '　　[ref=some][color=0088aa]https://www.remove.bg/ja[/color][/ref]（こちらのサイトで背景削除できます）'
+                                on_ref_press:
+                                    import webbrowser
+                                    webbrowser.open('https://www.remove.bg/ja')
+                                color: 1,1,1,0.8
+                                font_size: dp(20)
+                                text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        BoxLayout:
+                            size_hint_y: 0.12
+                            Label:
+                                text: ''
+                                color: 1,1,1,0.8
+                                font_size: dp(20)
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
 
         BoxLayout: #画像読み込み画面
             size_hint_y: 0.1
@@ -115,6 +314,9 @@
                     size: self.size
 
             BoxLayout:
+                size_hint_x: 0.35
+
+            BoxLayout:
                 size_hint_x: 0.1
                 orientation:'horizontal'
                 Button:
@@ -122,14 +324,24 @@
                     on_press: root.manager.current = 'tutorial'
 
                     Image:
-                        source: './UI_images/back.png'
+                        source: './UI_images/white_question.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
                         allow_stretch: True
 
 
             BoxLayout:
-                size_hint_x: 0.8
+                size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_press: root.manager.current = 'settings'
+
+                    Image:
+                        source: './UI_images/orange_gear.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
 
             BoxLayout:
                 size_hint_x: 0.1
@@ -137,10 +349,12 @@
                 Button:
                     background_color: (0.3, 0.3, 0.3, 1.0)
                     on_press: root.manager.current = 'video'
-                    on_release: root.to_video()
 
                     Image:
-                        source: './UI_images/next.png'
+                        source: './UI_images/white_video.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
                         allow_stretch: True
+
+            BoxLayout:
+                size_hint_x: 0.35

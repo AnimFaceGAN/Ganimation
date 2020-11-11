@@ -23,20 +23,49 @@
         BoxLayout:
             size_hint_y: 0.1
 
+
+            BoxLayout:
+                size_hint_x: 0.35
+
             BoxLayout:
                 size_hint_x: 0.1
-
+                orientation:'horizontal'
                 Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    background_color: (0.3, 0.3, 0.3, 0.0)
+                    on_press: root.manager.current = 'tutorial'
+
+                    Image:
+                        source: './UI_images/white_question.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+
+            BoxLayout:
+                size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 0.0)
                     on_press: root.manager.current = 'settings'
 
                     Image:
+                        source: './UI_images/white_gear.png'
                         center_x: self.parent.center_x
                         center_y: self.parent.center_y
-                        #allow_stretch: True
-                        source: './UI_images/back.png'
-            BoxLayout:
-                size_hint_x: 0.6
+                        allow_stretch: True
 
             BoxLayout:
-                size_hint_x: 0.3
+                size_hint_x: 0.1
+                orientation:'horizontal'
+                Button:
+                    background_color: (0.3, 0.3, 0.3, 0.0)
+                    on_press: root.manager.current = 'video'
+
+                    Image:
+                        source: './UI_images/orange_video.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+            BoxLayout:
+                size_hint_x: 0.35
