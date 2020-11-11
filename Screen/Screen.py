@@ -96,7 +96,7 @@ class SettingsScreen(Screen):
                 self.drop_area_label.text = ''
                 self.drop_area_image.source = output_path
                 self.drop_area_image.reload()
-                DB.SetSettingImage(output_path)
+                DB.SetSettingImage(input_path)
                 animator.update_base_image()
             else:
                 self.drop_area_label.text = '顔が検出されませんでした'
@@ -130,11 +130,11 @@ class VideoManager(Image):
         self.capture = cv2.VideoCapture(0)
         self.animator = animator
 
-        Clock.schedule_interval(self.update, 0.01)
+        Clock.schedule_interval(self.update, 0.05)
 
     def start_animation(self):
         self.is_animation = True
-        self.capture = cv2.VideoCapture(1)
+        self.capture = cv2.VideoCapture(0)
 
     def off_animation(self):
         self.is_animating = False
@@ -159,11 +159,9 @@ class VideoManager(Image):
         if not flg:
             return
         animeface=DB.GetAnimeFaces()
-        self.animeface =cv2.resize(animeface, (280, 280))
+        self.animeface =cv2.resize(animeface, (500, 500))
 
         #self.animeface = self.frame
-
-
 
         # Kivy Textureに変換
         buf = cv2.flip(self.animeface, -1).tobytes()

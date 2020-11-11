@@ -76,7 +76,6 @@ def extract_pytorch_image_from_filelike(file):
     pil_image = PIL.Image.open(file)
     pil_image=pil_image.resize((256, 256))
     image_size = pil_image.width
-    print(np.shape(pil_image))
     if np.shape(pil_image)[2]==3:
         image=rgb2rgba(np.asarray(pil_image))
     else:
@@ -143,7 +142,7 @@ def rgb2rgba(image):
             img = np.append(image[i][j], 1)
             new_image[i][j] = img
     a = np.all(new_image == 1, axis=-1)
-    new_image[:, :, 3] = np.where(np.all(new_image == 1, axis=-1), 0, 1)
+    new_image[:, :, 3] = np.where(np.all(image == 1, axis=-1), 0, 1)
     new_image = np.array(new_image)
     return new_image
 

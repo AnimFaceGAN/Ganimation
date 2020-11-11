@@ -26,6 +26,8 @@ from Animator.util import rgba_to_numpy_image, extract_pytorch_image_from_fileli
 from msvcrt import getch
 
 import  database
+import time
+
 
 class Animator:
 
@@ -54,11 +56,16 @@ class Animator:
 
         self.update_base_image()
 
+        print("--- Ready OK   ---")
+
     def update_base_image(self):
         #process_image(self.database.SettingImage)
+        print("--- Update Base Image ---")
         self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
 
     def update_image(self):
+        start=time.time()
+
         #self.update_base_image()
         #there_is_frame,frame=self.video_capture.read()
         frame = self.database.GetRealFaces()#self.video_capture.read()
@@ -114,6 +121,10 @@ class Animator:
             pil_image = PIL.Image.fromarray(np.uint8(np.rint(numpy_image * 255.0)), mode='RGBA')
 
             self.database.SetAnimeFaces(np.array(numpy_image*255,dtype=np.uint8))
+
+            elapsed_time = time.time() - start
+            print("ETA : {0}".format(elapsed_time) + "[sec]")
+
             return pil_image,True
 
 
