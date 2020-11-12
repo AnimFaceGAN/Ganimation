@@ -185,7 +185,8 @@
                 orientation:'horizontal'
                 Button:
                     background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'video'
+                    on_press: root.start_video()
+                    on_release: root.manager.current = 'video'
 
                     Image:
                         source: './UI_images/white_video.png'

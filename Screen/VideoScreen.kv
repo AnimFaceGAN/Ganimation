@@ -47,6 +47,7 @@
                 Button:
                     background_color: (0.3, 0.3, 0.3, 0.0)
                     on_press: root.manager.current = 'settings'
+                    on_release: root.stop_video()
 
                     Image:
                         source: './UI_images/white_gear.png'

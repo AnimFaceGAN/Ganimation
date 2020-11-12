@@ -67,9 +67,18 @@ f2b=loarder.create_foward2back()
 b2f=loarder.create_back2foward()
 DB=loarder.create_database()
 
+#ビデオ画面のupdateオンオフ
+playing_video = False
+
 # チュートリアル画面
 class TutorialScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def start_video(self):
+        global playing_video
+        playing_video = True
+        print('start')
 
 
 # 画像設定画面
@@ -113,23 +122,43 @@ class SettingsScreen(Screen):
 
         return
 
-    # ビデオ画面へ移ると同時にカメラ起動
-    def to_video(self):
-        pass
+
+    def start_video(self):
+        global playing_video
+        playing_video = True
+        print('start')
+
 
 
 # 詳細設定画面
 class OtherSettingsScreen(Screen):
-    pass
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def start_video(self):
+        global playing_video
+        playing_video = True
+        print('start')
 
 # ビデオ画面
 class VideoScreen(Screen):
-    pass
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def stop_video(self):
+        global playing_video
+        playing_video = False
+        print('stop')
+
+
 
 class VideoManager(Image):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+<<<<<<< HEAD
         self.is_animation = False
         self.capture = cv2.VideoCapture(0)
         self.animator = animator
@@ -228,6 +257,14 @@ def show_img(img, title=""):
         self.image_texture.texture = texture
         
         #if self.is_animation == True:
+=======
+        self.capture = cv2.VideoCapture(1)
+        Clock.schedule_interval(self.update, 0.01)
+
+    def update(self, dt):
+        global playing_video
+        if playing_video == True:
+>>>>>>> takahashi
             ret, self.frame = self.capture.read()
 
             # リアル顔画像をデータベースにセット
@@ -255,7 +292,6 @@ sm.add_widget(TutorialScreen(name='tutorial'))
 sm.add_widget(SettingsScreen(name='settings'))
 sm.add_widget(VideoScreen(name='video'))
 sm.add_widget(OtherSettingsScreen(name='other_settings'))
-
 
 class GanimationApp(App):
     def build(self):
