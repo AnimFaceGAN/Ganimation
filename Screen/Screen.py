@@ -40,9 +40,18 @@ null_path = '../images/faceset.png'  # 画像未入力時に表示する
 # DataBaseのインスタンス化
 DB = DataBase()
 
+#ビデオ画面のupdateオンオフ
+playing_video = False
+
 # チュートリアル画面
 class TutorialScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def start_video(self):
+        global playing_video
+        playing_video = True
+        print('start')
 
 
 # 画像設定画面
@@ -85,37 +94,48 @@ class SettingsScreen(Screen):
 
         return
 
-    # ビデオ画面へ移ると同時にカメラ起動
-    def to_video(self):
-        pass
+
+    def start_video(self):
+        global playing_video
+        playing_video = True
+        print('start')
+
 
 
 # 詳細設定画面
 class OtherSettingsScreen(Screen):
-    pass
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def start_video(self):
+        global playing_video
+        playing_video = True
+        print('start')
 
 # ビデオ画面
 class VideoScreen(Screen):
-    pass
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    def stop_video(self):
+        global playing_video
+        playing_video = False
+        print('stop')
+
+
 
 class VideoManager(Image):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.is_animation = False
         self.capture = cv2.VideoCapture(1)
         Clock.schedule_interval(self.update, 0.01)
 
-    def start_animation(self):
-        self.is_animation = True
-        self.capture = cv2.VideoCapture(1)
-
-    def stop_animation(self):
-        self.is_animating = False
-        self.cap.release()
-
     def update(self, dt):
-        #if self.is_animation == True:
+        global playing_video
+        if playing_video == True:
             ret, self.frame = self.capture.read()
 
             # リアル顔画像をデータベースにセット
@@ -141,7 +161,6 @@ sm.add_widget(TutorialScreen(name='tutorial'))
 sm.add_widget(SettingsScreen(name='settings'))
 sm.add_widget(VideoScreen(name='video'))
 sm.add_widget(OtherSettingsScreen(name='other_settings'))
-
 
 class GanimationApp(App):
     def build(self):
