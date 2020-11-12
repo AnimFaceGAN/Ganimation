@@ -13,7 +13,6 @@ import cv2
 import os.path
 import  numpy as np
 
-
 import numpy as np
 from kivy.app import App
 from kivy.lang import Builder
@@ -135,7 +134,7 @@ class VideoManager(Image):
         self.capture = cv2.VideoCapture(0)
         self.animator = animator
 
-        Clock.schedule_interval(self.update, 0.05)
+        Clock.schedule_interval(self.update, 0.07)
 
     def start_animation(self):
         self.is_animation = True

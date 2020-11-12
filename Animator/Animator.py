@@ -123,7 +123,7 @@ class Animator:
             self.database.SetAnimeFaces(np.array(numpy_image*255,dtype=np.uint8))
 
             elapsed_time = time.time() - start
-            print("ETA : {0}".format(elapsed_time) + "[sec]")
+            print(r"\rETA : {0} [sec]".format(elapsed_time) )
 
             return pil_image,True
 
