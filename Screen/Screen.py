@@ -1,3 +1,5 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
 import sys
 import os
 
@@ -158,7 +160,6 @@ class VideoManager(Image):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-<<<<<<< HEAD
         self.is_animation = False
         self.capture = cv2.VideoCapture(0)
         self.animator = animator
@@ -167,13 +168,16 @@ class VideoManager(Image):
 
     def start_animation(self):
         self.is_animation = True
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture(1)
 
     def stop_animation(self):
         self.is_animating = False
         self.cap.release()
 
     def update(self, dt):
+        if not playing_video:
+            return
+
         ret, self.frame = self.capture.read()
 
         # リアル顔画像をデータベースにセット
@@ -207,83 +211,6 @@ def show_img(img, title=""):
     cv2.imshow(title, img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
-    '''
-    image_texture = ObjectProperty(None)
-    is_animating = False
-    capture = None
-    frame = None
-    texture = None
-    count = 0
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        Clock.schedule_interval(self.update, 0.01)
-        Clock.schedule_interval(self.update_anime, 0.01)
-        Clock.schedule_interval(self.update_display, 0.01)
-
-    # アニメーションを開始する
-    @classmethod
-    def on_animation(cls):
-        cls.capture = cv2.VideoCapture(1)
-        cls.is_animating = True
-
-    # アニメーションを終了する
-    @classmethod
-    def off_animation(cls):
-        cls.cap.release()
-        cls.is_animating = False
-
-    @classmethod
-    def update(cls, dt):
-        if cls.is_animating:
-            ret, cls.frame = cls.capture.read()
-
-            # リアル顔画像をデータベースにセット
-            DB.SetRealFaces(cls.frame)
-
-    @classmethod
-    def update_anime(cls, dt):
-        # フレームを読み込み
-        if cls.is_animating:
-            # Kivy Textureに変換
-            buf = cv2.flip(cls.frame, 0).tostring()
-            texture = Texture.create(size=(cls.frame.shape[1], cls.frame.shape[0]), colorfmt='bgr')
-            texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
-            # インスタンスのtextureを変更
-            cls.texture = texture
-            cls.update_display(texture)
-
-    def update_display(self, texture):
-        self.image_texture.texture = texture
-        
-        #if self.is_animation == True:
-=======
-        self.capture = cv2.VideoCapture(1)
-        Clock.schedule_interval(self.update, 0.01)
-
-    def update(self, dt):
-        global playing_video
-        if playing_video == True:
->>>>>>> takahashi
-            ret, self.frame = self.capture.read()
-
-            # リアル顔画像をデータベースにセット
-            DB.SetRealFaces(self.frame)
-
-            #アニメ顔画像のデータベースから取得
-            #self.animeface = DB.GetAnimeFaces()
-
-            # ビデオ表示テスト
-            self.animeface = self.frame
-            self.animeface = cv2.resize(self.frame, (280, 280))
-
-            # Kivy Textureに変換
-            buf = cv2.flip(self.animeface, -1).tostring()
-            texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='bgra')
-            texture.blit_buffer(buf, colorfmt='bgr', bufferfmt='ubyte')
-            # インスタンスのtextureを変更
-            self.texture = texture
-    '''
 
 
 

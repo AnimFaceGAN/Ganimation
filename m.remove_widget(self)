@@ -1,0 +1,364 @@
+[33mcommit 9edb38a4ca28ad542a439023d517bf8fef925cee[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: 9850b39 5dd2b5d
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Thu Nov 12 21:43:14 2020 +0900
+
+    Merge takahashi
+
+[33mcommit 9850b39c4736009da8b445bb081b9a04f5e43dc2[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Thu Nov 12 21:41:40 2020 +0900
+
+    Update
+
+[33mcommit 5dd2b5d8d9da0afec2dcb1e1a6c5a0b174b0947c[m[33m ([m[1;31morigin/takahashi[m[33m, [m[1;32mtakahashi[m[33m)[m
+Author: takahashi1130 <57855627+takahashi1130@users.noreply.github.com>
+Date:   Thu Nov 12 18:07:24 2020 +0900
+
+    UIの更新
+    
+    ・Updateのオンオフを追加
+    ・AnimeFaceDetect.pyの不要部分削除
+
+[33mcommit c6694668dd1e1c98b39687a0549868ed7a5f4ec9[m
+Merge: 10ef786 ded6e91
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Wed Nov 11 20:04:39 2020 +0900
+
+    merge takahashi
+
+[33mcommit 10ef786b9b2139c7e16a4a05ac201fd583215bb9[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Wed Nov 11 19:44:16 2020 +0900
+
+    Update Animator
+
+[33mcommit ded6e91b74a694fb94ae6709d504ff62153ec6cc[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Mon Nov 9 14:05:18 2020 +0900
+
+    Update AnimeFaceDetect.py
+
+[33mcommit 1a0557680d1e4e91b698d966d390f021ea7274f0[m
+Merge: 6a42a01 54ccfc4
+Author: takahashi1130 <57855627+takahashi1130@users.noreply.github.com>
+Date:   Mon Nov 9 13:48:33 2020 +0900
+
+    Merge branch 'takahashi' of https://github.com/AnimFaceGAN/AnimFaceGan into takahashi
+
+[33mcommit 6a42a017882ddb85e4bcbca9cd9373fccb1dd876[m
+Author: takahashi1130 <57855627+takahashi1130@users.noreply.github.com>
+Date:   Mon Nov 9 13:48:15 2020 +0900
+
+    UIの更新
+
+[33mcommit 54ccfc4b063fd07796e19f85aaf6298fdee255c6[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Mon Nov 9 13:41:45 2020 +0900
+
+    Add files via upload
+
+[33mcommit 94f008f5f7188680fb3556b2e22b017846d90880[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Mon Nov 9 13:41:18 2020 +0900
+
+    Delete demo_tutorial.png
+
+[33mcommit ec81e45d9ee29a9877fc845ef927fca732210a6a[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Mon Nov 9 13:40:45 2020 +0900
+
+    upload new icons
+
+[33mcommit 351bc4ffa064bc245daed69dc77a23b139380202[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Mon Nov 9 13:39:15 2020 +0900
+
+    Add files via upload
+
+[33mcommit 88d3f5fbb835866a3c989706ec4eb34d7c2990f6[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Mon Nov 9 13:38:33 2020 +0900
+
+    Delete faceset.png
+
+[33mcommit bbda9f39ce4d3662d81544e4f4f1c7337258b127[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Nov 7 21:00:59 2020 +0900
+
+    Join UI and model
+
+[33mcommit 894b8767e8f40b98f5d37e6ea4a4f8dd3c74bfc3[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Nov 7 15:01:25 2020 +0900
+
+    修正中
+
+[33mcommit 51d27fab1f0160f3bcf8e73eb9d9d3ab678ec652[m
+Merge: 0ffaf23 b02de6a
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Nov 7 14:39:11 2020 +0900
+
+    merge kicu
+
+[33mcommit 0ffaf23afffe813d8923b5096a2faca5a59f7286[m
+Merge: 4b5f042 280df8e
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Nov 7 14:37:38 2020 +0900
+
+    Merge branch 'kicu'
+
+[33mcommit b02de6a4d49ad3eaf7eab016bbff8db3b39dff51[m
+Merge: a368a1e f014078
+Author: takahashi1130 <57855627+takahashi1130@users.noreply.github.com>
+Date:   Sat Nov 7 14:35:52 2020 +0900
+
+    Merge branch 'takahashi' of https://github.com/AnimFaceGAN/AnimFaceGan into takahashi
+
+[33mcommit a368a1e52ce420f870d59f48e9bcebfc59df241c[m
+Author: takahashi1130 <57855627+takahashi1130@users.noreply.github.com>
+Date:   Sat Nov 7 14:35:27 2020 +0900
+
+    UI最新バージョン
+    
+    ・チュートリアル画面
+    ・ビデオ表示
+
+[33mcommit 280df8ebc72ae3b690bdbb20ed5c866ce3ed35b5[m[33m ([m[1;31morigin/kicu[m[33m, [m[1;32mkicu[m[33m)[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Nov 7 14:35:25 2020 +0900
+
+    Add image process
+
+[33mcommit f0140786d683c3fd9fe701b1c28dadbad6131f14[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Sat Nov 7 14:31:20 2020 +0900
+
+    チュートリアルなどの画像を追加
+
+[33mcommit 346a6eea7b262ab4c08efe87e27d1ae082b79ba3[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Sat Nov 7 14:30:13 2020 +0900
+
+    画像設定のデフォルト画像を追加
+
+[33mcommit 47d6cdc0d23cc339816fb2b05f8dfd5908b56c67[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Oct 31 16:13:30 2020 +0900
+
+    Update Animator
+
+[33mcommit 9d6d05bc477ad78a617e6fc2e918fd43b7f6cf28[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Fri Oct 30 15:59:13 2020 +0900
+
+    Add Animator
+
+[33mcommit 5e8a8c3d7aeae2f7add59534bfedebaa057860a7[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sun Oct 25 21:29:43 2020 +0900
+
+    merge takahashi branch
+
+[33mcommit 99ae915d289ae89ef842cc0d6be341c21349503e[m
+Merge: 8b5856d bc0cd19
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sun Oct 25 21:12:16 2020 +0900
+
+    Merge branch 'takahashi' into kicu
+
+[33mcommit bc0cd192c4267f962b4fef4753eb78a6bfd93b2e[m
+Author: takahashi1130 <57855627+takahashi1130@users.noreply.github.com>
+Date:   Sun Oct 25 00:31:46 2020 +0900
+
+    Create shape_predictor_68_face_landmarks.dat
+
+[33mcommit 237de2c0092d15963887ee1f3141fb38e56a21cd[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Sun Oct 25 00:25:35 2020 +0900
+
+    UIで使用する画像の追加
+
+[33mcommit 03d5681cb4466910d4a79c68b4074f6a992b8b8a[m
+Author: takahashi1130 <57855627+takahashi1130@users.noreply.github.com>
+Date:   Sun Oct 25 00:23:19 2020 +0900
+
+    UIの更新
+
+[33mcommit e0fe3e17cbf3ca6e7221499a6a77c0c2848e64c7[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Sun Oct 25 00:16:09 2020 +0900
+
+    anime_face_detect()をScreen.pyで使える形に修正
+
+[33mcommit 1ff5b012ab11f0e17f7b69c01355bc7b815682fa[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Sun Oct 25 00:12:55 2020 +0900
+
+    Add files via upload
+
+[33mcommit e5e5393d43e96486a2f7dcd5dab3e902b4fa7f95[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Sun Oct 25 00:12:27 2020 +0900
+
+    Add files via upload
+
+[33mcommit 8b5856d3b6f4946ebe0b221727ad3b3189d58123[m
+Merge: fec1f48 389bdbf
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Oct 24 23:37:13 2020 +0900
+
+    Merge branch 'takahashi' into kicu
+
+[33mcommit 4b5f04205264444db87f3988ac0248c20a8dc5c8[m
+Merge: 1a2a838 fec1f48
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sat Oct 24 23:35:05 2020 +0900
+
+    Merge branch 'kicu'
+
+[33mcommit fec1f48041344b4614580d2d3a33c26a9c6eac12[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Fri Oct 23 17:26:52 2020 +0900
+
+    Update ReadMe
+
+[33mcommit 3b00c30838b4b1214f696efc64db2a6e3592c212[m
+Author: KICU1129 <kisuke1129@gmail.com>
+Date:   Sun Oct 18 17:53:50 2020 +0900
+
+    Dataを管理しやすいクラスを作成s、somthingのdata_sampleを参照
+
+[33mcommit 0a9a3b49ca83ab3a7b48c6cf5c72ac60e7345291[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Fri Oct 9 17:09:43 2020 +0900
+
+    Update preprocess_faces01.py
+
+[33mcommit 033b1ff97d5579c9422e231a978de736e27b7b97[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Fri Oct 9 17:08:26 2020 +0900
+
+    Add files via upload
+
+[33mcommit 389bdbf5dbb558d7fca7ebc86090b0926205883c[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 30 17:24:44 2020 +0900
+
+    アニメ顔検出
+
+[33mcommit c87d90ecaa5edb1f7b711dc721e38ce004b55697[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 16 16:45:12 2020 +0900
+
+    Update Screen.py
+
+[33mcommit 0ab9e459881a00fa0d7bf24a49b018808294804e[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 16 16:44:13 2020 +0900
+
+    使用した日本語対応フォントを追加
+
+[33mcommit cf143d03e4b4b11d88a57872b1f9796aacf1653c[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 16 16:27:13 2020 +0900
+
+    Update VideoScreen.kv
+
+[33mcommit d823a72d4fba2725c5fed5529894ce8d45a4df30[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 16 16:26:24 2020 +0900
+
+    Update TutorialScreen.kv
+
+[33mcommit 4aa8aeb6c0ae3113841555c88d2dcfd0a30ffbc9[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 16 16:26:03 2020 +0900
+
+    Update SettingsScreen.kv
+
+[33mcommit d6a5edb674f3f9ff5efac7ef165d51ca364d6b6c[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 16 16:25:42 2020 +0900
+
+    Update Screen.py
+
+[33mcommit 623681b281bd0a455d0b75ceebf3ed1069ab2a26[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Sep 16 16:24:51 2020 +0900
+
+    Update OtherSettingsScreen.kv
+
+[33mcommit a4381b16f084c4331ef28a44f8c371a5a923022b[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Thu Aug 27 05:51:52 2020 +0900
+
+    画面遷移
+
+[33mcommit 01166ce5b4648097bd5a30f53b8e73f9afb4fdc3[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Jul 29 19:02:24 2020 +0900
+
+    csvファイルへ書き込み実装
+
+[33mcommit 1a2a838c2018760958824b42dedae3e280f31943[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Wed Jul 29 15:23:48 2020 +0900
+
+    Delete kivy1.py
+
+[33mcommit 5b57915470138dd450f41d073f18ec2f4772ef9f[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Wed Jul 29 15:23:38 2020 +0900
+
+    Delete deepplayer.kv
+
+[33mcommit 61991bb827dd592eca2f8ba1e602070c85e67921[m
+Author: yutatonoda <68141589+yutatonoda@users.noreply.github.com>
+Date:   Wed Jul 29 15:19:34 2020 +0900
+
+    Add files via upload
+
+[33mcommit 7498231801f4ffdd1f57d6a9cf0b415dd0dd03cb[m
+Author: Tait41 <57855627+Tait41@users.noreply.github.com>
+Date:   Wed Jul 29 15:18:28 2020 +0900
+
+    video顔画像からの特徴量取得
+
+[33mcommit 3e26160e6c3a3a06d703e3ef1e9450f5417b94cb[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Wed Jul 15 16:33:44 2020 +0900
+
+    Update collect_anime_face.py
+
+[33mcommit c0764b6194b78b17272de01561bd1bea5ce16223[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Wed Jul 15 15:21:39 2020 +0900
+
+    Update collect_anime_face.py
+
+[33mcommit 0e078a803516145003db804c254199c3e294ff3a[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Fri Jul 10 19:17:09 2020 +0900
+
+    Add files via upload
+    
+    顔の特徴を動画から検出する
+
+[33mcommit f82333d44580cbd6fa736e067ee4f78d089230ea[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Fri Jul 10 19:11:14 2020 +0900
+
+    Rename detect_face01.py to collect_anime_face.py
+
+[33mcommit 7e49b4aa443b62b65962173ab5e0dbad563b1cb4[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Fri Jul 10 19:10:22 2020 +0900
+
+    Add files via upload
+
+[33mcommit e086c1cbaed7f8206d17b03bfc805d35a0482a8f[m
+Author: KICU1129 <47740674+KICU1129@users.noreply.github.com>
+Date:   Fri Jul 10 19:01:16 2020 +0900
+
+    Initial commit

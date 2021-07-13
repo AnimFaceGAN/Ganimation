@@ -1,7 +1,7 @@
 <TutorialScreen>:
 
     BoxLayout:
-        orientation: 'vertical'     # 'horizontal'���Ɖ����
+        orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
         BoxLayout:
             size_hint_y: 0.1
@@ -28,7 +28,7 @@
                     pos: self.pos
                     size: self.size
 
-        BoxLayout: #�`���[�g���A��
+        BoxLayout: #チュートリアル
             size_hint_y: 0.7998
             canvas.before:
                 Color:
@@ -71,7 +71,7 @@
                     size_hint_y: 0.1
 
                     Label:
-                        text: 'Ganimation�Ƃ́H'
+                        text: 'Ganimationとは？'
                         color: 1,1,1,0.8
                         font_size: dp(25)
                         text_size: self.size
@@ -117,7 +117,7 @@
                     BoxLayout:
                         size_hint_x: 0.8
                         Label:
-                            text: '�@���̃A�v���ł͈ꖇ�̊�C���X�g����r�f�I��c�Ŏg����A�o�^�[�𐶐��ł��܂��B��̓I�ɂ́A�@�B�w�K�̉��p�Z�p���g�p���āA�}�̂悤�Ɋ�C���X�g�𗘗p�҂̊�̓����ɖ͕킳���Ă��܂��B\n�@���̃A�v�����g���΁A�A�j���L�����N�^�[�̊��Zoom��Discord�Ȃǂ̃r�f�I��c�ɎQ�����邱�Ƃ��ł���̂ŁA�Q�Ȃ��Ђǂ����ł����Ȃ��r�f�I��c�̎Q���ł��܂��B \n�@�g�����͊ȒP�ŁA�K�C�h���C���ɉ������`���̊�C���X�g���ꖇ�p�ӂ��A�ݒ��ʂŃZ�b�g���邾���ł��B���[�U�̊�F����web�J�����݂̂ōs����łƂĂ�����y�ł��B���񂲑̌����������I'
+                            text: '　このアプリでは一枚の顔イラストからビデオ会議で使えるアバターを生成できます。具体的には、機械学習の応用技術を使用して、図のように顔イラストを利用者の顔の動きに模倣させています。\n　このアプリを使えば、アニメキャラクターの顔でZoomやDiscordなどのビデオ会議に参加することができるので、寝癖がひどい時でも問題なくビデオ会議の参加できます。 \n　使い方は簡単で、ガイドラインに沿った形式の顔イラストを一枚用意し、設定画面でセットするだけです。ユーザの顔認識はwebカメラのみで行えるでとてもお手軽です。是非ご体験ください！'
                             color: 1,1,1,0.8
                             text_size: self.size
                             halign: 'left'

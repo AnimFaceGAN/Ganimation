@@ -1,6 +1,6 @@
 <OtherSettingsScreen>:
     BoxLayout:
-        orientation: 'vertical'     # 'horizontal'‚¾‚Æ‰¡ˆê—ñ
+        orientation: 'vertical'     # 'horizontal'ã ã¨æ¨ªä¸€åˆ—
         size: root.size
         BoxLayout:
             size_hint_y: 0.1
@@ -26,18 +26,18 @@
                     pos: self.pos
                     size: self.size
 
-        BoxLayout: #‘I‘ğƒ{ƒ^ƒ“
+        BoxLayout: #é¸æŠãƒœã‚¿ãƒ³
             size_hint_y: 0.1
 
             Button:
-                text: '‰æ‘œİ’è'
+                text: 'ç”»åƒè¨­å®š'
                 color: 1,1,1,1
                 font_size: dp(30)
                 background_color: (0.3, 0.3, 0.3, 1.0)
                 on_press: root.manager.current = 'settings'
 
             Button:
-                text: 'Ú×İ’è'
+                text: 'è©³ç´°è¨­å®š'
                 color: (1.0, 1.0, 1.0, 1.0)
                 font_size: dp(30)
                 background_color: (0.0, 0.6, 0.7, 1)
@@ -53,7 +53,7 @@
                     size: self.size
 
 
-        BoxLayout: #‰æ‘œ“Ç‚İ‚İ‰æ–Ê
+        BoxLayout: #ç”»åƒèª­ã¿è¾¼ã¿ç”»é¢
             size_hint_y: 0.6996
             canvas.before:
                 Color:
@@ -67,7 +67,7 @@
                     anchor_y: 'center'
                     padding: 40
                     Label:
-                        text: 'Šeíİ’è'
+                        text: 'å„ç¨®è¨­å®š'
                         color: 1,1,1,1
                         font_size: 50
                         canvas.before:
@@ -77,7 +77,7 @@
                                 pos: self.pos
                                 size: self.size
 
-        BoxLayout: #‰æ‘œ“Ç‚İ‚İ‰æ–Ê
+        BoxLayout: #ç”»åƒèª­ã¿è¾¼ã¿ç”»é¢
             size_hint_y: 0.1
 
             canvas.before:
