@@ -40,7 +40,9 @@ Ganimation is under [GNU AGPLv3](https://choosealicense.com/licenses/agpl-3.0/)
 ## 参考
 ---
 AIを作るうえで以下のサイトおよびコードを参考もしくは使用しました。
+
 [Talking Head Animefrom a Single Image](https://pkhungurn.github.io/talking-head-anime/)
+
 [talking-head-anime-demo](https://github.com/pkhungurn/talking-head-anime-demo)
 
 
