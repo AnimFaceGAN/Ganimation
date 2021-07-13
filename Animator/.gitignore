@@ -27,7 +27,7 @@ out/
 .idea/
 .gradle/
 build/
-/data/illust/
+/data/
 .idea/*
 *.iml
 
