@@ -1,4 +1,4 @@
 @echo off
-call activate talking-head-anime
+call activate ganimation
 python Screen.py
 pause
