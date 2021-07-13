@@ -21,7 +21,6 @@ AIとPythonを使ってZoom等のコミュニケーションツールでアニ�
 ---
 以下を実行すればライブラリがインストールされます
 ~~~
-cd AnimFaceGan
 conda env create -n ganimation -f ganimation_env.yml
 ~~~
 **推奨スペック**
