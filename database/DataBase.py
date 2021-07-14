@@ -22,7 +22,7 @@ class DataBase(Singleton):
     def __init__(self):
         self.AnimeFaces=[]
         self.RealFaces=[]
-        self.SettingImage="C:\Codding\Ganimation\Ganimation\AnimFaceGan\Animator\data\illust\opasity.png"
+        self.SettingImage=os.path.dirname(os.path.abspath(__file__)).replace("database","Animator")+"\data\illust\opasity.png"
 
         #self.animator=CreateAnimator()
         pass
