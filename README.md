@@ -8,12 +8,14 @@ AIとPythonを使ってZoom等のコミュニケーションツールでアニ�
 
 ## 使い方
 ---
-アイコン付きの”Ganimation”をクリックすると実行されます。
+[こちら](https://drive.google.com/file/d/1_LwXFVwz85g6T6CV-kqXaWQYMxo8U23n/view?usp=sharing)からdata.zipをダウンロードして解答した後、配置してください。
+
+Screenフォルダ内のの”Ganimation.bat”をクリックすると実行されます。
 
 **画像の条件**
 
 1. お好きなアニメ顔画像を準備します
-1. [コチラなど](https://www.remove.bg/ja)で背景の透過処理を行う
+1. [コチラ](https://www.remove.bg/ja)などで背景の透過処理を行う
 1. 四角の場所にドラッグ＆ドロップしてください
 1. 読み込みが完了すればアニメキャラクターになりきれます！ 
  
@@ -31,6 +33,7 @@ conda env create -n ganimation -f ganimation_env.yml
 |GPU|RTX2070super|
 |メモリ|16GB|
 |cuda|10以上|
+|OS|Windows10|
 
 ## Licence
 ---
