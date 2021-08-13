@@ -168,9 +168,10 @@ class Animator:
         min_angle_idx=np.argmin(angles)
 
         if angles[0]<0.1:
-            pose_diff=pose_diff[pose_diff[pose_index[0]]==angles[0]]
-        else:
             pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
+        else:
+            pose_diff=pose_diff[pose_diff[pose_index[0]]==angles[0]]
+
 
         # print(pose_diff)
         parts=[]
