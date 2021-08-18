@@ -92,7 +92,6 @@ class DataGenerator:
 
         self.update_base_image()
 
-        print("--- Ready OK   ---")
 
     def update_base_image(self):
         #process_image(self.database.SettingImage)
@@ -102,11 +101,11 @@ class DataGenerator:
     def set_images_temp(self):
         # start=time.time()
         # frame = self.database.GetRealFaces()#self.video_capture.read()
-
+        self.update_base_image()
         # imageSaver=ImageSaver()
         self.current_pose = torch.zeros(self.pose_size, device=self.torch_device)
         
-        print("Start Generate Images")
+        # print("Start Generate Images")
 
         euler_angles_list=np.linspace(-1,1,10)
         eye_ratio_list=np.linspace(0,1,5)
@@ -188,7 +187,9 @@ class DataGenerator:
             #current_poseに値を突っ込む
             for j in range(len(self.current_pose)):
                 self.current_pose[j]=self.images_temp.iloc[i][pose_idx].values[j]
+            
             numpy_image=self.create_anime_from_pose()
+            cv2.imwrite("./test_img.png",numpy_image)
             # print(self.images_temp.loc[[self.images_temp.index[i]],"image"])
             self.images_temp.loc[[self.images_temp.index[i]],"image"]=[numpy_image]
             # imageSaver.save(numpy_image)
@@ -205,9 +206,10 @@ class DataGenerator:
     
     def save_data(self):
         image_path,data_path=self.database.fileManager.get_new_path()
-        print(image_path)
-        print(data_path)
+        # print(image_path)
+        # print(data_path)
         cv2.imwrite(image_path, cv2.imread(self.database.SettingImage))
+        # cv2.imwrite(image_path, self.source_image.cpu().numpy())
         self.images_temp.to_pickle(data_path)
 
         #Reset Image Temp to reduce memory
@@ -227,16 +229,8 @@ class DataGenerator:
 
 
 
-def CreateDataGenerator():
-    cuda = torch.device('cuda')
-    poser = MorphRotateCombinePoser256Param6(
-        morph_module_spec=FaceMorpherSpec(),
-        morph_module_file_name="data/face_morpher.pt",
-        rotate_module_spec=TwoAlgoFaceRotatorSpec(),
-        rotate_module_file_name="data/two_algo_face_rotator.pt",
-        combine_module_spec=CombinerSpec(),
-        combine_module_file_name="data/combiner.pt",
-        device=cuda)
+def CreateDataGenerator(cuda,poser):
+    
 
     # face_detector = dlib.get_frontal_face_detector()
     # landmark_?locator = dlib.shape_predictor(os.path.dirname(os.path.abspath(__file__))+"\data\shape_predictor_68_face_landmarks.dat")

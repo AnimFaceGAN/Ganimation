@@ -1,5 +1,6 @@
 import os
 import sys
+from tkinter.constants import PROJECTING
 sys.path.append(os.getcwd())
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
@@ -23,7 +24,7 @@ from Animator.tha.face_morpher import FaceMorpherSpec
 from Animator.tha.two_algo_face_rotator import TwoAlgoFaceRotatorSpec
 from Animator.util import rgba_to_numpy_image, extract_pytorch_image_from_filelike,process_image,show_img
 
-from Animator.GenerateFace import DataGenerator
+from Animator.GenerateFace import CreateDataGenerator
 
 from msvcrt import getch
 
@@ -60,7 +61,7 @@ class Animator:
         self.last_pose = None
 
         #Create instance of DataGenerator
-        self.dataGenerator=DataGenerator(poser,torch_device)
+        self.dataGenerator=CreateDataGenerator(torch_device,poser)
 
         #self.image_path=os.path.dirname(os.path.abspath(__file__))+"/data/illust/image/face.png"
         self.image_path="./face.png"
@@ -211,11 +212,11 @@ class Animator:
     
     def read_image_temp(self):
         self.image_temp=pd.read_pickle(self.database.fileManager.get_folder_path(self.database.BaseImageName)[1])
-        
+        print(self.database.fileManager.get_folder_path(self.database.BaseImageName))
 
 
 def CreateAnimator():
-    cuda = torch.device('cpu')
+    cuda = torch.device('cuda')
     poser = MorphRotateCombinePoser256Param6(
         morph_module_spec=FaceMorpherSpec(),
         morph_module_file_name="data/face_morpher.pt",

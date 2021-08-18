@@ -6,7 +6,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
 import  numpy  as np
-from  Animator.Animator import CreateAnimator
+# from  Animator.Animator import CreateAnimator
 
 class Singleton(object):
     def __new__(cls, *args, **kargs):
@@ -24,7 +24,7 @@ class DataBase(Singleton):
         self.RealFaces=[]
         self.SettingImage=os.path.dirname(os.path.abspath(__file__)).replace("database","Animator")+"\data\illust\girl-removebg-preview.png"
 
-        self.BaseImageName="base_image_99"
+        self.BaseImageName="base_image_1"
 
         #define FileManager to manage folders
         self.fileManager=FileManager()
