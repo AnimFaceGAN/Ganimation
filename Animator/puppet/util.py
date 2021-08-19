@@ -36,6 +36,7 @@ def compute_eye_normalized_ratio(face_landmarks, eye_horiz_points, eye_bottom_po
     return left_eye_normalized_ratio
 
 
+
 MOUTH_TOP_POINTS = [61, 62, 63]
 MOUTH_BOTTOM_POINTS = [67, 66, 65]
 MOUTH_HORIZ_POINTS = [60, 64]

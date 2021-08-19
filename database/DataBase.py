@@ -24,7 +24,7 @@ class DataBase(Singleton):
         self.RealFaces=[]
         self.SettingImage=os.path.dirname(os.path.abspath(__file__)).replace("database","Animator")+"\data\illust\girl-removebg-preview.png"
 
-        self.BaseImageName="base_image_1"
+        self.BaseImageName="base_image_99"
 
         #define FileManager to manage folders
         self.fileManager=FileManager()

@@ -24,7 +24,7 @@ from Animator.tha.face_morpher import FaceMorpherSpec
 from Animator.tha.two_algo_face_rotator import TwoAlgoFaceRotatorSpec
 from Animator.util import rgba_to_numpy_image, extract_pytorch_image_from_filelike,process_image,show_img
 
-from Animator.GenerateFace import CreateDataGenerator
+from Animator.GenerateFace import CreateDataGenerator,ImageSaver
 
 from msvcrt import getch
 
@@ -33,6 +33,7 @@ import time
 
 import pandas as pd
 
+saver=ImageSaver()
 
 class Animator:
 
@@ -58,6 +59,7 @@ class Animator:
 
         self.posed_image = None
         self.current_pose = None
+        self.pase_posediff=np.zeros(6)
         self.last_pose = None
 
         #Create instance of DataGenerator
@@ -103,8 +105,8 @@ class Animator:
             face_rect = faces[0]
             face_landmarks = self.landmark_locator(rgb_frame, face_rect)
             face_box_points, euler_angles = self.head_pose_solver.solve_head_pose(face_landmarks)
-            self.draw_face_landmarks(rgb_frame, face_landmarks)
-            self.draw_face_box(rgb_frame, face_box_points)
+            # self.draw_face_landmarks(rgb_frame, face_landmarks)
+            # self.draw_face_box(rgb_frame, face_box_points)
 
         # resized_frame = cv2.flip(cv2.resize(rgb_frame, (192, 256)), 1)
         # pil_image = PIL.Image.fromarray(resized_frame, mode='RGB')
@@ -136,7 +138,7 @@ class Animator:
             mouth_normalized_ratio = compute_mouth_normalized_ratio(face_landmarks, min_mouth_ratio, max_mouth_ratio)
             self.current_pose[5] = mouth_normalized_ratio
 
-            print(f"current_pose={self.current_pose}")
+
 
             # print(self.current_pose)
 
@@ -157,30 +159,59 @@ class Animator:
 
     def approx_image(self):
         start=time.time()
+        print(f"current_pose={self.current_pose}")
+
 
         pose_index=["pose_0","pose_1","pose_2","pose_3","pose_4","pose_5"]
         pose_diff=self.image_temp.copy()
         pose_diff[[p+"_diff" for p in pose_index]]=np.abs(pose_diff[pose_index]-self.current_pose.cpu().numpy())
 
         angles=[]
-        angles.append(pose_diff.sort_values(by=["pose_0_diff"], ascending=True).iloc[0].pose_0)
-        angles.append(pose_diff.sort_values(by=["pose_1_diff"], ascending=True).iloc[0].pose_1)
-        angles.append(pose_diff.sort_values(by=["pose_2_diff"], ascending=True).iloc[0].pose_2)
+        angle_1=pose_diff.sort_values(by=["pose_0_diff"], ascending=True)
+        angle_1=angle_1[(angle_1.pose_3==0) & (angle_1.pose_4==0) & (angle_1.pose_5==0)]
+        angle_2=pose_diff.sort_values(by=["pose_1_diff"], ascending=True)
+        angle_2=angle_2[(angle_2.pose_3==0) & (angle_2.pose_4==0) & (angle_2.pose_5==0)]
+        angle_3=pose_diff.sort_values(by=["pose_2_diff"], ascending=True)
+        angle_3=angle_3[(angle_3.pose_3==0) & (angle_3.pose_4==0) & (angle_3.pose_5==0)]
+
+        angles.append(angle_1.iloc[0].pose_0)
+        angles.append(angle_2.iloc[0].pose_1)
+        angles.append(angle_3.iloc[0].pose_2)
         min_angle_idx=np.argmin(angles)
+        
 
-        if angles[0]<0.1:
-            pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
-        else:
-            pose_diff=pose_diff[pose_diff[pose_index[0]]==angles[0]]
+        pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
+        for i in range(3):
+            if  i != min_angle_idx:
+                #pose_diff=pose_diff[pose_diff[pose_index[i]]==0]
+                pass
+
+        # if angles[0]<0.1:
+        #     pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
+        # else:
+        #     pose_diff=pose_diff[pose_diff[pose_index[0]]==angles[0]]
 
 
-        # print(pose_diff)
         parts=[]
-        base_img=pose_diff.iloc[0].image
-
-        parts.append(pose_diff.sort_values(by=["pose_3_diff"], ascending=True).iloc[0].image)
-        parts.append(pose_diff.sort_values(by=["pose_4_diff"], ascending=True).iloc[0].image)
-        parts.append(pose_diff.sort_values(by=["pose_5_diff"], ascending=True).iloc[0].image)
+        base_img=pose_diff[
+                            # (pose_diff.pose_0==angles[0])&(pose_diff.pose_1==angles[1])& (pose_diff.pose_2==angles[2])&
+                            (pose_diff.pose_3==0) & (pose_diff.pose_4==0)&(pose_diff.pose_5==0)
+                            ].iloc[0].image
+        #right eye
+        part_1=pose_diff.sort_values(by=["pose_3_diff"], ascending=True)
+        part_1=part_1[(part_1.pose_4==0) & (part_1.pose_5==0)]
+        #left eye
+        part_2=pose_diff.sort_values(by=["pose_4_diff"], ascending=True)
+        part_2=part_2[(part_2.pose_3==0) & (part_2.pose_5==0)]
+        #mouth
+        part_3=pose_diff.sort_values(by=["pose_5_diff"], ascending=True)
+        part_3=part_3[(part_3.pose_4==0) & (part_3.pose_3==0)]
+        
+        parts.append(part_1.iloc[0])
+        parts.append(part_2.iloc[0])
+        parts.append(part_3.iloc[0])
+        print(f"[ My Choice Poses = angles : {[angles[i] for i in range(3)]} \n, parts :  {[parts[i][pose_index[i+3]] for i in range(3)]} ]")
+        
 
         # elapsed_time = time.time() - start
         # print("Image Sync ETA : {0} [sec]".format(elapsed_time) )
@@ -191,8 +222,8 @@ class Animator:
         sync_image=base_img
 
         for part in parts:
-            diff_img=np.mean(base_img-part,axis=2)
-            sync_image[diff_img>3]=part[diff_img>3]
+            diff_img=np.mean(base_img-part.image,axis=2)
+            sync_image[diff_img>10]=part.image[diff_img>10]
 
         return sync_image
 
@@ -216,7 +247,7 @@ class Animator:
 
 
 def CreateAnimator():
-    cuda = torch.device('cuda')
+    cuda = torch.device('cpu')
     poser = MorphRotateCombinePoser256Param6(
         morph_module_spec=FaceMorpherSpec(),
         morph_module_file_name="data/face_morpher.pt",

@@ -116,8 +116,8 @@ class DataGenerator:
                 _l=np.array([0,1,2])
                 _l=_l[~(_l==euler_idx)]
                 self.current_pose[euler_idx]=eul_r
-                self.current_pose[_l[0]]=1
-                self.current_pose[_l[1]]=1
+                self.current_pose[_l[0]]=0
+                self.current_pose[_l[1]]=0
                 
                 which__parts={
                     "r_eye":eye_ratio_list,
