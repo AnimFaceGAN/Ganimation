@@ -28,7 +28,7 @@ from msvcrt import getch
 
 import  database
 
-import pickle
+import asyncio
 
 # from poser.morph_rotate_combine_poser import MorphRotateCombinePoser256Param6
 # from puppet.head_pose_solver import HeadPoseSolver
@@ -107,7 +107,7 @@ class DataGenerator:
         
         # print("Start Generate Images")
 
-        euler_angles_list=np.linspace(-1,1,10)
+        euler_angles_list=np.round(np.arange(-1,1,0.2),1)#np.linspace(-1,1,10)
         eye_ratio_list=np.linspace(0,1,5)
         mouth_ratio_list=np.linspace(0,1,5)
 
@@ -164,6 +164,7 @@ class DataGenerator:
         # print(self.images_temp)
 
     def create_image(self):
+        self.update_base_image()
         start=time.time()
 
         frame = self.database.GetRealFaces()#self.video_capture.read()
@@ -189,7 +190,6 @@ class DataGenerator:
                 self.current_pose[j]=self.images_temp.iloc[i][pose_idx].values[j]
             
             numpy_image=self.create_anime_from_pose()
-            cv2.imwrite("./test_img.png",numpy_image)
             # print(self.images_temp.loc[[self.images_temp.index[i]],"image"])
             self.images_temp.loc[[self.images_temp.index[i]],"image"]=[numpy_image]
             # imageSaver.save(numpy_image)

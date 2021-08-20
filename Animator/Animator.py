@@ -33,6 +33,8 @@ import time
 
 import pandas as pd
 
+import asyncio
+
 saver=ImageSaver()
 
 class Animator:
@@ -81,6 +83,7 @@ class Animator:
         print("--- Update Base Image ---")
         self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
         self.dataGenerator.create_image()
+        
     
     def change_base_image(self):
         print("--- Change Base Image ---")
@@ -247,7 +250,7 @@ class Animator:
 
 
 def CreateAnimator():
-    cuda = torch.device('cpu')
+    cuda = torch.device('cuda' if torch.cuda.is_available() else "cpu")
     poser = MorphRotateCombinePoser256Param6(
         morph_module_spec=FaceMorpherSpec(),
         morph_module_file_name="data/face_morpher.pt",
