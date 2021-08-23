@@ -49,7 +49,7 @@ import asyncio
 # import  database
 
 import time
-from tqdm import tqdm
+#from tqdm import tqdm
 
 
 class ImageSaver:
@@ -112,7 +112,7 @@ class DataGenerator:
         
         # print("Start Generate Images")
 
-        euler_angles_list=np.round(np.arange(-1,1,0.2),1)#np.linspace(-1,1,10)
+        euler_angles_list=[ -1 , -0.8 , -0.6 , -0.4 , -0.2 , 0 , 0.2 , 0.4 , 0.6 , 0.8, 1]#np.round(np.arange(-1,1,0.2),1)#np.linspace(-1,1,10)
         eye_ratio_list=np.linspace(0,1,5)
         mouth_ratio_list=np.linspace(0,1,5)
 
@@ -190,15 +190,16 @@ class DataGenerator:
 
         print("--- Update Base Image ---")
 
-        for i in tqdm( range(len(self.images_temp))):
+        for i in range(len(self.images_temp)):
+            print(f"\r[{i}/{len(self.images_temp)}: Create Images]", end='')
             #current_poseに値を突っ込む
             for j in range(len(self.current_pose)):
-                self.current_pose[j]=self.images_temp.iloc[i][pose_idx].values[j]
+                self.current_pose[j]=self.images_temp.iloc[i][pose_idx[j]]#.values[j]
             
             numpy_image=self.create_anime_from_pose()
             # print(self.images_temp.loc[[self.images_temp.index[i]],"image"])
             self.images_temp.loc[[self.images_temp.index[i]],"image"]=[numpy_image]
-            # imageSaver.save(numpy_image)
+            imageSaver.save(numpy_image)
             
         #save image and dataframe
         self.save_data()
