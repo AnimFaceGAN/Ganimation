@@ -1,3 +1,7 @@
+
+#Tips
+#なんか顔の角度で端から二番目あたりが正面に向くようになってる要検討
+
 import os
 import sys
 sys.path.append(os.getcwd())
@@ -45,6 +49,8 @@ import asyncio
 # import  database
 
 import time
+from tqdm import tqdm
+
 
 class ImageSaver:
     def __init__(self,root="/temp/"):
@@ -95,7 +101,6 @@ class DataGenerator:
 
     def update_base_image(self):
         #process_image(self.database.SettingImage)
-        print("--- Update Base Image ---")
         self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
 
     def set_images_temp(self):
@@ -183,8 +188,9 @@ class DataGenerator:
 
         pose_idx=["pose_0","pose_1","pose_2","pose_3","pose_4","pose_5"]
 
+        print("--- Update Base Image ---")
 
-        for i in range(len(self.images_temp)):
+        for i in tqdm( range(len(self.images_temp))):
             #current_poseに値を突っ込む
             for j in range(len(self.current_pose)):
                 self.current_pose[j]=self.images_temp.iloc[i][pose_idx].values[j]
