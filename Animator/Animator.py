@@ -123,7 +123,7 @@ class Animator:
         # pil_image = PIL.Image.fromarray(resized_frame, mode='RGB')
 
         if euler_angles is not None :
-            print("Estimate Faces")
+            # print("Estimate Faces")
             self.current_pose = torch.zeros(self.pose_size, device=self.torch_device)
             self.current_pose[0] = max(min(-euler_angles.item(0) / 15.0, 1.0), -1.0)
             self.current_pose[1] = max(min(-euler_angles.item(1) / 15.0, 1.0), -1.0)
@@ -149,8 +149,8 @@ class Animator:
             mouth_normalized_ratio = compute_mouth_normalized_ratio(face_landmarks, min_mouth_ratio, max_mouth_ratio)
             self.current_pose[5] = mouth_normalized_ratio
 
-            if self.current_pose[3]>0.7 or self.current_pose[4]>0.7:
-                print("[Closing eyes]")
+            # if self.current_pose[3]>0.7 or self.current_pose[4]>0.7:
+            #     print("[Closing eyes]")
                 
             # print(self.current_pose)
 
@@ -163,13 +163,13 @@ class Animator:
             self.database.SetAnimeFaces(numpy_image)
 
             elapsed_time = time.time() - start
-            print(r"ETA : {0} [sec]".format(elapsed_time) )
+            print(f"\r ETA : {elapsed_time} [sec]" ,end="")
 
             self.past_image=pil_image
 
             return pil_image,True
         else:
-            print("not detected face 2")
+            # print(f"\r not detected face 2",end="")
             return self.past_image,False
 
     def approx_image(self):
@@ -192,16 +192,30 @@ class Animator:
         angles.append(angle_1.iloc[0].pose_0)
         angles.append(angle_2.iloc[0].pose_1)
         angles.append(angle_3.iloc[0].pose_2)
-        min_angle_idx=np.argmin(angles)
+        min_angle_idx=2#np.argmin(angles)
+
         
-        if True:#self.past_pose["angle"]<=0.1:
+
+                
+        if self.past_pose["angle"]<0.1:
             # pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
-            pose_diff=pose_diff[pose_diff[pose_index[2]]==angles[2]]
+            # pose_diff=pose_diff[pose_diff[pose_index[0]]==angles[0]]
+            for i  in range(len(angles)):
+                if i == min_angle_idx:
+                    pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
+                else:
+                    pose_diff=pose_diff[pose_diff[pose_index[i]]==0]
             self.past_pose["min_index"]=min_angle_idx
             self.past_pose["angle"]=angles[min_angle_idx]
 
         else:
-            pose_diff=pose_diff[pose_diff[pose_index[self.past_pose["min_index"]]]==angles[self.past_pose["min_index"]]]
+            # pose_diff=pose_diff[pose_diff[pose_index[self.past_pose["min_index"]]]==angles[self.past_pose["min_index"]]]
+            for i  in range(len(angles)):
+                if i == self.past_pose["min_index"]:
+                    pose_diff=pose_diff[pose_diff[pose_index[self.past_pose["min_index"]]]==angles[self.past_pose["min_index"]]]
+                else:
+                    pose_diff=pose_diff[pose_diff[pose_index[i]]==0]
+            
             self.past_pose["angle"]=angles[self.past_pose["min_index"]]
 
         

@@ -205,7 +205,7 @@ class DataGenerator:
         self.save_data()
 
         elapsed_time = time.time() - start
-        print(r"\rETA : {0} [sec]".format(elapsed_time) )
+        print(f"\rGenerate ETA : {elapsed_time} [sec]" ,end="")
 
         print("Finish the works!")
 
