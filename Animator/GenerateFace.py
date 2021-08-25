@@ -191,11 +191,10 @@ class DataGenerator:
         print("--- Update Base Image ---")
 
         for i in range(len(self.images_temp)):
-            print(f"\r[{i}/{len(self.images_temp)}: Create Images]", end='')
+            print(f"\r[{i}/{len(self.images_temp)}: Created Images | time : {round(time.time() - start,3)}[sec]]", end='')
             #current_poseに値を突っ込む
             for j in range(len(self.current_pose)):
                 self.current_pose[j]=self.images_temp.iloc[i][pose_idx[j]]#.values[j]
-            
             numpy_image=self.create_anime_from_pose()
             # print(self.images_temp.loc[[self.images_temp.index[i]],"image"])
             self.images_temp.loc[[self.images_temp.index[i]],"image"]=[numpy_image]
@@ -205,7 +204,7 @@ class DataGenerator:
         self.save_data()
 
         elapsed_time = time.time() - start
-        print(f"\rGenerate ETA : {elapsed_time} [sec]" ,end="")
+        print(f"\r Total time : {elapsed_time} [sec]" ,end="")
 
         print("Finish the works!")
 

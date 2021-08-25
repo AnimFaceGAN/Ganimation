@@ -163,7 +163,7 @@ class Animator:
             self.database.SetAnimeFaces(numpy_image)
 
             elapsed_time = time.time() - start
-            print(f"\r ETA : {elapsed_time} [sec]" ,end="")
+            print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
 
             self.past_image=pil_image
 
@@ -193,11 +193,8 @@ class Animator:
         angles.append(angle_2.iloc[0].pose_1)
         angles.append(angle_3.iloc[0].pose_2)
         min_angle_idx=2#np.argmin(angles)
-
-        
-
                 
-        if self.past_pose["angle"]<0.1:
+        if np.abs(self.past_pose["angle"])<0.1:
             # pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
             # pose_diff=pose_diff[pose_diff[pose_index[0]]==angles[0]]
             for i  in range(len(angles)):
