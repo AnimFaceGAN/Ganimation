@@ -162,8 +162,8 @@ class Animator:
 
             self.database.SetAnimeFaces(numpy_image)
 
-            elapsed_time = time.time() - start
-            print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
+            # elapsed_time = time.time() - start
+            # print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
 
             self.past_image=numpy_image
 

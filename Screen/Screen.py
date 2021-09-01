@@ -14,6 +14,7 @@ from  database import  *
 import cv2
 import os.path
 import  numpy as np
+import time
 
 import numpy as np
 from kivy.app import App
@@ -36,6 +37,51 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
 from  Animator.Animator import CreateAnimator
+
+from PIL import Image
+
+import asyncio
+def fire_and_forget(task, *args, **kwargs):
+    loop = asyncio.get_event_loop()
+    if callable(task):
+        return loop.run_in_executor(None, task, *args, **kwargs)
+    else:    
+        raise TypeError('Task must be a callable')
+
+#for using virtual camera
+import pyvirtualcam
+import pyautogui
+def obs_camera(anime,bg,cam):
+    # s=time.time()
+    W,H=800,800#pyautogui.size()
+    bg=cv2.resize(bg,(W,H))
+    bg=cv2.cvtColor(bg, cv2.COLOR_BGRA2RGBA)
+    anime=cv2.resize(anime,dsize=None,fx=1, fy=1)
+    # anime=cv2.cvtColor(anime, cv2.COLOR_BGRA2RGBA)
+
+
+    bg=Image.fromarray(bg).convert('RGBA')
+    anime=Image.fromarray(anime)
+    img_clear = Image.new("RGBA", bg.size, (255, 255, 255, 0))
+
+    anime_h, anime_w = anime.size[:2]
+    bg_h, bg_w = bg.size[:2]
+
+    img_clear.paste(anime, (int((bg_h-anime_h)/2), int((bg_w-anime_w)/2)))
+    bg = Image.alpha_composite(bg, img_clear)
+
+    # x1, y1, x2, y2 = 0, 0, anime.shape[1], anime.shape[0]
+
+    # bg[y1:y2, x1:x2] = bg[y1:y2, x1:x2] * (1 - anime[:, :, 3:] / 255) + \
+    #                   anime[:, :, :3] * (anime[:, :, 3:] / 255)
+
+    _frame=cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
+    # _frame=cv2.resize(_frame,(W,H))
+    # cv2.imwrite("./obs_frame.png",np.array(bg))
+    cam.send(_frame)
+    # print(time.time()-s)
+    # cam.sleep_until_next_frame()
+    return
 
 animator=CreateAnimator()
 #animator.update_image().show()
@@ -249,6 +295,14 @@ class VideoScreen(Screen):
 
         Clock.schedule_interval(self.update, 0.05)
 
+        W,H=800,800#pyautogui.size()
+        self.cam=pyvirtualcam.Camera(width=W, height=H, fps=10) 
+
+        self.video_bg_path=output_bg_path
+        self.video_bg=cv2.imread(self.video_bg_path)
+
+
+
         # Clock.schedule_interval(self.update, 0.01)
         print('init video')
         global playing_video
@@ -267,6 +321,7 @@ class VideoScreen(Screen):
         print('start video')
 
     def update(self, dt):
+        start=time.time()
 
         if not playing_video:
             return
@@ -306,13 +361,64 @@ class VideoScreen(Screen):
         # texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
         # # インスタンスのtextureを変更
         # self.texture = texture
-
+        
         # Kivy Textureに変換
         buf = cv2.flip(self.animeface, -1).tobytes()
         texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='rgba')
         texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
         # インスタンスのtextureを変更
         self.anime.texture = texture
+        
+        ##############################################################################
+        #----  Virtual Camera  ----
+        ##############################################################################
+        #Change bg if it chenged 
+        if self.video_bg_path!=output_bg_path:
+            print("changed")
+            self.video_bg_path= output_bg_path
+            self.video_bg=cv2.imread(self.video_bg_path)
+        start=time.time()
+        # _bg=cv2.imread(output_bg_path)
+        # obs_camera(self.animeface,_bg,self.cam)
+
+        W,H=800,800#pyautogui.size()
+        bg=cv2.resize(self.video_bg,(W,H))
+        bg=cv2.cvtColor(bg, cv2.COLOR_BGRA2RGBA)
+        # anime=cv2.resize(self.animeface,dsize=None,fx=1, fy=1)
+        # anime=cv2.cvtColor(anime, cv2.COLOR_BGRA2RGBA)
+
+
+
+        bg=Image.fromarray(bg).convert('RGBA')
+        anime=Image.fromarray(self.animeface)
+        img_clear = Image.new("RGBA", bg.size, (255, 255, 255, 0))
+
+
+        anime_h, anime_w = anime.size[:2]
+        bg_h, bg_w = bg.size[:2]
+
+        img_clear.paste(anime, (int((bg_h-anime_h)/2), int((bg_w-anime_w)/2)))
+        bg = Image.alpha_composite(bg, img_clear)
+
+
+
+        # x1, y1, x2, y2 = 0, 0, anime.shape[1], anime.shape[0]
+
+        # bg[y1:y2, x1:x2] = bg[y1:y2, x1:x2] * (1 - anime[:, :, 3:] / 255) + \
+        #                   anime[:, :, :3] * (anime[:, :, 3:] / 255)
+
+        _frame=cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
+
+        # _frame=cv2.resize(_frame,(W,H))
+        # cv2.imwrite("./obs_frame.png",np.array(bg))
+        self.cam.send(_frame)
+        elapsed_time = time.time() - start
+        print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
+
+
+        ##############################################################################
+
+        
 
     # チュートリアルポップアップ表示
     def tutorial_popup_open(self):
