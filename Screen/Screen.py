@@ -228,7 +228,11 @@ class OtherSettingsScreen(Screen):
 
     def select_button(self, num):
         global output_bg_path
-        print("back?")
+        _ori_path="../Images/save/bg/"
+        _folders=os.listdir(_ori_path)
+        if len(_folders)>=num:
+            output_bg_path=_ori_path+_folders[num-1]+"/bg.png"
+
 
 # ビデオ画面
 class VideoScreen(Screen):
@@ -240,10 +244,10 @@ class VideoScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.bg_src = "../images/save/bg/save1/bg.png"
-        self.capture = cv2.VideoCapture(1)
+        self.capture = cv2.VideoCapture(0)
         self.animator = animator
 
-        Clock.schedule_interval(self.update, 0.07)
+        Clock.schedule_interval(self.update, 0.05)
 
         # Clock.schedule_interval(self.update, 0.01)
         print('init video')
@@ -280,7 +284,7 @@ class VideoScreen(Screen):
         _, flg = result
         if not flg:
             return
-        print("animation")
+        # print("animation")
         
 
         #アニメ顔画像のデータベースから取得
@@ -355,7 +359,7 @@ class VideoScreen(Screen):
         self.start_video()
         self.popup.dismiss()
         self.bg.reload() #背景更新
-        self.capture = cv2.VideoCapture(1)
+        self.capture = cv2.VideoCapture(0)
 
 
 
