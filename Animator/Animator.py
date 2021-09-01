@@ -80,7 +80,7 @@ class Animator:
         
         #for create source image
         self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
-        self.past_image=deepcopy(self.source_image)
+        self.past_image=cv2.imread(self.database.SettingImage)#deepcopy(self.source_image)
 
         # self.update_base_image()
         self.read_image_temp()
@@ -165,11 +165,13 @@ class Animator:
             elapsed_time = time.time() - start
             print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
 
-            self.past_image=pil_image
+            self.past_image=numpy_image
 
             return pil_image,True
         else:
             # print(f"\r not detected face 2",end="")
+            self.database.SetAnimeFaces(self.past_image)
+
             return self.past_image,False
 
     def approx_image(self):

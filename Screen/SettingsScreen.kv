@@ -34,18 +34,19 @@
             size_hint_y: 0.1
 
             Button:
-                text: '画像設定'
+                text: '顔イラスト設定'
+                size: self.size
                 color: 1,1,1,1
-                font_size: dp(30)
                 background_color: (0.0, 0.6, 0.7, 1)
                 #on_press: root.manager.current = 'settings'
 
             Button:
-                text: '詳細設定'
+                text: '背景設定'
                 color: 1,1,1,1
-                font_size: dp(30)
+                size: self.size
                 background_color: (0.3, 0.3, 0.3, 1.0)
-                on_press: root.manager.current = 'other_settings'
+                #on_press: root.manager.current = 'character_settings'
+                on_release: root.to_settings2()
 
         Label: #Narrow gap
             size_hint_y:0.002
@@ -57,7 +58,7 @@
                     size: self.size
 
         BoxLayout: #Main Part
-            size_hint_y: 0.6996
+            size_hint_y: 0.4996
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
@@ -74,7 +75,8 @@
                     Label:
                         canvas.before:
                             Color:
-                                rgba: 0.2, 0.2, 0.2, 0.2
+                                rgba: 0.1, 0.1, 0.1, 1
+                                #rgba: 0.2, 0.2, 0.2, 0.2
                             Rectangle:
                                 pos: self.pos
                                 size: self.size
@@ -91,7 +93,8 @@
                         bold: True
                         text: 'ファイルをドラッグ＆ドロップ'
                         color: 1,1,1,1
-                        font_size: dp(20)
+                        size: self.size
+                        #font_size: dp(20)
 
             BoxLayout:
                 AnchorLayout:
@@ -106,9 +109,9 @@
                             size_hint_y: 0.08
                             Label:
                                 text: '使い方'
+                                text_size: self.width, None
+                                size: self.size
                                 color: 1,1,1,0.8
-                                font_size: dp(25)
-                                text_size: self.size
                                 halign: 'center'
                                 valign: 'middle'
 
@@ -123,8 +126,8 @@
                             size_hint_y: 0.08
                             Label:
                                 text: '　1. 使用したいキャラクターの顔画像を準備してください'
-                                font_size: dp(20)
-                                text_size: self.size
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -138,10 +141,12 @@
                         BoxLayout:
                             size_hint_y: 0.08
                             Label:
-                                text: '　2. 左の四角形に用意した画像をドラッグ&ドロップしてください'
+                                text: '　2. 左の枠内に用意した画像をドラッグ&ドロップしてください'
+                                text_size: self.width, None
+                                size: self.size
                                 color: 1,1,1,0.8
-                                font_size: dp(20)
-                                text_size: self.size
+                                #font_size: dp(20)
+                                #text_size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -156,8 +161,8 @@
                             size_hint_y: 0.08
                             Label:
                                 text: '　3. 画像の読み込みに成功するとアバターの使用を開始できます'
-                                font_size: dp(20)
-                                text_size: self.size
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -173,9 +178,9 @@
                             size_hint_y: 0.08
                             Label:
                                 text: '使用できる画像'
-                                font_size: dp(25)
+                                text_size: self.width, None
+                                size: self.size
                                 color: 1,1,1,0.8
-                                text_size: self.size
                                 halign: 'center'
                                 valign: 'middle'
 
@@ -189,9 +194,9 @@
                         BoxLayout:
                             size_hint_y: 0.08
                             Label:
-                                text: '　・画像サイズは256px×256px'
-                                font_size: dp(20)
-                                text_size: self.size
+                                text: '　・画像サイズは256px×256px（自動リサイズ）'
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -208,8 +213,8 @@
                             Label:
                                 text: '　・キャラクターの頭は中央128px×128px内に収める'
                                 color: 1,1,1,0.8
-                                font_size: dp(20)
-                                text_size: self.size
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -225,8 +230,8 @@
                             Label:
                                 text: '　・目と口は大きく開いている'
                                 color: 1,1,1,0.8
-                                font_size: dp(20)
-                                text_size: self.size
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -242,8 +247,8 @@
                             Label:
                                 text: '　・頭が正面を向いている'
                                 color: 1,1,1,0.8
-                                font_size: dp(20)
-                                text_size: self.size
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -259,8 +264,8 @@
                             Label:
                                 text: '　・画像はRGBA形式で背景は透過されている'
                                 color: 1,1,1,0.8
-                                font_size: dp(20)
-                                text_size: self.size
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -274,13 +279,13 @@
                             size_hint_y: 0.08
                             Label:
                                 markup: True
-                                text: '　　[ref=some][color=0088aa]https://www.remove.bg/ja[/color][/ref]（こちらのサイトで背景削除できます）'
+                                text: '　　[ref=some][color=0088aa]https://www.remove.bg/ja[/color][/ref] （こちらで背景透過できます）'
                                 on_ref_press:
                                     import webbrowser
                                     webbrowser.open('https://www.remove.bg/ja')
                                 color: 1,1,1,0.8
-                                font_size: dp(20)
-                                text_size: self.size
+                                text_size: self.width, None
+                                size: self.size
                                 halign: 'left'
                                 valign: 'middle'
 
@@ -303,8 +308,62 @@
                                         pos: self.pos
                                         size: self.size
 
-        BoxLayout: #画像読み込み画面
-            size_hint_y: 0.1
+        BoxLayout:
+            size_hint_y: 0.2
+
+            Button:
+                text: 'save1'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(1)
+
+            Button:
+                text: 'save2'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(2)
+
+            Button:
+                text: 'save3'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(3)
+
+            Button:
+                text: 'save4'
+                color: 1,1,1,1
+                size: self.size
+                background_color:(0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(4)
+
+            Button:
+                text: 'save5'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(5)
+
+            Button:
+                text: 'save6'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(6)
+
+        BoxLayout:
+            size_hint_y: 0.02
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout:
+            size_hint_y: 0.08
 
             canvas.before:
                 Color:
@@ -314,48 +373,16 @@
                     size: self.size
 
             BoxLayout:
-                size_hint_x: 0.35
+                size_hint_x: 0.4
 
             BoxLayout:
-                size_hint_x: 0.1
+                size_hint_x: 0.2
                 orientation:'horizontal'
                 Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'tutorial'
-
-                    Image:
-                        source: './UI_images/white_question.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
+                    text: 'close'
+                    color: 1,1,1,1
+                    background_color: (0.3, 0.3, 0.1)
+                    on_release: root.popup_close()
 
             BoxLayout:
-                size_hint_x: 0.1
-                orientation:'horizontal'
-                Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'settings'
-
-                    Image:
-                        source: './UI_images/orange_gear.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
-            BoxLayout:
-                size_hint_x: 0.1
-                orientation:'horizontal'
-                Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.start_video()
-                    on_release: root.manager.current = 'video'
-
-                    Image:
-                        source: './UI_images/white_video.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
-            BoxLayout:
-                size_hint_x: 0.35
+                size_hint_x: 0.4

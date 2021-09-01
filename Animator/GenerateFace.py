@@ -214,7 +214,7 @@ class DataGenerator:
         image_path,data_path=self.database.fileManager.get_new_path()
         # print(image_path)
         # print(data_path)
-        cv2.imwrite(image_path, cv2.imread(self.database.SettingImage))
+        # cv2.imwrite(image_path, cv2.imread(self.database.SettingImage))
         # cv2.imwrite(image_path, self.source_image.cpu().numpy())
         self.images_temp.to_pickle(data_path)
 

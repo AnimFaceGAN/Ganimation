@@ -1,12 +1,17 @@
 <VideoScreen>:
-    canvas.before:
-        Rectangle:
-            source: './UI_images/bg.jpg'
-            pos: self.pos
-            size: self.size
+    bg: bg
+    anime: anime
 
-    VideoManager:
-        id: camera_preview
+    Image:
+        id: bg
+        source: root.bg_src
+        pos: self.pos
+        size: self.size
+        keep_ratio: False
+        allow_stretch: True
+
+    Image:
+        id: anime
         size: root.size
         allow_stretch: True
 
@@ -23,7 +28,6 @@
         BoxLayout:
             size_hint_y: 0.1
 
-
             BoxLayout:
                 size_hint_x: 0.35
 
@@ -32,7 +36,8 @@
                 orientation:'horizontal'
                 Button:
                     background_color: (0.3, 0.3, 0.3, 0.0)
-                    on_press: root.manager.current = 'tutorial'
+                    #on_press: root.manager.current = 'tutorial'
+                    on_release: root.tutorial_popup_open()
 
                     Image:
                         source: './UI_images/white_question.png'
@@ -46,8 +51,9 @@
                 orientation:'horizontal'
                 Button:
                     background_color: (0.3, 0.3, 0.3, 0.0)
-                    on_press: root.manager.current = 'settings'
-                    on_release: root.stop_video()
+                    #on_press: root.manager.current = 'settings'
+                    on_release: root.settings_popup_open()
+                    #on_release: root.stop_video()
 
                     Image:
                         source: './UI_images/white_gear.png'

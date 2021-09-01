@@ -1,4 +1,13 @@
 <OtherSettingsScreen>:
+    drop_area_image: drop_area_image
+    drop_area_label: drop_area_label
+    save1: save1
+    save2: save2
+    save3: save3
+    save4: save4
+    save5: save5
+    save6: save6
+
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
@@ -30,18 +39,19 @@
             size_hint_y: 0.1
 
             Button:
-                text: '画像設定'
+                text: '顔イラスト設定'
+                size: self.size
                 color: 1,1,1,1
-                font_size: dp(30)
                 background_color: (0.3, 0.3, 0.3, 1.0)
-                on_press: root.manager.current = 'settings'
+                on_release: root.to_settings1()
 
             Button:
-                text: '詳細設定'
-                color: (1.0, 1.0, 1.0, 1.0)
-                font_size: dp(30)
+                text: '背景設定'
+                color: 1,1,1,1
+                size: self.size
                 background_color: (0.0, 0.6, 0.7, 1)
-                #on_press: root.manager.current = 'other_settings'
+                #on_press: root.manager.current = 'character_settings'
+                #on_release: root.to_settings2()
 
         Label:
             size_hint_y:0.002
@@ -53,32 +63,234 @@
                     size: self.size
 
 
-        BoxLayout: #画像読み込み画面
-            size_hint_y: 0.6996
+        BoxLayout: #Main Part
+            size_hint_y: 0.4996
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
+            BoxLayout:
+
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    padding: 40
+
+                    Label:
+                        canvas.before:
+                            Color:
+                                rgba: 0.1, 0.1, 0.1, 1
+                                #rgba: 0.2, 0.2, 0.2, 0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+                    Label:
+                        id: drop_area_label
+                        bold: True
+                        text: 'ファイルをドラッグ＆ドロップ'
+                        color: 1,1,1,1
+                        size: self.size
+                        #font_size: dp(20)
+                    Image:
+                        id: drop_area_image
+                        source: root.image_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+                    Label:
+                        id: drop_area_label
+                        bold: True
+                        text: 'ファイルをドラッグ＆ドロップ'
+                        color: 1,1,1,1
+                        size: self.size
+                        #font_size: dp(20)
+
             BoxLayout:
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'center'
                     padding: 40
-                    Label:
-                        text: '各種設定'
-                        color: 1,1,1,1
-                        font_size: 50
-                        canvas.before:
-                            Color:
-                                rgba: 0.2, 0.2, 0.2, 1
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
 
-        BoxLayout: #画像読み込み画面
-            size_hint_y: 0.1
+                    BoxLayout:
+                        orientation: 'vertical'
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '使い方'
+                                text_size: self.width, None
+                                size: self.size
+                                color: 1,1,1,0.8
+                                halign: 'center'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.2, 0.2, 0.2, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　・背景画像を左の枠内にドラッグ&ドロップしてください'
+                                text_size: self.width, None
+                                size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                color: 1,1,1,0.8
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　・画像サイズ・縦横比は表示する際に自動調整されます'
+                                text_size: self.width, None
+                                size: self.size
+                                color: 1,1,1,0.8
+                                #font_size: dp(20)
+                                #text_size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.76
+                            Label:
+                                text: ''
+                                color: 1,1,1,0.8
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+        BoxLayout:
+            size_hint_y: 0.2
+
+            Button:
+                text: 'save1'
+                color: 1,1,1,1
+                size: 200, 150
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(1)
+
+                Image:
+                    id: save1
+                    source: root.save1_src
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    size: 300, 200
+                    keep_ratio: False
+                    allow_stretch: True
+
+            Button:
+                text: 'save2'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(2)
+
+                Image:
+                    id: save2
+                    source: root.save2_src
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    size: 300, 200
+                    keep_ratio: False
+                    allow_stretch: True
+
+            Button:
+                text: 'save3'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(3)
+
+                Image:
+                    id: save3
+                    source: root.save3_src
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    size: 300, 200
+                    keep_ratio: False
+                    allow_stretch: True
+
+            Button:
+                text: 'save4'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(4)
+
+                Image:
+                    id: save4
+                    source: root.save4_src
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    size: 300, 200
+                    keep_ratio: False
+                    allow_stretch: True
+
+            Button:
+                text: 'save5'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(5)
+
+                Image:
+                    id: save5
+                    source: root.save5_src
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    size: 300, 200
+                    keep_ratio: False
+                    allow_stretch: True
+
+            Button:
+                text: 'save6'
+                color: 1,1,1,1
+                size: self.size
+                background_color: (0.3, 0.3, 0.3, 1)
+                on_release: root.select_button(6)
+
+                Image:
+                    id: save6
+                    source: root.save6_src
+                    center_x: self.parent.center_x
+                    center_y: self.parent.center_y
+                    size: 300, 200
+                    keep_ratio: False
+                    allow_stretch: True
+
+        BoxLayout:
+            size_hint_y: 0.02
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout:
+            size_hint_y: 0.08
 
             canvas.before:
                 Color:
@@ -88,48 +300,16 @@
                     size: self.size
 
             BoxLayout:
-                size_hint_x: 0.35
+                size_hint_x: 0.4
 
             BoxLayout:
-                size_hint_x: 0.1
+                size_hint_x: 0.2
                 orientation:'horizontal'
                 Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'tutorial'
-
-                    Image:
-                        source: './UI_images/white_question.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
+                    text: 'close'
+                    color: 1,1,1,1
+                    background_color: (0.3, 0.3, 0.1)
+                    on_release: root.popup_close()
 
             BoxLayout:
-                size_hint_x: 0.1
-                orientation:'horizontal'
-                Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'settings'
-
-                    Image:
-                        source: './UI_images/orange_gear.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
-            BoxLayout:
-                size_hint_x: 0.1
-                orientation:'horizontal'
-                Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.start_video()
-                    on_release: root.manager.current = 'video'
-
-                    Image:
-                        source: './UI_images/white_video.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
-            BoxLayout:
-                size_hint_x: 0.35
+                size_hint_x: 0.4
