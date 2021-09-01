@@ -161,7 +161,7 @@ class VideoManager(Image):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.is_animation = False
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture(1)
         self.animator = animator
 
         Clock.schedule_interval(self.update, 0.07)
