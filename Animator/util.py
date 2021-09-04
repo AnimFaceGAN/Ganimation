@@ -72,12 +72,14 @@ def rgba_to_numpy_image(torch_image: Tensor):
     return rgba_image
 
 
-def extract_pytorch_image_from_filelike(file):
+def extract_pytorch_image_from_filelike(file,isConvert=False):
     pil_image = PIL.Image.open(file)
     pil_image=pil_image.resize((256, 256))
     image_size = pil_image.width
-    if np.shape(pil_image)[2]==3:
+    if np.shape(pil_image)[2]==3 and not isConvert :
         image=rgb2rgba(np.asarray(pil_image))
+    elif isConvert:
+        image=rgb2rgba(np.asarray(pil_image),back=0)
     else:
         image = (numpy.asarray(pil_image) / 255.0).reshape(image_size, image_size, 4)
     #image[:, :, 3] = np.where(np.all(image == 1, axis=-1), 0, 1)
@@ -134,7 +136,7 @@ def face2center(image):
 
 
 
-def rgb2rgba(image):
+def rgb2rgba(image,back=1):
     image = (np.asarray(image) / 255.0).reshape(256, 256, 3)
     new_image = np.zeros((256, 256, 4))
     for i in range(len(image)):
@@ -142,7 +144,7 @@ def rgb2rgba(image):
             img = np.append(image[i][j], 1)
             new_image[i][j] = img
     a = np.all(new_image == 1, axis=-1)
-    new_image[:, :, 3] = np.where(np.all(image == 1, axis=-1), 0, 1)
+    new_image[:, :, 3] = np.where(np.all(image == back, axis=-1), 0, 1)
     new_image = np.array(new_image)
     return new_image
 

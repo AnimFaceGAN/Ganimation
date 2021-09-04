@@ -51,32 +51,6 @@ def fire_and_forget(task, *args, **kwargs):
 #for using virtual camera
 import pyvirtualcam
 import pyautogui
-def obs_camera(anime,bg,cam):
-    # s=time.time()
-    W,H=800,800#pyautogui.size()
-    bg=cv2.resize(bg,(W,H))
-    bg=cv2.cvtColor(bg, cv2.COLOR_BGRA2RGBA)
-    anime=cv2.resize(anime,dsize=None,fx=1, fy=1)
-    # anime=cv2.cvtColor(anime, cv2.COLOR_BGRA2RGBA)
-
-
-    bg=Image.fromarray(bg).convert('RGBA')
-    anime=Image.fromarray(anime)
-    img_clear = Image.new("RGBA", bg.size, (255, 255, 255, 0))
-
-    anime_h, anime_w = anime.size[:2]
-    bg_h, bg_w = bg.size[:2]
-
-    img_clear.paste(anime, (int((bg_h-anime_h)/2), int((bg_w-anime_w)/2)))
-    bg = Image.alpha_composite(bg, img_clear)
-
-    _frame=cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
-    # _frame=cv2.resize(_frame,(W,H))
-    # cv2.imwrite("./obs_frame.png",np.array(bg))
-    cam.send(_frame)
-    # print(time.time()-s)
-    # cam.sleep_until_next_frame()
-    return
 
 animator=CreateAnimator()
 #animator.update_image().show()
@@ -121,6 +95,10 @@ selected_bg = 1
 #ビデオ画面のupdateオンオフ
 playing_video = False
 selected_window = "video"
+
+
+#TEST REDERING MODE
+DB.renderMode="Low" # "Low"  or  "High"
 
 # チュートリアル画面
 class TutorialScreen(Screen):
