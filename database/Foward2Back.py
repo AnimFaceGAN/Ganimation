@@ -14,3 +14,9 @@ class Foward2Back(BaseDataCenter):
 
     def SetSettingImage(self,image):
         self.database.SetSettingImage(image)
+    
+    def SetBaseImage(self, imagefolder):
+        pass
+
+    def IsLoadingImage(self):
+        return True

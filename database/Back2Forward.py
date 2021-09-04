@@ -11,5 +11,8 @@ class Back2Foward(BaseDataCenter):
     def GetData(self):
         return  self.database.GetRealFaces()
 
+    def GetBaseImage(self):
+        pass
+
 
 

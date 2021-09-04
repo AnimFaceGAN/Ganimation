@@ -3,6 +3,8 @@
     BoxLayout:
         orientation: 'vertical'     # 'horizontal'だと横一列
         size: root.size
+
+
         BoxLayout:
             size_hint_y: 0.1
 
@@ -28,7 +30,7 @@
                     pos: self.pos
                     size: self.size
 
-        BoxLayout: #チュートリアル
+        BoxLayout:
             size_hint_y: 0.7998
             canvas.before:
                 Color:
@@ -68,16 +70,9 @@
                             size: self.size
 
                 BoxLayout:
-                    size_hint_y: 0.1
+                    size_hint_y: 0.05
 
                     Label:
-                        text: 'Ganimationとは？'
-                        color: 1,1,1,0.8
-                        font_size: dp(25)
-                        text_size: self.size
-                        halign: 'center'
-                        valign: 'middle'
-
                         canvas.before:
                             Color:
                                 rgba: 0.3, 0.3, 0.3, 1
@@ -86,7 +81,7 @@
                                 size: self.size
 
                 BoxLayout:
-                    size_hint_y: 0.45
+                    size_hint_y: 0.5
 
                     canvas.before:
                         Color:
@@ -117,12 +112,13 @@
                     BoxLayout:
                         size_hint_x: 0.8
                         Label:
-                            text: '　このアプリでは一枚の顔イラストからビデオ会議で使えるアバターを生成できます。具体的には、機械学習の応用技術を使用して、図のように顔イラストを利用者の顔の動きに模倣させています。\n　このアプリを使えば、アニメキャラクターの顔でZoomやDiscordなどのビデオ会議に参加することができるので、寝癖がひどい時でも問題なくビデオ会議の参加できます。 \n　使い方は簡単で、ガイドラインに沿った形式の顔イラストを一枚用意し、設定画面でセットするだけです。ユーザの顔認識はwebカメラのみで行えるでとてもお手軽です。是非ご体験ください！'
+                            text: ' Ganimationは一枚の顔イラストからビデオ会議で使えるアバターを生成できます。機械学習の応用技術をGan使用することで、顔イラストをユーザーの顔の動きに模倣させることでAnimationを生成しています。\n \n このアプリを使えば、アニメキャラクターの顔でZoomやDiscordなどのビデオ会議に参加することができます。\n \n 使い方は簡単、ガイドラインに沿った形式の顔イラストを一枚用意し、設定画面でセットするだけです。ユーザの表情認識はwebカメラで行います。是非ご体験ください！'
                             color: 1,1,1,0.8
                             text_size: self.size
+                            font_size: dp(15)
+                            size: self.size
                             halign: 'left'
                             valign: 'middle'
-                            font_size: dp(22)
 
                             canvas.before:
                                 Color:
@@ -140,8 +136,18 @@
                     Rectangle:
                         pos: self.pos
                         size: self.size
+
         BoxLayout:
-            size_hint_y: 0.1
+            size_hint_y: 0.02
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout:
+            size_hint_y: 0.08
 
             canvas.before:
                 Color:
@@ -151,48 +157,17 @@
                     size: self.size
 
             BoxLayout:
-                size_hint_x: 0.35
+                size_hint_x: 0.4
 
             BoxLayout:
-                size_hint_x: 0.1
+                size_hint_x: 0.2
                 orientation:'horizontal'
                 Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'tutorial'
-
-                    Image:
-                        source: './UI_images/orange_question.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
+                    text: 'close'
+                    color: 1,1,1,1
+                    background_color: (0.3, 0.3, 0.1)
+                    #on_press: root.manager.current = 'tutorial'
+                    on_release: root.popup_close()
 
             BoxLayout:
-                size_hint_x: 0.1
-                orientation:'horizontal'
-                Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.manager.current = 'settings'
-
-                    Image:
-                        source: './UI_images/white_gear.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
-            BoxLayout:
-                size_hint_x: 0.1
-                orientation:'horizontal'
-                Button:
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_press: root.start_video()
-                    on_release: root.manager.current = 'video'
-
-                    Image:
-                        source: './UI_images/white_video.png'
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
-            BoxLayout:
-                size_hint_x: 0.35
+                size_hint_x: 0.4
