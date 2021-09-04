@@ -8,9 +8,9 @@ AIとPythonを使ってZoom等のコミュニケーションツールでアニ�
 
 ## 使い方
 ---
-[こちら](https://drive.google.com/file/d/1_LwXFVwz85g6T6CV-kqXaWQYMxo8U23n/view?usp=sharing)からdata.zipをダウンロードして解凍した後、Animatorフォルダに配置してください。
-
-Screenフォルダ内のの”Ganimation.bat”をクリックすると実行されます。
+[こちら](https://drive.google.com/file/d/1_LwXFVwz85g6T6CV-kqXaWQYMxo8U23n/view?usp=sharing)からdata.zipをダウンロードして解凍した後、Ganimation\Animatorフォルダに配置してください。
+[こちら](https://drive.google.com/file/d/1UFVbqX8fPCEC5PTfvcyLE-uCgLPD322m/view?usp=sharing)からtemp.zipをダウンロードして解凍した後に、Ganimationフォルダに配置してください。
+Screenフォルダ内の”Ganimation.bat”をクリックすると実行されます。
 
 **画像の条件**
 

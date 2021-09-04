@@ -70,11 +70,6 @@ def obs_camera(anime,bg,cam):
     img_clear.paste(anime, (int((bg_h-anime_h)/2), int((bg_w-anime_w)/2)))
     bg = Image.alpha_composite(bg, img_clear)
 
-    # x1, y1, x2, y2 = 0, 0, anime.shape[1], anime.shape[0]
-
-    # bg[y1:y2, x1:x2] = bg[y1:y2, x1:x2] * (1 - anime[:, :, 3:] / 255) + \
-    #                   anime[:, :, :3] * (anime[:, :, 3:] / 255)
-
     _frame=cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
     # _frame=cv2.resize(_frame,(W,H))
     # cv2.imwrite("./obs_frame.png",np.array(bg))
@@ -279,7 +274,7 @@ class OtherSettingsScreen(Screen):
         if len(_folders)>=num:
             output_bg_path=_ori_path+_folders[num-1]+"/bg.png"
 
-CAMERA=1
+CAMERA=0
 # ビデオ画面
 class VideoScreen(Screen):
 
@@ -337,8 +332,6 @@ class VideoScreen(Screen):
         _, flg = result
         if not flg:
             return
-        # print("animation")
-        
 
         #アニメ顔画像のデータベースから取得
         self.animeface = DB.GetAnimeFaces()
@@ -375,7 +368,6 @@ class VideoScreen(Screen):
             print("changed")
             self.video_bg_path= output_bg_path
             self.video_bg=cv2.imread(self.video_bg_path)
-        start=time.time()
         # _bg=cv2.imread(output_bg_path)
         # obs_camera(self.animeface,_bg,self.cam)
 

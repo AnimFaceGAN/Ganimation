@@ -198,7 +198,8 @@ class DataGenerator:
             numpy_image=self.create_anime_from_pose()
             # print(self.images_temp.loc[[self.images_temp.index[i]],"image"])
             self.images_temp.loc[[self.images_temp.index[i]],"image"]=[numpy_image]
-            imageSaver.save(numpy_image)
+            # imageSaver.save(numpy_image)
+        
             
         #save image and dataframe
         self.save_data()
@@ -214,7 +215,7 @@ class DataGenerator:
         image_path,data_path=self.database.fileManager.get_new_path()
         # print(image_path)
         # print(data_path)
-        # cv2.imwrite(image_path, cv2.imread(self.database.SettingImage))
+        cv2.imwrite(image_path, cv2.imread(self.database.SettingImage))
         # cv2.imwrite(image_path, self.source_image.cpu().numpy())
         self.images_temp.to_pickle(data_path)
 
@@ -228,11 +229,6 @@ class DataGenerator:
         numpy_image = rgba_to_numpy_image(posed_image[0])
 
         return np.array(numpy_image*255,dtype=np.uint8)
-    
-
-
-    
-
 
 
 def CreateDataGenerator(cuda,poser):

@@ -92,6 +92,7 @@ class Animator:
         print("--- Update Base Image ---")
         self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
         fire_and_forget( self.dataGenerator.create_image)        
+        # self.dataGenerator.create_image()
     
     def change_base_image(self):
         print("--- Change Base Image ---")
