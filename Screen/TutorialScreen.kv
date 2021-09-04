@@ -1,4 +1,3 @@
-  
 <TutorialScreen>:
 
     BoxLayout:
@@ -115,7 +114,8 @@
                         Label:
                             text: ' Ganimationは一枚の顔イラストからビデオ会議で使えるアバターを生成できます。機械学習の応用技術をGan使用することで、顔イラストをユーザーの顔の動きに模倣させることでAnimationを生成しています。\n \n このアプリを使えば、アニメキャラクターの顔でZoomやDiscordなどのビデオ会議に参加することができます。\n \n 使い方は簡単、ガイドラインに沿った形式の顔イラストを一枚用意し、設定画面でセットするだけです。ユーザの表情認識はwebカメラで行います。是非ご体験ください！'
                             color: 1,1,1,0.8
-                            text_size: self.width, None
+                            text_size: self.size
+                            font_size: dp(15)
                             size: self.size
                             halign: 'left'
                             valign: 'middle'

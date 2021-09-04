@@ -279,7 +279,7 @@ class OtherSettingsScreen(Screen):
         if len(_folders)>=num:
             output_bg_path=_ori_path+_folders[num-1]+"/bg.png"
 
-
+CAMERA=1
 # ビデオ画面
 class VideoScreen(Screen):
 
@@ -290,7 +290,7 @@ class VideoScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.bg_src = "../images/save/bg/save1/bg.png"
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture(CAMERA)
         self.animator = animator
 
         Clock.schedule_interval(self.update, 0.05)
@@ -300,8 +300,6 @@ class VideoScreen(Screen):
 
         self.video_bg_path=output_bg_path
         self.video_bg=cv2.imread(self.video_bg_path)
-
-
 
         # Clock.schedule_interval(self.update, 0.01)
         print('init video')
@@ -465,7 +463,7 @@ class VideoScreen(Screen):
         self.start_video()
         self.popup.dismiss()
         self.bg.reload() #背景更新
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture(CAMERA)
 
 
 
