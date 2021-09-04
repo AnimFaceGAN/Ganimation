@@ -62,9 +62,10 @@ class Animator:
 
         self.pose_size = len(self.poser.pose_parameters())
         #use to generate image temps
-        self.source_image = None
+        # self.source_image = None
         #use for save image temp
         self.image_temp=None
+        self.thumbnail_temp=None
 
 
         self.posed_image = None
@@ -79,7 +80,7 @@ class Animator:
         self.image_path="./face.png"
         
         #for create source image
-        self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
+        # self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
         self.past_image=cv2.imread(self.database.SettingImage)#deepcopy(self.source_image)
 
         # self.update_base_image()
@@ -90,13 +91,13 @@ class Animator:
     def update_base_image(self):
         #process_image(self.database.SettingImage)
         print("--- Update Base Image ---")
-        self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
+        # self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
         fire_and_forget( self.dataGenerator.create_image)        
         # self.dataGenerator.create_image()
     
     def change_base_image(self):
         print("--- Change Base Image ---")
-        self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
+        # self.source_image = extract_pytorch_image_from_filelike(self.database.SettingImage).to(self.torch_device).unsqueeze(dim=0)
         self.read_image_temp()
 
     def update_image(self):
@@ -158,7 +159,16 @@ class Animator:
             # self.current_pose = self.current_pose.unsqueeze(dim=0)
 
             # posed_image = self.poser.pose(self.source_image, self.current_pose).detach().cpu()
-            numpy_image = self.approx_image()#rgba_to_numpy_image(posed_image[0])
+
+            ###################################################################################
+            # CHECK RENDERING MODE
+            ###################################################################################
+            if self.database.renderMode=="Low":
+                numpy_image = self.approx_image()
+            elif self.database.renderMode=="High":
+                numpy_image=self.create_anime_from_pose()
+            else:
+                raise print("No such redering mode!")
             pil_image = PIL.Image.fromarray(np.uint8(np.rint(numpy_image * 255.0)), mode='RGBA')
 
             self.database.SetAnimeFaces(numpy_image)
@@ -218,18 +228,6 @@ class Animator:
             
             self.past_pose["angle"]=angles[self.past_pose["min_index"]]
 
-        
-        # for i in range(3):
-        #     if  i != min_angle_idx:
-                #   pose_diff=pose_diff[pose_diff[pose_index[i]]==0]
-        #         pass
-
-        # if angles[0]<0.1:
-        #     pose_diff=pose_diff[pose_diff[pose_index[min_angle_idx]]==angles[min_angle_idx]]
-        # else:
-        #     pose_diff=pose_diff[pose_diff[pose_index[0]]==angles[0]]
-
-
         parts=[]
         base_img=pose_diff[
                             # (pose_diff.pose_0==angles[0])&(pose_diff.pose_1==angles[1])& (pose_diff.pose_2==angles[2])&
@@ -248,22 +246,10 @@ class Animator:
         parts.append(part_1.iloc[0])
         parts.append(part_2.iloc[0])
         parts.append(part_3.iloc[0])
-        # print(f"[ My Choice Poses = angles : {[angles[i] for i in range(3)]} \n, parts :  {[parts[i][pose_index[i+3]] for i in range(3)]} ]")
-
-        # elapsed_time = time.time() - start
-        # print("Image Sync ETA : {0} [sec]".format(elapsed_time) )
 
         return self._sync_image(base_img,parts)
 
     def _sync_image(self,base_image,parts):
-        # sync_image=deepcopy( base_image)
-        # c=0
-        # for part in parts[::-1]:
-        #     gray_part=cv2.cvtColor(part.image, cv2.COLOR_BGR2GRAY)
-        #     diff=np.abs((cv2.cvtColor(base_image, cv2.COLOR_BGR2GRAY)-gray_part))
-        #     th=1#np.mean(diff)
-        #     sync_image[diff>th]=part.image[diff>th]
-        #     c+=1
 
 
         sync_image=deepcopy( base_image)
@@ -304,6 +290,13 @@ class Animator:
                 
 
         return sync_image
+    
+    def create_anime_from_pose(self):
+        current_pose = self.current_pose.unsqueeze(dim=0)
+        posed_image = self.poser.pose(self.thumbnail_temp, current_pose).detach().cpu()
+        numpy_image = rgba_to_numpy_image(posed_image[0])
+
+        return np.array(numpy_image*255,dtype=np.uint8)
 
     def draw_face_box(self, frame, face_box_points):
         line_pairs = [[0, 1], [1, 2], [2, 3], [3, 0],
@@ -321,7 +314,9 @@ class Animator:
    
     
     def read_image_temp(self):
-        self.image_temp=pd.read_pickle(self.database.fileManager.get_folder_path(self.database.BaseImageName)[1])
+        thumbnail_path,temp_path=self.database.fileManager.get_folder_path(self.database.BaseImageName)
+        self.image_temp=pd.read_pickle(temp_path)
+        self.thumbnail_temp=extract_pytorch_image_from_filelike(thumbnail_path,isConvert=True).to(self.torch_device).unsqueeze(dim=0)
         # print(self.database.fileManager.get_folder_path(self.database.BaseImageName))
 
 
