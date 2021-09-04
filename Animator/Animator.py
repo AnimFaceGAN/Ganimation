@@ -37,6 +37,31 @@ import asyncio
 
 saver=ImageSaver()
 
+class FPS:
+    def __init__(self):
+        import time
+        self.s1=time.time()
+        self.i=0
+        self.c=0
+
+    def start(self):
+        self.s1=time.time()
+        self.i=0
+        self.c=0
+
+    def stop(self):
+        c= round(time.time()-self.s1,4)+1e-8
+        print(f"second : {round(c,4)} , diff {round(c-self.c,5)}, fps : {round(1/c,4)}  ---{self.i}")
+        self.i+=1
+        self.c=c
+        return c
+    def end(self):
+        print("-----------------------------------------------------------------------------/n")
+
+fps=FPS()
+
+
+
 def fire_and_forget(task, *args, **kwargs):
     loop = asyncio.get_event_loop()
     if callable(task):
@@ -120,7 +145,6 @@ class Animator:
             face_box_points, euler_angles = self.head_pose_solver.solve_head_pose(face_landmarks)
             #self.draw_face_landmarks(rgb_frame, face_landmarks)
             # self.draw_face_box(rgb_frame, face_box_points)
-
         # resized_frame = cv2.flip(cv2.resize(rgb_frame, (192, 256)), 1)
         # pil_image = PIL.Image.fromarray(resized_frame, mode='RGB')
 
@@ -130,7 +154,6 @@ class Animator:
             self.current_pose[0] = max(min(-euler_angles.item(0) / 15.0, 1.0), -1.0)
             self.current_pose[1] = max(min(-euler_angles.item(1) / 15.0, 1.0), -1.0)
             self.current_pose[2] = max(min(euler_angles.item(2) / 15.0, 1.0), -1.0)
-
             if self.last_pose is None:
                 self.last_pose = self.current_pose
             else:
@@ -145,12 +168,10 @@ class Animator:
                                                                             eye_min_ratio,
                                                                             eye_max_ratio)
             self.current_pose[4] = 1 - right_eye_normalized_ratio
-
             min_mouth_ratio = 0.02
             max_mouth_ratio = 0.3
             mouth_normalized_ratio = compute_mouth_normalized_ratio(face_landmarks, min_mouth_ratio, max_mouth_ratio)
             self.current_pose[5] = mouth_normalized_ratio
-
             # if self.current_pose[3]>0.7 or self.current_pose[4]>0.7:
             #     print("[Closing eyes]")
                 
@@ -172,7 +193,6 @@ class Animator:
             pil_image = PIL.Image.fromarray(np.uint8(np.rint(numpy_image * 255.0)), mode='RGBA')
 
             self.database.SetAnimeFaces(numpy_image)
-
             # elapsed_time = time.time() - start
             # print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
 

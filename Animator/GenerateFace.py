@@ -52,6 +52,30 @@ import time
 #from tqdm import tqdm
 
 
+class FPS:
+    def __init__(self):
+        import time
+        self.s1=time.time()
+        self.i=0
+        self.c=0
+
+    def start(self):
+        self.s1=time.time()
+        self.i=0
+        self.c=0
+
+    def stop(self):
+        c= round(time.time()-self.s1,4)+1e-8
+        print(f"second : {round(c,4)} , diff {round(c-self.c,5)}, fps : {round(1/c,4)}  ---{self.i}")
+        self.i+=1
+        self.c=c
+        return c
+    def end(self):
+        print("-----------------------------------------------------------------------------/n")
+
+fps=FPS()
+
+
 class ImageSaver:
     def __init__(self,root="/temp/"):
         self.image_idx=0
@@ -114,10 +138,13 @@ class DataGenerator:
 
         euler_angles_list=[ -1 , -0.8 , -0.6 , -0.4 , -0.2 , 0 , 0.2 , 0.4 , 0.6 , 0.8, 1]#np.round(np.arange(-1,1,0.2),1)#np.linspace(-1,1,10)
         eye_ratio_list=np.linspace(0,1,5)
-        mouth_ratio_list=np.linspace(0,1,5)
+        mouth_ratio_list=[0,0.5,1]#np.linspace(0,1,5)
 
+        #############################################################################
+        # USE ONLY 1 AXIS TO MOVE FACE
+        #############################################################################
         for eul_r in euler_angles_list:
-            for euler_idx in range(3):
+            for euler_idx in [2]:
                 _l=np.array([0,1,2])
                 _l=_l[~(_l==euler_idx)]
                 self.current_pose[euler_idx]=eul_r
@@ -191,7 +218,8 @@ class DataGenerator:
         print("--- Update Base Image ---")
 
         for i in range(len(self.images_temp)):
-            print(f"\r[{i}/{len(self.images_temp)}: Created Images | time : {round(time.time() - start,3)}[sec]]", end='')
+            _my_time=time.time() - start
+            print(f"\r[{i}/{len(self.images_temp)}: Created Images | time : {round(_my_time,3)}[sec]] , ETA : {_my_time/(i+1)*len(self.images_temp)-_my_time}", end='')
             #current_poseに値を突っ込む
             for j in range(len(self.current_pose)):
                 self.current_pose[j]=self.images_temp.iloc[i][pose_idx[j]]#.values[j]
