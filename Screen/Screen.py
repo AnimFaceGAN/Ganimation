@@ -45,7 +45,7 @@ def fire_and_forget(task, *args, **kwargs):
     loop = asyncio.get_event_loop()
     if callable(task):
         return loop.run_in_executor(None, task, *args, **kwargs)
-    else:    
+    else:
         raise TypeError('Task must be a callable')
 
 #for using virtual camera
@@ -56,13 +56,14 @@ animator=CreateAnimator()
 #animator.update_image().show()
 
 # フォント読み込み Windows用
-resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
-LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
+#resource_add_path('{}\\{}'.format(os.environ['SYSTEMROOT'], 'Fonts'))
+#LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
 
 # フォント読み込み Mac用
 #resource_add_path('./Font')
 #LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
-# フォント読み込み
+
+# フォント読み込み OS関係無し
 resource_add_path('./Font')
 LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 
@@ -71,10 +72,12 @@ LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 #LabelBase.register(DEFAULT_FONT, 'MSGOTHIC.ttc')
 
 # Kivyファイルの読み込み
-Builder.load_file('TutorialScreen.kv', encoding="utf-8")
-Builder.load_file('SettingsScreen.kv', encoding="utf-8")
-Builder.load_file('VideoScreen.kv', encoding="utf-8")
-Builder.load_file('OtherSettingsScreen.kv', encoding="utf-8")
+Builder.load_file('kivy/VideoScreen.kv', encoding="utf-8")
+Builder.load_file('kivy/TutorialScreen.kv', encoding="utf-8")
+Builder.load_file('kivy/AvatarGenerateScreen.kv', encoding="utf-8")
+Builder.load_file('kivy/AvatarSelectScreen.kv', encoding="utf-8")
+Builder.load_file('kivy/BgSettingsScreen.kv', encoding="utf-8")
+Builder.load_file('kivy/OtherSettingsScreen.kv', encoding="utf-8")
 
 # アニメ顔画像のパス
 output_path = '../images/output.png'
@@ -106,23 +109,20 @@ class TutorialScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
-    def start_video(self):
-        # global playing_video
-        # playing_video = True
-        print('start')
 
-
-# 画像設定画面
-class SettingsScreen(Screen):
+# アバター生成画面
+class AvatarGenerateScreen(Screen):
     popup_close = ObjectProperty(None)
+    to_settings1 = ObjectProperty(None)
     to_settings2 = ObjectProperty(None)
+    to_settings3 = ObjectProperty(None)
 
     drop_area_image = ObjectProperty()
     drop_area_label = ObjectProperty()
     image_src = StringProperty('')
 
     def __init__(self, **kw):
-        super(SettingsScreen, self).__init__(**kw)
+        super(AvatarGenerateScreen, self).__init__(**kw)
         Window.bind(on_dropfile=self._on_file_drop)
         # Window.bind(on_cursor_enter=self.on_cursor_enter)
         self.image_src = '../images/faceset.png'
@@ -156,12 +156,6 @@ class SettingsScreen(Screen):
 
         return
 
-
-    def start_video(self):
-        global playing_video
-        playing_video = True
-        print('start')
-    
     def select_button(self, num):
         global output_bg_path
         print(num)
@@ -179,11 +173,73 @@ class SettingsScreen(Screen):
             print("no such data")
 
 
-
-# 詳細設定画面
-class OtherSettingsScreen(Screen):
+# アバター選択画面
+class AvatarSelectScreen(Screen):
     popup_close = ObjectProperty(None)
+    to_settings0 = ObjectProperty(None)
+    to_settings2 = ObjectProperty(None)
+    to_settings3 = ObjectProperty(None)
+
+    image_src = StringProperty('')
+
+    def __init__(self, **kw):
+        super(AvatarSelectScreen, self).__init__(**kw)
+        Window.bind(on_dropfile=self._on_file_drop)
+        # Window.bind(on_cursor_enter=self.on_cursor_enter)
+        self.image_src = '../images/output.png'
+
+    # 画像を読み込む
+    def _on_file_drop(self, window, file_path):
+        # print('dropped image')
+
+        input_path = str(pathlib.Path(str(file_path, 'utf-8').lstrip("b")))
+        root, ext = os.path.splitext(input_path)
+
+        if ext == '.png' or ext == '.jpg' or ext == '.jpeg':
+            print('loading dropped image')
+
+            img = cv2.imread(input_path, cv2.IMREAD_COLOR)
+
+            # external file function
+            if anime_face_detect(img):
+                self.drop_area_label.text = ''
+                self.drop_area_image.source = output_path
+                self.drop_area_image.reload()
+                DB.SetSettingImage(input_path)
+                animator.update_base_image()
+            else:
+                self.drop_area_label.text = '顔が検出されませんでした'
+                self.drop_area_image.source = null_path
+                self.drop_area_image.reload()
+        else:
+            self.drop_area_label.text = '画像の読み込みに失敗しました'
+            print('->fail')
+
+        return
+
+    def select_button(self, num):
+        global output_bg_path
+        print(num)
+        selectFolder = "../temp/"#"../images/save/face/save"+str(num)+"/"
+        folders=os.listdir(selectFolder)
+        # if not os.listdir(folders):
+        #     print("empty")
+        # else:
+        #     print("not empty")
+        print(folders)
+        if len(folders)>=num:
+            DB.SetBaseImage(folders[num-1])
+            animator.change_base_image()
+        else:
+            print("no such data")
+
+
+# 背景設定画面
+class BgSettingsScreen(Screen):
+    popup_close = ObjectProperty(None)
+    to_settings0 = ObjectProperty(None)
     to_settings1 = ObjectProperty(None)
+    to_settings3 = ObjectProperty(None)
 
     drop_area_image = ObjectProperty()
     drop_area_label = ObjectProperty()
@@ -204,7 +260,7 @@ class OtherSettingsScreen(Screen):
 
     def __init__(self, **kwargs):
         # super().__init__(**kwargs)
-        super(OtherSettingsScreen, self).__init__(**kwargs)
+        super(BgSettingsScreen, self).__init__(**kwargs)
         Window.bind(on_dropfile=self._on_file_drop)
         self.image_src = output_bg_path
         self.drop_area_label.text = 'ファイルをドラッグ＆ドロップ'
@@ -214,11 +270,6 @@ class OtherSettingsScreen(Screen):
         self.save4_src = "../images/save/bg/save4/bg.png"
         self.save5_src = "../images/save/bg/save5/bg.png"
         self.save6_src = "../images/save/bg/save6/bg.png"
-
-    def start_video(self):
-        global playing_video
-        playing_video = True
-        print('start')
 
     # 画像を読み込む
     def _on_file_drop(self, widndow, file_path):
@@ -252,7 +303,46 @@ class OtherSettingsScreen(Screen):
         if len(_folders)>=num:
             output_bg_path=_ori_path+_folders[num-1]+"/bg.png"
 
+
+
+# その他設定画面
+class OtherSettingsScreen(Screen):
+    popup_close = ObjectProperty(None)
+    to_settings0 = ObjectProperty(None)
+    to_settings1 = ObjectProperty(None)
+    to_settings2 = ObjectProperty(None)
+
+    drop_area_image = ObjectProperty()
+    drop_area_label = ObjectProperty()
+    save1 = ObjectProperty()
+    save2 = ObjectProperty()
+    save3 = ObjectProperty()
+    save4 = ObjectProperty()
+    save5 = ObjectProperty()
+    save6 = ObjectProperty()
+
+    save1_src = StringProperty('')
+    save2_src = StringProperty('')
+    save3_src = StringProperty('')
+    save4_src = StringProperty('')
+    save5_src = StringProperty('')
+    save6_src = StringProperty('')
+    image_src = StringProperty('')
+
+    def __init__(self, **kwargs):
+        # super().__init__(**kwargs)
+        super(OtherSettingsScreen, self).__init__(**kwargs)
+        self.image_src = output_bg_path
+        self.save1_src = "../images/save/bg/save1/bg.png"
+        self.save2_src = "../images/save/bg/save2/bg.png"
+        self.save3_src = "../images/save/bg/save3/bg.png"
+        self.save4_src = "../images/save/bg/save4/bg.png"
+        self.save5_src = "../images/save/bg/save5/bg.png"
+        self.save6_src = "../images/save/bg/save6/bg.png"
+
+
 CAMERA=0
+
 # ビデオ画面
 class VideoScreen(Screen):
 
@@ -269,7 +359,7 @@ class VideoScreen(Screen):
         Clock.schedule_interval(self.update, 0.05)
 
         W,H=800,800#pyautogui.size()
-        self.cam=pyvirtualcam.Camera(width=W, height=H, fps=10) 
+        self.cam=pyvirtualcam.Camera(width=W, height=H, fps=10)
 
         self.video_bg_path=output_bg_path
         self.video_bg=cv2.imread(self.video_bg_path)
@@ -300,6 +390,7 @@ class VideoScreen(Screen):
         ret, self.frame = self.capture.read()
         # print(ret)
 
+
         # リアル顔画像をデータベースにセット
         DB.SetRealFaces(self.frame)
 
@@ -311,6 +402,7 @@ class VideoScreen(Screen):
         if not flg:
             return
 
+
         #アニメ顔画像のデータベースから取得
         self.animeface = DB.GetAnimeFaces()
         self.animeface =cv2.resize(self.animeface, (500, 500))
@@ -321,8 +413,8 @@ class VideoScreen(Screen):
         # cv2.waitKey(4)
 
         # デバッグ用
-        # self.animeface = self.frame
-        # self.animeface = cv2.resize(self.frame, (280, 280))
+        #self.animeface = self.frame
+        #elf.animeface = cv2.resize(self.frame, (500, 500))
 
         # Kivy Textureに変換
         # buf = cv2.flip(self.animeface, -1).tobytes()
@@ -330,18 +422,19 @@ class VideoScreen(Screen):
         # texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
         # # インスタンスのtextureを変更
         # self.texture = texture
-        
+
         # Kivy Textureに変換
         buf = cv2.flip(self.animeface, -1).tobytes()
         texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='rgba')
         texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
         # インスタンスのtextureを変更
         self.anime.texture = texture
-        
+
+
         ##############################################################################
         #----  Virtual Camera  ----
         ##############################################################################
-        #Change bg if it chenged 
+        #Change bg if it chenged
         if self.video_bg_path!=output_bg_path:
             print("changed")
             self.video_bg_path= output_bg_path
@@ -386,46 +479,70 @@ class VideoScreen(Screen):
 
         ##############################################################################
 
-        
+
 
     # チュートリアルポップアップ表示
     def tutorial_popup_open(self):
         self.stop_video()
 
         content = TutorialScreen(popup_close=self.popup_close)
-        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.7, 0.7), auto_dismiss=False)
+        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.8, 0.8), auto_dismiss=False)
         self.popup.open()
 
     # 設定ポップアップ表示
     def settings_popup_open(self):
         global selected_window
-        selected_window = "settings"
+        selected_window = "avatar_genearate"
         self.stop_video()
 
-        content = SettingsScreen(popup_close=self.popup_close, to_settings2=self.to_settings2)
-        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.7, 0.7), auto_dismiss=False)
+        content = AvatarGenerateScreen(popup_close=self.popup_close, to_settings1=self.to_settings1,  to_settings2=self.to_settings2, to_settings3=self.to_settings3)
+        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.8, 0.8), auto_dismiss=False)
         self.popup.open()
 
-    # 顔イラスト設定へ画面遷移
-    def to_settings1(self):
+
+    # アバター生成へ画面遷移
+    def to_settings0(self):
         global selected_window
-        selected_window = "settings"
+        selected_window = "avatar_genearate"
+        self.stop_video()
 
         self.popup.dismiss()
-        content = SettingsScreen(popup_close=self.popup_close, to_settings2=self.to_settings2)
-        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.7, 0.7), auto_dismiss=False)
+        content = AvatarGenerateScreen(popup_close=self.popup_close, to_settings1=self.to_settings1, to_settings2=self.to_settings2, to_settings3=self.to_settings3)
+        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.8, 0.8), auto_dismiss=False)
+        self.popup.open()
+
+    # アバター選択へ画面遷移
+    def to_settings1(self):
+        global selected_window
+        selected_window = "avatar_select"
+        self.stop_video()
+
+        self.popup.dismiss()
+        content = AvatarSelectScreen(popup_close=self.popup_close, to_settings0=self.to_settings0, to_settings2=self.to_settings2, to_settings3=self.to_settings3)
+        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.8, 0.8), auto_dismiss=False)
         self.popup.open()
 
     # 背景設定へ画面遷移
     def to_settings2(self):
         global selected_window
+        selected_window = "bg_settings"
+
+        self.popup.dismiss()
+        content = BgSettingsScreen(popup_close=self.popup_close, to_settings0=self.to_settings0, to_settings1=self.to_settings1, to_settings3=self.to_settings3)
+        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.8, 0.8), auto_dismiss=False)
+        self.popup.open()
+
+    # その他設定へ画面遷移
+    def to_settings3(self):
+        global selected_window
         selected_window = "other_settings"
 
         self.popup.dismiss()
-        content = OtherSettingsScreen(popup_close=self.popup_close, to_settings1=self.to_settings1)
-        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.7, 0.7), auto_dismiss=False)
+        content = OtherSettingsScreen(popup_close=self.popup_close, to_settings0=self.to_settings0, to_settings1=self.to_settings1, to_settings2=self.to_settings2)
+        self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.8, 0.8), auto_dismiss=False)
         self.popup.open()
 
+    # ポップアップを閉じる
     def popup_close(self):
         global selected_window
         selected_window = "video"
@@ -496,10 +613,7 @@ class VideoScreen(Screen):
 
 
 sm = ScreenManager(transition=WipeTransition())
-# sm.add_widget(TutorialScreen(name='tutorial'))
-# sm.add_widget(SettingsScreen(name='settings'))
 sm.add_widget(VideoScreen(name='video'))
-# sm.add_widget(OtherSettingsScreen(name='other_settings'))
 
 class GanimationApp(App):
     def build(self):

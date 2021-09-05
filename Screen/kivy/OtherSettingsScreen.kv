@@ -1,0 +1,102 @@
+<OtherSettingsScreen>:
+    BoxLayout:
+        orientation: 'horizontal'     # 'horizontal'だと横一列
+        size: root.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.15
+
+            Image:
+                source: './UI_images/title.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Button:
+                text: 'アバター生成'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings0()
+
+            Button:
+                text: 'アバター選択'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings1()
+
+            Button:
+                text: '背景設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings2()
+
+            Button:
+                text: 'その他設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.0, 0.6, 0.7, 1)
+                #on_release: root.to_settings3()
+
+            Button:
+                text: 'close'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.popup_close()
+
+        BoxLayout:
+            size_hint_x: 0.85
+
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+
+                AnchorLayout:
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    padding: 30
+
+                    Label:
+                        canvas.before:
+                            Color:
+                                rgba: 0.1, 0.1, 0.1, 1
+                                #rgba: 0.2, 0.2, 0.2, 0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size

@@ -1,19 +1,14 @@
-<SettingsScreen>:
+<AvatarGenerateScreen>:
     drop_area_image: drop_area_image
     drop_area_label: drop_area_label
 
     BoxLayout:
-        orientation: 'vertical'     # 'horizontal'だと横一列
+        orientation: 'horizontal'     # 'horizontal'だと横一列
         size: root.size
-        BoxLayout:
-            size_hint_y: 0.1
 
-            canvas.before:
-                Color:
-                    rgba: 0.1, 0.1, 0.1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.15
 
             Image:
                 source: './UI_images/title.png'
@@ -21,63 +16,92 @@
                 center_y: self.parent.center_y
                 allow_stretch: True
 
-        Label:
-            size_hint_y:0.002
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-
-        BoxLayout: #Select Buttons(image setting and other settings)
-            size_hint_y: 0.1
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
 
             Button:
-                text: 'アバター設定'
-                font_size: dp(20)
+                text: 'アバター生成'
+                text_size: self.size
+                font_size: dp(15)
                 color: 1,1,1,1
                 size: self.size
                 halign: 'center'
                 valign: 'middle'
                 background_color: (0.0, 0.6, 0.7, 1)
-                #on_press: root.manager.current = 'settings'
+                #on_release: root.to_settings0()
 
             Button:
-                text: '背景設定'
+                text: 'アバター選択'
                 text_size: self.size
-                font_size: dp(20)
+                font_size: dp(15)
                 color: 1,1,1,1
                 size: self.size
                 halign: 'center'
                 valign: 'middle'
                 background_color: (0.3, 0.3, 0.3, 1.0)
-                #on_press: root.manager.current = 'character_settings'
+                on_release: root.to_settings1()
+
+            Button:
+                text: '背景設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
                 on_release: root.to_settings2()
 
-        Label: #Narrow gap
-            size_hint_y:0.002
-            canvas.before:
-                Color:
-                    rgba: 0, 0, 0, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+            Button:
+                text: 'その他設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings3()
 
-        BoxLayout: #Main Part
-            size_hint_y: 0.4996
+            Button:
+                text: 'close'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.popup_close()
+
+        BoxLayout:
+            size_hint_x: 0.85
+            orientation: 'vertical'
+
             canvas.before:
                 Color:
                     rgba: 0.1, 0.1, 0.1, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
+
             BoxLayout:
+                size_hint_y: 0.9
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
 
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'center'
-                    padding: 10
+                    padding: 30
 
                     Label:
                         canvas.before:
@@ -99,18 +123,17 @@
                         id: drop_area_label
                         bold: True
                         text: 'ファイルをドラッグ＆ドロップ'
+                        text_size: self.size
                         font_size: dp(15)
-                        color: 1,1,1,1
                         size: self.size
-                        #font_size: dp(20)
+                        color: 1,1,1,1
                         halign: 'center'
                         valign: 'middle'
 
-            BoxLayout:
                 AnchorLayout:
                     anchor_x: 'center'
                     anchor_y: 'center'
-                    padding: 10
+                    padding: 30
 
                     BoxLayout:
                         orientation: 'vertical'
@@ -119,6 +142,7 @@
                             size_hint_y: 0.08
                             Label:
                                 text: '使い方'
+                                text_size: self.size
                                 font_size: dp(15)
                                 size: self.size
                                 color: 1,1,1,0.8
@@ -328,81 +352,30 @@
                                         pos: self.pos
                                         size: self.size
 
-        BoxLayout:
-            size_hint_y: 0.2
 
-            Button:
-                text: 'save1'
-                color: 1,1,1,1
-                size: self.size
-                background_color: (0.3, 0.3, 0.3, 1)
-                on_release: root.select_button(1)
-
-            Button:
-                text: 'save2'
-                color: 1,1,1,1
-                size: self.size
-                background_color: (0.3, 0.3, 0.3, 1)
-                on_release: root.select_button(2)
-
-            Button:
-                text: 'save3'
-                color: 1,1,1,1
-                size: self.size
-                background_color: (0.3, 0.3, 0.3, 1)
-                on_release: root.select_button(3)
-
-            Button:
-                text: 'save4'
-                color: 1,1,1,1
-                size: self.size
-                background_color:(0.3, 0.3, 0.3, 1)
-                on_release: root.select_button(4)
-
-            Button:
-                text: 'save5'
-                color: 1,1,1,1
-                size: self.size
-                background_color: (0.3, 0.3, 0.3, 1)
-                on_release: root.select_button(5)
-
-            Button:
-                text: 'save6'
-                color: 1,1,1,1
-                size: self.size
-                background_color: (0.3, 0.3, 0.3, 1)
-                on_release: root.select_button(6)
-
-        BoxLayout:
-            size_hint_y: 0.02
-            canvas.before:
-                Color:
-                    rgba: 0.1, 0.1, 0.1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
-
-        BoxLayout:
-            size_hint_y: 0.08
-
-            canvas.before:
-                Color:
-                    rgba: 0.1, 0.1, 0.1, 1
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
 
             BoxLayout:
-                size_hint_x: 0.4
+                size_hint_y: 0.1
+                orientation: 'horizontal'
 
-            BoxLayout:
-                size_hint_x: 0.2
-                orientation:'horizontal'
                 Button:
-                    text: 'close'
+                    text: 'load'
+                    text_size: self.size
+                    font_size: dp(15)
                     color: 1,1,1,1
-                    background_color: (0.3, 0.3, 0.1)
-                    on_release: root.popup_close()
+                    size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    #on_release: root.popup_close()
 
-            BoxLayout:
-                size_hint_x: 0.4
+                Button:
+                    text: 'prerendering'
+                    text_size: self.size
+                    font_size: dp(15)
+                    color: 1,1,1,1
+                    size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    #on_release: root.popup_close()

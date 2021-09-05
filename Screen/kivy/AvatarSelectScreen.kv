@@ -1,0 +1,203 @@
+<AvatarSelectScreen>:
+
+    BoxLayout:
+        orientation: 'horizontal'     # 'horizontal'だと横一列
+        size: root.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.15
+
+            Image:
+                source: './UI_images/title.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Button:
+                text: 'アバター生成'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings0()
+
+            Button:
+                text: 'アバター選択'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.0, 0.6, 0.7, 1)
+                #on_release: root.to_settings1()
+
+            Button:
+                text: '背景設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings2()
+
+            Button:
+                text: 'その他設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings3()
+
+            Button:
+                text: 'close'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.popup_close()
+
+        BoxLayout:
+            size_hint_x: 0.85
+            orientation: 'vertical'
+
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                size_hint_y: 0.7
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                AnchorLayout:
+                    size_hint_x: 0.2
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    padding: 30
+
+                AnchorLayout:
+                    size_hint_x: 0.6
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    padding: 30
+
+                    Label:
+                        canvas.before:
+                            Color:
+                                rgba: 0.1, 0.1, 0.1, 1
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+
+                    Image:
+                        source: root.image_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+
+                AnchorLayout:
+                    size_hint_x: 0.2
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+                    padding: 30
+
+
+            BoxLayout:
+                size_hint_y: 0.2
+                orientation: 'horizontal'
+
+                Button:
+                    text: 'save1'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    #on_release: root.select_button(1)
+
+                Button:
+                    text: 'save2'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    #on_release: root.select_button(2)
+
+                Button:
+                    text: 'save3'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    #on_release: root.select_button(3)
+
+                Button:
+                    text: 'save4'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color:(0.3, 0.3, 0.3, 1)
+                    #on_release: root.select_button(4)
+
+                Button:
+                    text: 'save5'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    #on_release: root.select_button(5)
+
+                Button:
+                    text: 'save6'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    #on_release: root.select_button(6)
+
+            BoxLayout:
+                size_hint_y: 0.1
+                orientation: 'horizontal'
+
+                Button:
+                    text: 'load'
+                    text_size: self.size
+                    font_size: dp(15)
+                    color: 1,1,1,1
+                    size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_release: root.to_settings0()
+
+                Button:
+                    text: 'delete'
+                    text_size: self.size
+                    font_size: dp(15)
+                    color: 1,1,1,1
+                    size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    #on_release: root.popup_close()

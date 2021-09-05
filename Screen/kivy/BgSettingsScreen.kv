@@ -1,0 +1,281 @@
+<BgSettingsScreen>:
+    drop_area_image: drop_area_image
+    drop_area_label: drop_area_label
+    save1: save1
+    save2: save2
+    save3: save3
+    save4: save4
+    save5: save5
+    save6: save6
+
+    BoxLayout:
+        orientation: 'horizontal'     # 'horizontal'だと横一列
+        size: root.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.15
+
+            Image:
+                source: './UI_images/title.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Button:
+                text: 'アバター生成'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings0()
+
+            Button:
+                text: 'アバター選択'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings1()
+
+            Button:
+                text: '背景設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.0, 0.6, 0.7, 1)
+                #on_release: root.to_settings2()
+
+            Button:
+                text: 'その他設定'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.to_settings3()
+
+            Button:
+                text: 'close'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.popup_close()
+
+        BoxLayout:
+            size_hint_x: 0.85
+            orientation: 'vertical'
+
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                size_hint_y: 0.7
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                AnchorLayout:
+                    size_hint_x: 0.2
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+
+                AnchorLayout:
+                    size_hint_x: 0.6
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+
+                    Label:
+                        canvas.before:
+                            Color:
+                                rgba: 0.1, 0.1, 0.1, 1
+                                #rgba: 0.2, 0.2, 0.2, 0.2
+                            Rectangle:
+                                pos: self.pos
+                                size: self.size
+
+                    Image:
+                        id: drop_area_image
+                        source: root.image_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        allow_stretch: True
+
+                    Label:
+                        id: drop_area_label
+                        bold: True
+                        text: 'ファイルをドラッグ＆ドロップ'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+                AnchorLayout:
+                    size_hint_x: 0.2
+                    anchor_x: 'center'
+                    anchor_y: 'center'
+
+
+            BoxLayout:
+                size_hint_y: 0.2
+                orientation: 'horizontal'
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Button:
+                    text: 'save1'
+                    color: 1,1,1,1
+                    size: 200, 150
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_release: root.select_button(1)
+
+                    Image:
+                        id: save1
+                        source: root.save1_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: self.size#300, 200
+                        keep_ratio: False
+                        allow_stretch: True
+
+                Button:
+                    text: 'save2'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_release: root.select_button(2)
+
+                    Image:
+                        id: save2
+                        source: root.save2_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: self.size#300, 200
+                        keep_ratio: False
+                        allow_stretch: True
+
+                Button:
+                    text: 'save3'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_release: root.select_button(3)
+
+                    Image:
+                        id: save3
+                        source: root.save3_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: self.size#300, 200
+                        keep_ratio: False
+                        allow_stretch: True
+
+                Button:
+                    text: 'save4'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_release: root.select_button(4)
+
+                    Image:
+                        id: save4
+                        source: root.save4_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: self.size#300, 200
+                        keep_ratio: False
+                        allow_stretch: True
+
+                Button:
+                    text: 'save5'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_release: root.select_button(5)
+
+                    Image:
+                        id: save5
+                        source: root.save5_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: self.size#300, 200
+                        keep_ratio: False
+                        allow_stretch: True
+
+                Button:
+                    text: 'save6'
+                    color: 1,1,1,1
+                    size: self.size
+                    background_color: (0.3, 0.3, 0.3, 1)
+                    on_release: root.select_button(6)
+
+                    Image:
+                        id: save6
+                        source: root.save6_src
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: self.size#300, 200
+                        keep_ratio: False
+                        allow_stretch: True
+
+            BoxLayout:
+                size_hint_y: 0.1
+                orientation: 'horizontal'
+
+                Button:
+                    text: 'load'
+                    text_size: self.size
+                    font_size: dp(15)
+                    color: 1,1,1,1
+                    size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    #on_release: root.popup_close()
+
+                Button:
+                    text: 'delete'
+                    text_size: self.size
+                    font_size: dp(15)
+                    color: 1,1,1,1
+                    size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    #on_release: root.popup_close()
