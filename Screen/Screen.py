@@ -37,7 +37,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
 from  Animator.Animator import CreateAnimator
-
+from  copy import deepcopy
 from PIL import Image
 
 import asyncio
@@ -50,7 +50,37 @@ def fire_and_forget(task, *args, **kwargs):
 
 #for using virtual camera
 import pyvirtualcam
-import pyautogui
+
+class FPS:
+    def __init__(self):
+        import time
+        self.s1=time.time()
+        self.i=0
+        self.c=0
+
+    def start(self):
+        self.s1=time.time()
+        self.i=0
+        self.c=0
+
+    def stop(self):
+        c= round(time.time()-self.s1,4)+1e-8
+        print(f"second : {round(c,4)} , diff {round(c-self.c,5)}, fps : {round(1/c,4)}  ---{self.i}")
+        self.i+=1
+        self.c=c
+        return c
+    def end(self):
+        print("-----------------------------------------------------------------------------/n")
+
+fps=FPS()
+
+
+def fire_and_forget(task, *args, **kwargs):
+    loop = asyncio.get_event_loop()
+    if callable(task):
+        return loop.run_in_executor(None, task, *args, **kwargs)
+    else:    
+        raise TypeError('Task must be a callable')
 
 animator=CreateAnimator()
 #animator.update_image().show()
@@ -208,6 +238,9 @@ class OtherSettingsScreen(Screen):
         Window.bind(on_dropfile=self._on_file_drop)
         self.image_src = output_bg_path
         self.drop_area_label.text = 'ファイルをドラッグ＆ドロップ'
+        self._init_images()
+    
+    def _init_images(self):
         self.save1_src = "../images/save/bg/save1/bg.png"
         self.save2_src = "../images/save/bg/save2/bg.png"
         self.save3_src = "../images/save/bg/save3/bg.png"
@@ -271,8 +304,14 @@ class VideoScreen(Screen):
         W,H=800,800#pyautogui.size()
         self.cam=pyvirtualcam.Camera(width=W, height=H, fps=10) 
 
+        #Init Video Back Ground Images
         self.video_bg_path=output_bg_path
         self.video_bg=cv2.imread(self.video_bg_path)
+        self.video_bg=cv2.resize(self.video_bg,(W,H))
+        self.video_bg=cv2.cvtColor(self.video_bg, cv2.COLOR_BGRA2RGBA)
+
+        #Init Screen Settings
+        self._init_screen()
 
         # Clock.schedule_interval(self.update, 0.01)
         print('init video')
@@ -282,18 +321,17 @@ class VideoScreen(Screen):
     def stop_video(self):
         global playing_video
         playing_video = False
-        self.capture.release()
+        # self.capture.release()
         print('stop video')
 
     def start_video(self):
         global playing_video
         playing_video = True
-        self.capture.release()
+        # self.capture.release()
         print('start video')
 
     def update(self, dt):
         start=time.time()
-
         if not playing_video:
             return
         # print("video now")
@@ -302,7 +340,6 @@ class VideoScreen(Screen):
 
         # リアル顔画像をデータベースにセット
         DB.SetRealFaces(self.frame)
-
         result = self.animator.update_image()
 
         if result == None:
@@ -310,83 +347,48 @@ class VideoScreen(Screen):
         _, flg = result
         if not flg:
             return
-
+        
         #アニメ顔画像のデータベースから取得
         self.animeface = DB.GetAnimeFaces()
         self.animeface =cv2.resize(self.animeface, (500, 500))
 
-        # cv2.imwrite("./screen_cap.png",self.animeface)
-
-        # cv2.imshow("",self.animeface)
-        # cv2.waitKey(4)
-
-        # デバッグ用
-        # self.animeface = self.frame
-        # self.animeface = cv2.resize(self.frame, (280, 280))
-
-        # Kivy Textureに変換
-        # buf = cv2.flip(self.animeface, -1).tobytes()
-        # texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='rgba')
-        # texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
-        # # インスタンスのtextureを変更
-        # self.texture = texture
-        
         # Kivy Textureに変換
         buf = cv2.flip(self.animeface, -1).tobytes()
         texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='rgba')
         texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
         # インスタンスのtextureを変更
         self.anime.texture = texture
-        
         ##############################################################################
         #----  Virtual Camera  ----
         ##############################################################################
+        W,H=800,800#pyautogui.size()
+
         #Change bg if it chenged 
         if self.video_bg_path!=output_bg_path:
             print("changed")
             self.video_bg_path= output_bg_path
             self.video_bg=cv2.imread(self.video_bg_path)
-        # _bg=cv2.imread(output_bg_path)
-        # obs_camera(self.animeface,_bg,self.cam)
+            self.video_bg=cv2.resize(self.video_bg,(W,H))
+            self.video_bg=cv2.cvtColor(self.video_bg, cv2.COLOR_BGRA2RGBA)
 
-        W,H=800,800#pyautogui.size()
-        bg=cv2.resize(self.video_bg,(W,H))
-        bg=cv2.cvtColor(bg, cv2.COLOR_BGRA2RGBA)
-        # anime=cv2.resize(self.animeface,dsize=None,fx=1, fy=1)
-        # anime=cv2.cvtColor(anime, cv2.COLOR_BGRA2RGBA)
-
-
-
+        # bg=cv2.resize(self.video_bg,(W,H))
+        bg=self.video_bg
+        # bg=cv2.cvtColor(bg, cv2.COLOR_BGRA2RGBA)
         bg=Image.fromarray(bg).convert('RGBA')
         anime=Image.fromarray(self.animeface)
         img_clear = Image.new("RGBA", bg.size, (255, 255, 255, 0))
-
 
         anime_h, anime_w = anime.size[:2]
         bg_h, bg_w = bg.size[:2]
 
         img_clear.paste(anime, (int((bg_h-anime_h)/2), int((bg_w-anime_w)/2)))
         bg = Image.alpha_composite(bg, img_clear)
+        _frame=np.array(bg)[:,:,:3]#cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
 
-
-
-        # x1, y1, x2, y2 = 0, 0, anime.shape[1], anime.shape[0]
-
-        # bg[y1:y2, x1:x2] = bg[y1:y2, x1:x2] * (1 - anime[:, :, 3:] / 255) + \
-        #                   anime[:, :, :3] * (anime[:, :, 3:] / 255)
-
-        _frame=cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
-
-        # _frame=cv2.resize(_frame,(W,H))
-        # cv2.imwrite("./obs_frame.png",np.array(bg))
         self.cam.send(_frame)
         elapsed_time = time.time() - start
-        print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
-
-
+        # print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
         ##############################################################################
-
-        
 
     # チュートリアルポップアップ表示
     def tutorial_popup_open(self):
@@ -401,7 +403,6 @@ class VideoScreen(Screen):
         global selected_window
         selected_window = "settings"
         self.stop_video()
-
         content = SettingsScreen(popup_close=self.popup_close, to_settings2=self.to_settings2)
         self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.7, 0.7), auto_dismiss=False)
         self.popup.open()
@@ -410,7 +411,6 @@ class VideoScreen(Screen):
     def to_settings1(self):
         global selected_window
         selected_window = "settings"
-
         self.popup.dismiss()
         content = SettingsScreen(popup_close=self.popup_close, to_settings2=self.to_settings2)
         self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.7, 0.7), auto_dismiss=False)
@@ -420,7 +420,6 @@ class VideoScreen(Screen):
     def to_settings2(self):
         global selected_window
         selected_window = "other_settings"
-
         self.popup.dismiss()
         content = OtherSettingsScreen(popup_close=self.popup_close, to_settings1=self.to_settings1)
         self.popup = Popup(title='',separator_height=0, content=content, size_hint=(0.7, 0.7), auto_dismiss=False)
@@ -433,67 +432,21 @@ class VideoScreen(Screen):
         self.start_video()
         self.popup.dismiss()
         self.bg.reload() #背景更新
-        self.capture = cv2.VideoCapture(CAMERA)
+        self.popup=None
+        # self.capture = cv2.VideoCapture(CAMERA)
 
-
-
-# class VideoManager(Image):
-
-#     def __init__(self, **kwargs):
-#         super().__init__(**kwargs)
-#         self.is_animation = False
-#         self.capture = cv2.VideoCapture(1)
-#         self.animator = animator
-
-#         Clock.schedule_interval(self.update, 0.07)
-
-#     def start_animation(self):
-#         self.is_animation = True
-#         self.capture = cv2.VideoCapture(1)
-
-#     def stop_animation(self):
-#         self.is_animating = False
-#         self.cap.release()
-
-#     def update(self, dt):
-#         if not playing_video:
-#             return
-
-#         ret, self.frame = self.capture.read()
-
-#         # リアル顔画像をデータベースにセット
-#         DB.SetRealFaces(self.frame)
-
-#         # アニメ顔画像のデータベースから取得
-#         # self.animeface = DB.GetAnimeFaces()
-
-#         # ビデオ表示テスト
-#         # アニメ顔画像のデータベースから取得
-#         # self.animeface = DB.GetAnimeFaces()
-#         result = self.animator.update_image()
-#         if result == None:
-#             return
-#         _, flg = result
-#         if not flg:
-#             return
-#         animeface=DB.GetAnimeFaces()
-#         self.animeface =cv2.resize(animeface, (500, 500))
-
-#         #self.animeface = self.frame
-
-#         # Kivy Textureに変換
-#         buf = cv2.flip(self.animeface, -1).tobytes()
-#         texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='rgba')
-#         texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
-#         # インスタンスのtextureを変更
-#         self.texture = texture
-
-# def show_img(img, title=""):
-#     cv2.imshow(title, img)
-#     cv2.waitKey(0)
-#     cv2.destroyAllWindows()
-
-
+    def _init_screen(self):
+        self.contents={
+            "setting_open": None,
+            "setting1": None,
+            "othersetting" : None
+        }
+        # self.contents["setting_open"]=SettingsScreen(popup_close=self.popup_close, to_settings2=self.to_settings2)
+        # self.contents["setting1"]=SettingsScreen(popup_close=self.popup_close, to_settings2=self.to_settings2)
+        # self.contents["othersetting"]=OtherSettingsScreen(popup_close=self.popup_close, to_settings1=self.to_settings1)
+        OtherSettingsScreen(popup_close=self.popup_close, to_settings1=self.to_settings1)
+        SettingsScreen(popup_close=self.popup_close, to_settings2=self.to_settings2)
+        
 
 sm = ScreenManager(transition=WipeTransition())
 # sm.add_widget(TutorialScreen(name='tutorial'))
