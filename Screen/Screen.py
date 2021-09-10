@@ -23,11 +23,13 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivy.core.window import Window
 from kivy.uix.screenmanager import (ScreenManager, Screen, NoTransition, SlideTransition, CardTransition, SwapTransition, FadeTransition, WipeTransition, FallOutTransition, RiseInTransition)
 
-from kivy.uix.image import Image
+from kivy.uix.image import Image as KImage
 from kivy.graphics.texture import Texture
 from kivy.clock import Clock
 from kivy.uix.screenmanager import (ScreenManager, Screen, NoTransition, SlideTransition, CardTransition,
                                     SwapTransition, FadeTransition, WipeTransition, FallOutTransition, RiseInTransition)
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
 
 #for pupup
 from kivy.uix.popup import Popup
@@ -37,6 +39,9 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.text import LabelBase, DEFAULT_FONT
 from kivy.resources import resource_add_path
 from  Animator.Animator import CreateAnimator
+
+import subprocess
+from functools import partial
 
 from PIL import Image
 
@@ -124,19 +129,22 @@ class AvatarGenerateScreen(Screen):
     def __init__(self, **kw):
         super(AvatarGenerateScreen, self).__init__(**kw)
         Window.bind(on_dropfile=self._on_file_drop)
+        
         # Window.bind(on_cursor_enter=self.on_cursor_enter)
         self.image_src = '../images/faceset.png'
+        
+        self.input_path=""
 
     # 画像を読み込む
     def _on_file_drop(self, window, file_path):
         # print('dropped image')
+        print(self.drop_area_label)
 
         input_path = str(pathlib.Path(str(file_path, 'utf-8').lstrip("b")))
         root, ext = os.path.splitext(input_path)
-
+        self.input_path=input_path
         if ext == '.png' or ext == '.jpg' or ext == '.jpeg':
             print('loading dropped image')
-
             img = cv2.imread(input_path, cv2.IMREAD_COLOR)
 
             # external file function
@@ -144,34 +152,44 @@ class AvatarGenerateScreen(Screen):
                 self.drop_area_label.text = ''
                 self.drop_area_image.source = output_path
                 self.drop_area_image.reload()
-                DB.SetSettingImage(input_path)
-                animator.update_base_image()
             else:
                 self.drop_area_label.text = '顔が検出されませんでした'
                 self.drop_area_image.source = null_path
                 self.drop_area_image.reload()
+                self.input_path=""
         else:
             self.drop_area_label.text = '画像の読み込みに失敗しました'
+            self.input_path=""
+            
             print('->fail')
 
         return
 
-    def select_button(self, num):
-        global output_bg_path
-        print(num)
-        selectFolder = "../temp/"#"../images/save/face/save"+str(num)+"/"
-        folders=os.listdir(selectFolder)
-        # if not os.listdir(folders):
-        #     print("empty")
-        # else:
-        #     print("not empty")
-        print(folders)
-        if len(folders)>=num:
-            DB.SetBaseImage(folders[num-1])
-            animator.change_base_image()
-        else:
-            print("no such data")
+    def open_folder(self):
+        subprocess.Popen(["explorer", r"./"], shell=True)
+        return
 
+    def do_prerendering(self):
+        if DB.finishGenerate:
+            if not self.input_path=="":
+                self.ids.render_button.background_color=(0.5,0,0,1)
+                self.ids.render_button.text="STOP"
+                DB.finishGenerate=False
+                DB.SetSettingImage(self.input_path)
+                animator.update_base_image()
+        elif not DB.finishGenerate:
+            self.ids.render_button.color=(0.3, 0.3, 0.3, 1.0)
+            self.ids.render_button.text="PRERENDERING"
+            DB.stopGenerate=True
+            print("Stop Signal")
+        
+        if (DB.finishGenerate and DB.stopGenerate):
+            DB.stopGenerate=False
+            self.ids.render_button.color=(0.3, 0.3, 0.3, 1.0)
+            self.ids.render_button.text="PRERENDERING"
+        return
+
+##################################################################################
 
 # アバター選択画面
 class AvatarSelectScreen(Screen):
@@ -184,15 +202,20 @@ class AvatarSelectScreen(Screen):
 
     def __init__(self, **kw):
         super(AvatarSelectScreen, self).__init__(**kw)
-        Window.bind(on_dropfile=self._on_file_drop)
+        # Window.bind(on_dropfile=self._on_file_drop)
         # Window.bind(on_cursor_enter=self.on_cursor_enter)
         self.image_src = '../images/output.png'
+        
+        self.create_buttons()
+        print("loadedd Select Screen")
+                
+        
 
     # 画像を読み込む
-    def _on_file_drop(self, window, file_path):
+    def _change_thumnail(self, file_path):
         # print('dropped image')
 
-        input_path = str(pathlib.Path(str(file_path, 'utf-8').lstrip("b")))
+        input_path = file_path
         root, ext = os.path.splitext(input_path)
 
         if ext == '.png' or ext == '.jpg' or ext == '.jpeg':
@@ -202,36 +225,52 @@ class AvatarSelectScreen(Screen):
 
             # external file function
             if anime_face_detect(img):
-                self.drop_area_label.text = ''
-                self.drop_area_image.source = output_path
+                self.drop_area_image.source = input_path
                 self.drop_area_image.reload()
-                DB.SetSettingImage(input_path)
-                animator.update_base_image()
             else:
-                self.drop_area_label.text = '顔が検出されませんでした'
                 self.drop_area_image.source = null_path
                 self.drop_area_image.reload()
         else:
-            self.drop_area_label.text = '画像の読み込みに失敗しました'
             print('->fail')
 
         return
 
-    def select_button(self, num):
+    def select_button(self,num,instance):
         global output_bg_path
-        print(num)
         selectFolder = "../temp/"#"../images/save/face/save"+str(num)+"/"
         folders=os.listdir(selectFolder)
-        # if not os.listdir(folders):
-        #     print("empty")
-        # else:
-        #     print("not empty")
-        print(folders)
+        
         if len(folders)>=num:
             DB.SetBaseImage(folders[num-1])
             animator.change_base_image()
+            _path=f"{selectFolder}{folders[num-1]}/thumbnail.png"
+            self._change_thumnail(_path)
         else:
             print("no such data")
+    
+    def create_buttons(self):
+        selectFolder = "../temp/"
+        folders=os.listdir(selectFolder)
+        
+        fncs=[]
+        for i in range(len(folders)):
+            _btn=Button(
+                text=f""
+                )
+            _btn.id=f"select_btn_{i}"
+            
+            self.ids.select_buttons.add_widget(_btn,index=i+1)
+            
+            # _fnc=lambda x: self.select_button(i+1)
+            # fncs.append(_fnc)
+            self.ids.select_buttons.children[-1].color=(1,1,1,1)
+            self.ids.select_buttons.children[-1].size= self.size
+            self.ids.select_buttons.children[-1].size_hint_x= Image.NONE
+            self.ids.select_buttons.children[-1].background_normal= f"{selectFolder}{folders[i]}/thumbnail.png"
+            self.ids.select_buttons.children[-1].id=f"select_btn_{i}"
+            self.ids.select_buttons.children[-1].bind(on_release= partial(self.select_button,i+1))
+            
+        return
 
 
 # 背景設定画面

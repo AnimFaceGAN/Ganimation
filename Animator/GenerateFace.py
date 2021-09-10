@@ -191,6 +191,11 @@ class DataGenerator:
         print("--- Update Base Image ---")
 
         for i in range(len(self.images_temp)):
+            print(self.database)
+            print(self.database.finishGenerate)
+            if self.database.finishGenerate:
+                self.database.finishGenerate=False
+                break
             print(f"\r[{i}/{len(self.images_temp)}: Created Images | time : {round(time.time() - start,3)}[sec]]", end='')
             #current_poseに値を突っ込む
             for j in range(len(self.current_pose)):
@@ -208,6 +213,7 @@ class DataGenerator:
         print(f"\r Total time : {elapsed_time} [sec]" ,end="")
 
         print("Finish the works!")
+        self.database.finishGenerate=True
 
         return True
     

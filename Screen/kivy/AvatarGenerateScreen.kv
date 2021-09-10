@@ -359,7 +359,8 @@
                 orientation: 'horizontal'
 
                 Button:
-                    text: 'load'
+                    id:load_button
+                    text: 'LOAD'
                     text_size: self.size
                     font_size: dp(15)
                     color: 1,1,1,1
@@ -367,10 +368,11 @@
                     halign: 'center'
                     valign: 'middle'
                     background_color: (0.3, 0.3, 0.3, 1.0)
-                    #on_release: root.popup_close()
+                    on_release: root.open_folder()
 
                 Button:
-                    text: 'prerendering'
+                    id:render_button
+                    text: 'PRERENDERING'
                     text_size: self.size
                     font_size: dp(15)
                     color: 1,1,1,1
@@ -378,4 +380,4 @@
                     halign: 'center'
                     valign: 'middle'
                     background_color: (0.3, 0.3, 0.3, 1.0)
-                    #on_release: root.popup_close()
+                    on_release: root.do_prerendering()
