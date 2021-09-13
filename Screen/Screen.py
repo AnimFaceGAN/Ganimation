@@ -104,7 +104,6 @@ selected_bg = 1
 playing_video = False
 selected_window = "video"
 
-
 #TEST REDERING MODE
 DB.renderMode="Low" # "Low"  or  "High"
 
@@ -134,6 +133,14 @@ class AvatarGenerateScreen(Screen):
         self.image_src = '../images/faceset.png'
         
         self.input_path=""
+
+        self.ids.generate_log.text="ココに画像を入れてください"
+        self.event=None
+
+        if not DB.finishGenerate:
+            self.event= Clock.schedule_interval(self.log_anime, 1.0)
+            self.ids.render_button.background_color=(0.5,0,0,1)
+            self.ids.render_button.text="STOP"
 
     # 画像を読み込む
     def _on_file_drop(self, window, file_path):
@@ -174,20 +181,42 @@ class AvatarGenerateScreen(Screen):
             if not self.input_path=="":
                 self.ids.render_button.background_color=(0.5,0,0,1)
                 self.ids.render_button.text="STOP"
+                DB.stopGenerate=False
                 DB.finishGenerate=False
                 DB.SetSettingImage(self.input_path)
                 animator.update_base_image()
+                self.event= Clock.schedule_interval(self.log_anime, 1.0)
+                # fire_and_forget( self.log_anime)
         elif not DB.finishGenerate:
-            self.ids.render_button.color=(0.3, 0.3, 0.3, 1.0)
+            self.ids.render_button.background_color=(0.3, 0.3, 0.3, 1.0)
             self.ids.render_button.text="PRERENDERING"
             DB.stopGenerate=True
-            print("Stop Signal")
+            DB.finishGenerate=False
         
-        if (DB.finishGenerate and DB.stopGenerate):
-            DB.stopGenerate=False
-            self.ids.render_button.color=(0.3, 0.3, 0.3, 1.0)
-            self.ids.render_button.text="PRERENDERING"
+        # if (DB.finishGenerate and DB.stopGenerate):
+        #     DB.stopGenerate=False
+        #     DB.finishGenerate=True
+        #     self.ids.render_button.background_color=(0.3, 0.3, 0.3, 1.0)
+        #     self.ids.render_button.text="PRERENDERING"
         return
+
+    def log_anime(self,dt):
+        if not DB.finishGenerate:
+            self.ids.generate_log.text=DB.generate_log
+        else:
+            DB.finishGenerate=True
+            self.ids.render_button.background_color=(0.3, 0.3, 0.3, 1.0)
+            self.ids.render_button.text="PRERENDERING"
+
+            if  DB.stopGenerate:
+                self.ids.generate_log.text="画像の学習を停止しました"
+            else:
+                self.ids.generate_log.text="画像の学習に成功しました！"
+
+            DB.stopGenerate=False
+            
+            self.event.cancel()
+            return False
 
 ##################################################################################
 
@@ -204,7 +233,7 @@ class AvatarSelectScreen(Screen):
         super(AvatarSelectScreen, self).__init__(**kw)
         # Window.bind(on_dropfile=self._on_file_drop)
         # Window.bind(on_cursor_enter=self.on_cursor_enter)
-        self.image_src = '../images/output.png'
+        self.image_src = "../temp/base_image_99/thumbnail.png"#'../images/output.png'
         
         self.create_buttons()
         print("loadedd Select Screen")
@@ -265,7 +294,7 @@ class AvatarSelectScreen(Screen):
             # fncs.append(_fnc)
             self.ids.select_buttons.children[-1].color=(1,1,1,1)
             self.ids.select_buttons.children[-1].size= self.size
-            self.ids.select_buttons.children[-1].size_hint_x= Image.NONE
+            self.ids.select_buttons.children[-1].size_hint_x= None
             self.ids.select_buttons.children[-1].background_normal= f"{selectFolder}{folders[i]}/thumbnail.png"
             self.ids.select_buttons.children[-1].id=f"select_btn_{i}"
             self.ids.select_buttons.children[-1].bind(on_release= partial(self.select_button,i+1))

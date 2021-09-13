@@ -1,4 +1,5 @@
 <AvatarGenerateScreen>:
+
     drop_area_image: drop_area_image
     drop_area_label: drop_area_label
 
@@ -97,38 +98,55 @@
                     Rectangle:
                         pos: self.pos
                         size: self.size
-
-                AnchorLayout:
-                    anchor_x: 'center'
-                    anchor_y: 'center'
-                    padding: 30
+                
+                BoxLayout:
+                    orientation: 'vertical'
 
                     Label:
-                        canvas.before:
-                            Color:
-                                rgba: 0.1, 0.1, 0.1, 1
-                                #rgba: 0.2, 0.2, 0.2, 0.2
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
-
-                    Image:
-                        id: drop_area_image
-                        source: root.image_src
-                        center_x: self.parent.center_x
-                        center_y: self.parent.center_y
-                        allow_stretch: True
-
-                    Label:
-                        id: drop_area_label
+                        id: generate_log
                         bold: True
-                        text: 'ファイルをドラッグ＆ドロップ'
-                        text_size: self.size
-                        font_size: dp(15)
-                        size: self.size
-                        color: 1,1,1,1
-                        halign: 'center'
-                        valign: 'middle'
+                        # text: ''
+                        # font_size: dp(20)
+                        # color: 1,1,1,1
+                        # halign: 'center'
+                        # valign: 'middle'
+                        # bcolor: 1,0,0,1
+                        # padding_y: [0,0]
+                        # margin_y : [0,0]
+                        
+                
+                    AnchorLayout:
+                        anchor_x: 'center'
+                        anchor_y: 'center'
+                        padding: 0
+                        margin : 0
+                        
+                        Label:
+                            canvas.before:
+                                Color:
+                                    rgba: 0.1, 0.1, 0.1, 1
+                                    #rgba: 0.2, 0.2, 0.2, 0.2
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+
+                        Image:
+                            id: drop_area_image
+                            source: root.image_src
+                            center_x: self.parent.center_x
+                            center_y: self.parent.center_y
+                            allow_stretch: True
+
+                        Label:
+                            id: drop_area_label
+                            bold: True
+                            text: 'ファイルをドラッグ＆ドロップ'
+                            text_size: self.size
+                            font_size: dp(15)
+                            size: self.size
+                            color: 1,1,1,1
+                            halign: 'center'
+                            valign: 'middle'
 
                 AnchorLayout:
                     anchor_x: 'center'

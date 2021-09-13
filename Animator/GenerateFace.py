@@ -191,10 +191,7 @@ class DataGenerator:
         print("--- Update Base Image ---")
 
         for i in range(len(self.images_temp)):
-            print(self.database)
-            print(self.database.finishGenerate)
-            if self.database.finishGenerate:
-                self.database.finishGenerate=False
+            if self.database.stopGenerate:
                 break
             print(f"\r[{i}/{len(self.images_temp)}: Created Images | time : {round(time.time() - start,3)}[sec]]", end='')
             #current_poseに値を突っ込む
@@ -203,12 +200,17 @@ class DataGenerator:
             numpy_image=self.create_anime_from_pose()
             # print(self.images_temp.loc[[self.images_temp.index[i]],"image"])
             self.images_temp.loc[[self.images_temp.index[i]],"image"]=[numpy_image]
+            _eta=time.time() - start
+            self.database.generate_log=f"[{int(100*i/len(self.images_temp))}%]  残り時間 : {round(_eta*(len(self.images_temp)/(i+1)))}[sec]"
+        self.database.generate_log="[00%]  残り時間 000 [sec]"
             # imageSaver.save(numpy_image)
+        if self.database.stopGenerate:
+            print("Canceled Prerendering")
+            self.database.finishGenerate=True
+            return
         
-            
         #save image and dataframe
         self.save_data()
-
         elapsed_time = time.time() - start
         print(f"\r Total time : {elapsed_time} [sec]" ,end="")
 
@@ -219,8 +221,6 @@ class DataGenerator:
     
     def save_data(self):
         image_path,data_path=self.database.fileManager.get_new_path()
-        # print(image_path)
-        # print(data_path)
         cv2.imwrite(image_path, cv2.imread(self.database.SettingImage))
         # cv2.imwrite(image_path, self.source_image.cpu().numpy())
         self.images_temp.to_pickle(data_path)
