@@ -29,7 +29,10 @@ class DataBase(Singleton):
         #define FileManager to manage folders
         self.fileManager=FileManager()
 
-        self.renderMode="Low" # this mode : "Low" or "High"
+        self.renderMode="Low" # Rendering mode : "Low" or "High"
+        
+        self.stopGenerate=False
+        self.finishGenerate=True
 
         #self.animator=CreateAnimator()
         pass

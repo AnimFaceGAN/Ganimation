@@ -1,0 +1,180 @@
+<TutorialScreen>:
+    BoxLayout:
+        orientation: 'horizontal'     # 'horizontal'だと横一列
+        size: root.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x: 0.15
+
+            Image:
+                source: './UI_images/title.png'
+                center_x: self.parent.center_x
+                center_y: self.parent.center_y
+                allow_stretch: True
+
+                canvas.before:
+                    Color:
+                        rgba: 0.1, 0.1, 0.1, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Button:
+                id: b1
+                text: 'Ganimationとは？'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.0, 0.6, 0.7, 1)
+                on_release: root.ChangeStep(1)
+
+            Button:
+                id: b2
+                text: '-STEP1-\nプリレンダリング'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                #size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.ChangeStep(2)
+
+            Button:
+                id: b3
+                text: '-STEP2-\nアバター選択'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.ChangeStep(3)
+
+            Button:
+                id: b4
+                text: '-STEP3-\n背景選択'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.ChangeStep(4)
+
+            Button:
+                id: b5
+                text: '-STEP4-\nカメラ選択'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.ChangeStep(5)
+
+            Button:
+                id: b6
+                text: '-FINAL-\nビデオを始める'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.ChangeStep(6)
+
+            Button:
+                text: 'close'
+                text_size: self.size
+                font_size: dp(15)
+                color: 1,1,1,1
+                size: self.size
+                halign: 'center'
+                valign: 'middle'
+                background_color: (0.3, 0.3, 0.3, 1.0)
+                on_release: root.popup_close()
+
+        BoxLayout:
+            size_hint_x: 0.05
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout:
+            size_hint_x: 0.75
+            orientation: 'vertical'
+
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            BoxLayout:
+                orientation: 'vertical'
+                #anchor_x: 'center'
+                #anchor_y: 'center'
+                #padding: 20
+
+                # canvas.before:
+                #     Color:
+                #         rgba: 0.1, 0.1, 0.1, 1
+                #     Rectangle:
+                #         pos: self.pos
+                #         size: self.size
+                BoxLayout:
+                    size_hint_y: 0.1
+                BoxLayout:
+                    size_hint_y: 0.6
+
+                    # canvas.before:
+                    #     Color:
+                    #         rgba: 0.3, 0.3, 0.3, 1
+                    #     Rectangle:
+                    #         pos: self.pos
+                    #         size: self.size
+                    #VideoPlayer:
+                    #    source: './UI_images/Turorial/demo.gif'
+
+                    Image:
+                        id: display_image
+                        source: './UI_images/Tutorial/Video.png'
+                        center_x: self.parent.center_x
+                        center_y: self.parent.center_y
+                        size: 100, 200
+                        allow_stretch: True
+
+                BoxLayout:
+                    size_hint_y: 0.3
+
+                    Label:
+                        id: display_text
+                        text: '「Ganimation」はたった一枚の顔イラストからアバターを生成できます。\n機械学習の応用技術をGan使用することで実現しています。\n作成したアバターでZoomやDiscordなどに参加できます。'
+                        color: 1,1,1,0.8
+                        text_size: self.size
+                        font_size: dp(20)
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+        BoxLayout:
+            size_hint_x: 0.05
+            canvas.before:
+                Color:
+                    rgba: 0.1, 0.1, 0.1, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
