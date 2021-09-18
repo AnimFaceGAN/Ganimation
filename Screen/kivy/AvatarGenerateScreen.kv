@@ -1,5 +1,4 @@
 <AvatarGenerateScreen>:
-
     drop_area_image: drop_area_image
     drop_area_label: drop_area_label
 
@@ -98,29 +97,37 @@
                     Rectangle:
                         pos: self.pos
                         size: self.size
-                
+
                 BoxLayout:
                     orientation: 'vertical'
 
-                    Label:
-                        id: generate_log
-                        bold: True
-                        # text: ''
-                        # font_size: dp(20)
-                        # color: 1,1,1,1
-                        # halign: 'center'
-                        # valign: 'middle'
-                        # bcolor: 1,0,0,1
-                        # padding_y: [0,0]
-                        # margin_y : [0,0]
-                        
-                
+                    BoxLayout:
+                        size_hint_y: 0.2
+                        Label:
+                            id: generate_log
+                            bold: True
+                            # text: ''
+                            # font_size: dp(20)
+                            # color: 1,1,1,1
+                            # halign: 'center'
+                            # valign: 'middle'
+                            # bcolor: 1,0,0,1
+                            # padding_y: [0,0]
+                            # margin_y : [0,0]
+                            text_size: self.size
+                            font_size: dp(15)
+                            size: self.size
+                            color: 1,1,1,1
+                            halign: 'center'
+                            valign: 'middle'
+
                     AnchorLayout:
+                        size_hint_y: 0.6
                         anchor_x: 'center'
                         anchor_y: 'center'
                         padding: 0
                         margin : 0
-                        
+
                         Label:
                             canvas.before:
                                 Color:
@@ -140,13 +147,16 @@
                         Label:
                             id: drop_area_label
                             bold: True
-                            text: 'ファイルをドラッグ＆ドロップ'
+                            text: ""
                             text_size: self.size
                             font_size: dp(15)
                             size: self.size
                             color: 1,1,1,1
                             halign: 'center'
                             valign: 'middle'
+
+                    BoxLayout:
+                        size_hint_y: 0.2
 
                 AnchorLayout:
                     anchor_x: 'center'
@@ -194,7 +204,7 @@
                         BoxLayout:
                             size_hint_y: 0.08
                             Label:
-                                text: '　2. 左の枠内に用意した画像をドラッグ&ドロップしてください'
+                                text: '　2. 左の枠内に用意した画像を入れてください'
                                 text_size: self.size
                                 font_size: dp(15)
                                 size: self.size
@@ -214,7 +224,25 @@
                         BoxLayout:
                             size_hint_y: 0.08
                             Label:
-                                text: '　3. 画像の読み込みに成功するとアバターの使用を開始できます'
+                                text: '　3. PRERENDERINGボタンを押しアバター生成を始めます'
+                                text_size: self.size
+                                font_size: dp(15)
+                                size: self.size
+                                halign: 'left'
+                                valign: 'middle'
+
+                                color: 1,1,1,0.8
+                                canvas.before:
+                                    Color:
+                                        rgba: 0.3, 0.3, 0.3, 1
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+
+                        BoxLayout:
+                            size_hint_y: 0.08
+                            Label:
+                                text: '　4. アバター生成が完了すると選択できるようになります'
                                 text_size: self.size
                                 font_size: dp(15)
                                 size: self.size
@@ -250,7 +278,7 @@
                         BoxLayout:
                             size_hint_y: 0.08
                             Label:
-                                text: '　・画像サイズは256px×256px（自動リサイズ）'
+                                text: '　・画像サイズは256px×256px（自動リサイズあり）'
                                 text_size: self.size
                                 font_size: dp(15)
                                 size: self.size
@@ -322,7 +350,7 @@
                         BoxLayout:
                             size_hint_y: 0.08
                             Label:
-                                text: '　・画像はRGBA形式で背景は透過されている'
+                                text: '　・RGBA形式で背景は透過されている'
                                 text_size: self.size
                                 color: 1,1,1,0.8
                                 font_size: dp(15)
@@ -340,7 +368,7 @@
                             size_hint_y: 0.08
                             Label:
                                 markup: True
-                                text: '　　[ref=some][color=0088aa]https://www.remove.bg/ja[/color][/ref] （こちらで背景透過できます）'
+                                text: '　　[ref=some][color=0088aa]https://www.remove.bg/ja[/color][/ref] （こちらで背景透過）'
                                 on_ref_press:
                                     import webbrowser
                                     webbrowser.open('https://www.remove.bg/ja')
@@ -358,7 +386,7 @@
                                         pos: self.pos
                                         size: self.size
                         BoxLayout:
-                            size_hint_y: 0.12
+                            size_hint_y: 0.04
                             Label:
                                 text: ''
                                 color: 1,1,1,0.8
@@ -376,17 +404,17 @@
                 size_hint_y: 0.1
                 orientation: 'horizontal'
 
-                Button:
-                    id:load_button
-                    text: 'LOAD'
-                    text_size: self.size
-                    font_size: dp(15)
-                    color: 1,1,1,1
-                    size: self.size
-                    halign: 'center'
-                    valign: 'middle'
-                    background_color: (0.3, 0.3, 0.3, 1.0)
-                    on_release: root.open_folder()
+                # Button:
+                #     id:load_button
+                #     text: 'LOAD'
+                #     text_size: self.size
+                #     font_size: dp(15)
+                #     color: 1,1,1,1
+                #     size: self.size
+                #     halign: 'center'
+                #     valign: 'middle'
+                #     background_color: (0.3, 0.3, 0.3, 1.0)
+                #     on_release: root.open_folder()
 
                 Button:
                     id:render_button

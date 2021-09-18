@@ -88,7 +88,7 @@
                     size: self.size
 
             BoxLayout:
-                size_hint_y: 0.7
+                size_hint_y: 0.6
                 canvas.before:
                     Color:
                         rgba: 0.1, 0.1, 0.1, 1
@@ -108,7 +108,7 @@
                     anchor_y: 'center'
                     padding: 30
 
-                    
+
 
                     Label:
                         canvas.before:
@@ -135,9 +135,9 @@
             BoxLayout:
                 size_hint_y: 0.2
                 orientation: 'horizontal'
-                
+
                 ScrollView:
-                    size_hint_y: 1.1
+                    #size_hint_y: 1.1
                     BoxLayout:
                         id: select_buttons
                         size_hint_x: None
@@ -145,50 +145,18 @@
                         width: self.minimum_width
                         # padding_x: 100
                         spacing: 20
-                        # Button:
-                        #     text: 'save1'
-                        #     color: 1,1,1,1
-                        #     size: self.size
-                        #     size_hint_x: None
-                        #     background_color: (0.3, 0.3, 0.3, 1)
-                        #     on_release: root.select_button(1)
 
-                        # Button:
-                        #     text: 'save2'
-                        #     color: 1,1,1,1
-                        #     size: self.size
-                        #     size_hint_x: None
-                        #     background_color: (0.3, 0.3, 0.3, 1)
-                        #     on_release: root.select_button(2)
+            BoxLayout:
+                size_hint_y: 0.1
+                orientation: 'horizontal'
 
-                        # Button:
-                        #     text: 'save3'
-                        #     color: 1,1,1,1
-                        #     size: self.size
-                        #     size_hint_x: None
-                        #     background_color: (0.3, 0.3, 0.3, 1)
-                        #     on_release: root.select_button(3)
-
-                        # Button:
-                        #     text: 'save4'
-                        #     color: 1,1,1,1
-                        #     size: self.size
-                        #     size_hint_x: None
-                        #     background_color:(0.3, 0.3, 0.3, 1)
-                        #     on_release: root.select_button(4)
-
-                        # Button:
-                        #     text: 'save5'
-                        #     color: 1,1,1,1
-                        #     size: self.size
-                        #     size_hint_x: None
-                        #     background_color: (0.3, 0.3, 0.3, 1)
-                        #     on_release: root.select_button(5)
-
-                        # Button:
-                        #     text: 'save6'
-                        #     color: 1,1,1,1
-                        #     size: self.size
-                        #     size_hint_x: None
-                        #     background_color: (0.3, 0.3, 0.3, 1)
-                        #     on_release: root.select_button(6)
+                Button:
+                    text: 'DELETE'
+                    text_size: self.size
+                    font_size: dp(15)
+                    color: 1,1,1,1
+                    size: self.size
+                    halign: 'center'
+                    valign: 'middle'
+                    background_color: (0.3, 0.3, 0.3, 1.0)
+                    on_release: root.delete_save_folder()

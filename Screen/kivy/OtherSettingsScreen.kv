@@ -85,18 +85,118 @@
                     pos: self.pos
                     size: self.size
 
-            BoxLayout:
 
-                AnchorLayout:
-                    anchor_x: 'center'
-                    anchor_y: 'center'
-                    padding: 30
+
+            BoxLayout:
+                orientation: 'vertical'
+
+                BoxLayout:
+                    size_hint_y: 0.1
+
+
+                BoxLayout:
+                    size_hint_y: 0.1
+                    orientation: 'horizontal'
 
                     Label:
-                        canvas.before:
-                            Color:
-                                rgba: 0.1, 0.1, 0.1, 1
-                                #rgba: 0.2, 0.2, 0.2, 0.2
-                            Rectangle:
-                                pos: self.pos
-                                size: self.size
+                        size_hint_x: 0.4
+                        id: drop_area_label
+                        bold: True
+                        text: 'Camera'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+                    Label:
+                        id: camera_id
+                        size_hint_x: 0.4
+                        bold: True
+                        text: 'name'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+                    Button:
+                        size_hint_x: 0.1
+                        text: '＜'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+                        background_color: (0.3, 0.3, 0.3, 1.0)
+                        on_release: root.ChangeCamera(-1)
+
+                    Button:
+                        size_hint_x: 0.1
+                        text: '＞'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+                        background_color: (0.3, 0.3, 0.3, 1.0)
+                        on_release: root.ChangeCamera(1)
+
+                BoxLayout:
+                    size_hint_y: 0.01
+
+                BoxLayout:
+                    size_hint_y: 0.1
+                    orientation: 'horizontal'
+
+
+                    Label:
+                        size_hint_x: 0.4
+                        bold: True
+                        text: 'Rendering Mode'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+                    Label:
+                        id: render_mode
+                        size_hint_x: 0.4
+                        id: drop_area_label
+                        bold: True
+                        text: 'Low'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+                    Button:
+                        size_hint_x: 0.2
+                        text: 'CHANGE'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+                        background_color: (0.3, 0.3, 0.3, 1.0)
+                        on_release: root.ChangeRenderingMode()
+
+
+                BoxLayout:
+                    size_hint_y: 0.69
+                    orientation: 'horizontal'
+                    canvas.before:
+                        Color:
+                            rgba: 0.1, 0.1, 0.1, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
