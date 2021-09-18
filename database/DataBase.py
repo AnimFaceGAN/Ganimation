@@ -34,6 +34,8 @@ class DataBase(Singleton):
         self.stopGenerate=False
         self.finishGenerate=True
 
+        self.generate_log="[00%]  残り時間 000 [sec]"
+
         #self.animator=CreateAnimator()
         pass
 
@@ -64,7 +66,7 @@ class FileManager:
         self.folder_temp="base_image_"
         self.image_temp="thumbnail.png"
         self.data_temp="data.pkl"
-        self.last_num=len(self.dir_list)-1#max([int(i[:12]) for i in self.dir_list])
+        self.last_num=len(self.dir_list)#max([int(i[:12]) for i in self.dir_list])
     
     def get_image_list(self):
         self.dir_list=os.listdir(self.root)
@@ -72,6 +74,7 @@ class FileManager:
     
     def get_new_path(self):
         self.last_num+=1
+        # self.last_num=sorted([int(x[x.rfind("_"):]) for x in self.dir_list])[-2]+1
 
         self.dir_list.append(self.folder_temp+str(self.last_num))
         folder_path=self.root+self.folder_temp+str(self.last_num)+"/"

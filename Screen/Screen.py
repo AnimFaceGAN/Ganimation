@@ -129,7 +129,7 @@ output_path = '../images/output.png'
 null_path = '../images/faceset.png'  # 画像未入力時に表示する
 
 # DataBaseのインスタンス化
-DataLoarderクラスのインスタンス化
+# DataLoarderクラスのインスタンス化
 loarder=DataLoarder()
 #それぞれのインスタンスを読み込む
 f2b=loarder.create_foward2back()
@@ -245,7 +245,6 @@ class AvatarGenerateScreen(Screen):
         if selected_window == "avatar_genearate":
             print('dropped anime image')
             # print('dropped image')
-            print(self.drop_area_label)
 
             input_path = str(pathlib.Path(str(file_path, 'utf-8').lstrip("b")))
             root, ext = os.path.splitext(input_path)
@@ -385,7 +384,6 @@ class AvatarSelectScreen(Screen):
         if len(folders)>=num:
             DB.SetBaseImage(folders[num-1])
             animator.change_base_image()
-            print(folders[num-1])
             _path=f"{selectFolder}{folders[num-1]}/thumbnail.png"
             self.output_path = _path
             self._change_thumnail(_path)
@@ -403,7 +401,6 @@ class AvatarSelectScreen(Screen):
         fncs=[]
         for i in range(len(folders)):
 
-            print(folders[i])
             _btn=Button(
                 text=f""
                 )
@@ -428,7 +425,6 @@ class AvatarSelectScreen(Screen):
         #セーブフォルダ削除
         delete_path = self.output_path.replace("/thumbnail.png", '')
         shutil.rmtree(delete_path)
-        print(delete_path)
 
         #ボタン更新
         self.ids.select_buttons.clear_widgets()
@@ -567,7 +563,6 @@ class BgSettingsScreen(Screen):
         #背景フォルダ削除
         delete_path = output_bg_path.replace('/bg.png', '')
         shutil.rmtree(delete_path)
-        print(delete_path)
 
         #ボタン更新
         self.ids.select_buttons.clear_widgets()
@@ -592,7 +587,7 @@ class OtherSettingsScreen(Screen):
         # super().__init__(**kwargs)
         super(OtherSettingsScreen, self).__init__(**kwargs)
         self.ids.camera_id.text = "Camera Device ID "+str(CAMERA)
-        self.ids.render_mode.text = DB.renderMode
+        # self.ids.render_mode.text = DB.renderMode
 
     def ChangeCamera(self, num):
         global CAMERA
@@ -605,14 +600,12 @@ class OtherSettingsScreen(Screen):
 
     def ChangeRenderingMode(self):
         if DB.renderMode == "Low":
-            print(High)
             DB.renderMode = "High"
-            self.ids.render_mode.text = "High"
+            # self.ids.render_mode.text = "High"
 
         elif DB.renderMode == "High":
-            print(Low)
-            DB.renderMode == "Low"
-            self.ids.render_mode.text = "Low"
+            DB.renderMode = "Low"
+            # self.ids.render_mode.text = "Low"
 
         data = {"Camera":CAMERA, "RenderingMode":DB.renderMode}
         with open("setting_data.pickle", mode="wb") as f:
@@ -647,7 +640,7 @@ class VideoScreen(Screen):
         Clock.schedule_interval(self.update, 0.05)
 
         W,H=800,800#pyautogui.size()
-        #self.cam=pyvirtualcam.Camera(width=W, height=H, fps=10)
+        self.cam=pyvirtualcam.Camera(width=W, height=H, fps=10)
 
         #Init Video Back Ground Images
         self.video_bg_path=output_bg_path
@@ -694,7 +687,7 @@ class VideoScreen(Screen):
 
         # リアル顔画像をデータベースにセット
         DB.SetRealFaces(self.frame)
-        result = self.animator.update_image()
+        result = animator.update_image()
 
         if result == None:
             return
@@ -711,7 +704,7 @@ class VideoScreen(Screen):
 
         buf = cv2.flip(self.animeface, -1).tobytes()
         texture = Texture.create(size=(self.animeface.shape[1], self.animeface.shape[0]), colorfmt='rgba')
-        texture.blit_buffer(buf, colorfmt='rgb')#, bufferfmt='ubyte')
+        texture.blit_buffer(buf, colorfmt='rgba', bufferfmt='ubyte')
         # インスタンスのtextureを変更
         self.anime.texture = texture
 

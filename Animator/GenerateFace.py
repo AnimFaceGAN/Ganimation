@@ -135,7 +135,9 @@ class DataGenerator:
         self.current_pose = torch.zeros(self.pose_size, device=self.torch_device)
         
         # print("Start Generate Images")
-
+        #Reset image temp
+        self.images_temp=pd.DataFrame([],columns=["pose_0","pose_1","pose_2","pose_3","pose_4","pose_5","image"])
+        
         euler_angles_list=[ -1 , -0.8 , -0.6 , -0.4 , -0.2 , 0 , 0.2 , 0.4 , 0.6 , 0.8, 1]#np.round(np.arange(-1,1,0.2),1)#np.linspace(-1,1,10)
         eye_ratio_list=np.linspace(0,1,5)
         mouth_ratio_list=[0,0.5,1]#np.linspace(0,1,5)
@@ -197,6 +199,7 @@ class DataGenerator:
 
     def create_image(self):
         self.update_base_image()
+        self.set_images_temp()
         start=time.time()
 
         frame = self.database.GetRealFaces()#self.video_capture.read()
@@ -220,9 +223,8 @@ class DataGenerator:
         for i in range(len(self.images_temp)):
             if self.database.stopGenerate:
                 break
-            _my_time=time.time() - start
-            print(f"\r[{i}/{len(self.images_temp)}: Created Images | time : {round(_my_time,3)}[sec]] , ETA : {_my_time/(i+1)*len(self.images_temp)-_my_time}", end='')
-
+            print(f"\r[{i}/{len(self.images_temp)}: Created Images | time : {round(time.time() - start,3)}[sec]]", end='')
+            
             #current_poseに値を突っ込む
             for j in range(len(self.current_pose)):
                 self.current_pose[j]=self.images_temp.iloc[i][pose_idx[j]]#.values[j]
