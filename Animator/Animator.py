@@ -1,6 +1,8 @@
 import os
 import sys
 from tkinter.constants import PROJECTING
+
+from pandas.io import pickle
 sys.path.append(os.getcwd())
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
@@ -34,6 +36,7 @@ import time
 import pandas as pd
 from copy import deepcopy
 import asyncio
+import pickle5
 
 saver=ImageSaver()
 
@@ -335,7 +338,7 @@ class Animator:
     
     def read_image_temp(self):
         thumbnail_path,temp_path=self.database.fileManager.get_folder_path(self.database.BaseImageName)
-        self.image_temp=pd.read_pickle(temp_path)
+        self.image_temp=pickle5.load(open(temp_path,"rb"))#pd.read_pickle(temp_path)
         self.thumbnail_temp=extract_pytorch_image_from_filelike(thumbnail_path,isConvert=True).to(self.torch_device).unsqueeze(dim=0)
         # print(self.database.fileManager.get_folder_path(self.database.BaseImageName))
 
