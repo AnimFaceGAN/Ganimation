@@ -23,6 +23,11 @@ Screenフォルダ内の”Ganimation.bat”をクリックすると実行され
  
 ## Requirement
 ---
+[OBS Studio](https://obsproject.com/ja/download) 
+のインストール
+
+<br>
+
 以下を実行すればライブラリがインストールされます
 ~~~
 conda env create -n ganimation -f ganimation_env.yml
