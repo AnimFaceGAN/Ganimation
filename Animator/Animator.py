@@ -291,7 +291,7 @@ class Animator:
 
             # 一番面積が大きい輪郭を選択する。
             if len(contours)>0:
-                    
+                
                 max_cnt = max(contours, key=lambda x: cv2.contourArea(x))
             
                 # 黒い画像に一番大きい輪郭だけ塗りつぶして描画する。

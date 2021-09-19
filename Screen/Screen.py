@@ -260,7 +260,7 @@ class AvatarGenerateScreen(Screen):
                     self.drop_area_image.reload()
                     self.ids.render_button.background_color=(0,0.7,0.0,1)
                 else:
-                    elf.drop_area_label.text = '顔が検出されませんでした'
+                    self.drop_area_label.text = '顔が検出されませんでした'
                     self.drop_area_image.source = null_path
                     self.drop_area_image.reload()
                     self.input_path=""
@@ -413,10 +413,10 @@ class AvatarSelectScreen(Screen):
             self.ids.select_buttons.children[-1].background_normal= f"{selectFolder}{folders[i]}/thumbnail.png"
             self.ids.select_buttons.children[-1].size_hint_y= 1
             self.ids.select_buttons.children[-1].size_hint_x= None
-            self.ids.select_buttons.children[-1].width = Window.size[0] * 0.1
+            self.ids.select_buttons.children[-1].width = Window.size[0] * 0.16
             self.ids.select_buttons.children[-1].id=f"select_btn_{i}"
             self.ids.select_buttons.children[-1].bind(on_release= partial(self.select_button,i+1))
-
+            
         return
 
 
@@ -587,7 +587,7 @@ class OtherSettingsScreen(Screen):
         # super().__init__(**kwargs)
         super(OtherSettingsScreen, self).__init__(**kwargs)
         self.ids.camera_id.text = "Camera Device ID "+str(CAMERA)
-        # self.ids.render_mode.text = DB.renderMode
+        self.ids.render_mode.text = DB.renderMode
 
     def ChangeCamera(self, num):
         global CAMERA
@@ -601,11 +601,11 @@ class OtherSettingsScreen(Screen):
     def ChangeRenderingMode(self):
         if DB.renderMode == "Low":
             DB.renderMode = "High"
-            # self.ids.render_mode.text = "High"
+            self.ids.render_mode.text = "High"
 
         elif DB.renderMode == "High":
             DB.renderMode = "Low"
-            # self.ids.render_mode.text = "Low"
+            self.ids.render_mode.text = "Low"
 
         data = {"Camera":CAMERA, "RenderingMode":DB.renderMode}
         with open("setting_data.pickle", mode="wb") as f:
