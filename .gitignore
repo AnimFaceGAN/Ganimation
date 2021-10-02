@@ -4,8 +4,11 @@
 *.pyc
 *.py[cod]
 
-/temp
-
+#ignore temp folder 
+/resource/temp
+/resource/data/
+temp/
+data/
 
 
 ######################################################
