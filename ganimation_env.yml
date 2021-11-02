@@ -89,4 +89,5 @@ dependencies:
     - pywin32==301
     - requests==2.26.0
     - urllib3==1.26.6
+    - wmi==1.5.1
 prefix: D:\CODDING\ANACONDA\envs\ganimation_app

@@ -1,11 +1,13 @@
 import sys
 import os
+import wmi
 
 sys.path.append(os.getcwd())
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../..'))
 
 import  numpy  as np
+from .Limit import LimitApp
 # from  Animator.Animator import CreateAnimator
 
 class Singleton(object):
@@ -54,6 +56,15 @@ class DataBase(Singleton):
         self.INITIAL_HEIGHT = 700
         #カメラデバイスID
         self.CAMERA=0
+        #カメラの名前
+        self.cameras=self._get_camera()
+        #Use Virtual Cameara?
+        self.virtual_camera=True
+
+
+        #アプリの制限機能
+        self.limitApp=LimitApp(self.path_root,limit=True)
+        
 
         #self.animator=CreateAnimator()
         pass
@@ -77,6 +88,19 @@ class DataBase(Singleton):
     def SetBaseImage(self,imageName):
         self.BaseImageName=imageName
         #self.animator.update_base_image()
+
+    def _get_camera(self):
+        c = wmi.WMI()
+        wql = "Select * From Win32_USBControllerDevice"
+        cameras=[]
+        for item in c.query(wql):
+            a = item.Dependent.PNPClass
+            b = item.Dependent.Name.upper()
+            if ( a.upper() == 'CAMERA') and 'AUDIO' not in b:
+                cameras.append(item.Dependent.Name)
+        if len(cameras)==0:
+            cameras.append("Not Found")
+        return cameras
 
 class FileManager:
     def __init__(self,path_root):
