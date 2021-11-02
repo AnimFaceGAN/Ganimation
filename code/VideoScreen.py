@@ -168,11 +168,21 @@ class VideoScreen(Screen):
         print('start video')
 
     def update(self, dt):
+        
+
         start=time.time()
         if not DB.playing_video:
             return
         # print("video now")
         ret, self.frame = self.capture.read()
+
+        ###############################################
+        # 制限機能の追加
+        ###############################################
+        if DB.limitApp.check():
+            self.ids.anime.source = path_root+"/Images/null.png"
+            self.bg_src = path_root+"/Images/thankyou.png"
+            return
 
         if ret == False:
             print("No Signal")
@@ -181,6 +191,7 @@ class VideoScreen(Screen):
             return
         self.ids.message.text = ""
 
+        
 
         # リアル顔画像をデータベースにセット
         DB.SetRealFaces(self.frame)
@@ -208,33 +219,34 @@ class VideoScreen(Screen):
         ##############################################################################
         #----  Virtual Camera  ----
         ##############################################################################
-        W,H=800,800#pyautogui.size()
+        if DB.virtual_camera:
+            W,H=800,800#pyautogui.size()
 
-        #Change bg if it chenged 
-        if self.video_bg_path!=DB.output_bg_path:
-            print("changed")
-            self.video_bg_path= DB.output_bg_path
-            self.video_bg=cv2.imread(self.video_bg_path)
-            self.video_bg=cv2.resize(self.video_bg,(W,H))
-            self.video_bg=cv2.cvtColor(self.video_bg, cv2.COLOR_BGRA2RGBA)
+            #Change bg if it chenged 
+            if self.video_bg_path!=DB.output_bg_path:
+                print("changed")
+                self.video_bg_path= DB.output_bg_path
+                self.video_bg=cv2.imread(self.video_bg_path)
+                self.video_bg=cv2.resize(self.video_bg,(W,H))
+                self.video_bg=cv2.cvtColor(self.video_bg, cv2.COLOR_BGRA2RGBA)
 
-        # bg=cv2.resize(self.video_bg,(W,H))
-        bg=self.video_bg
-        # bg=cv2.cvtColor(bg, cv2.COLOR_BGRA2RGBA)
-        bg=Image.fromarray(bg).convert('RGBA')
-        anime=Image.fromarray(self.animeface)
-        img_clear = Image.new("RGBA", bg.size, (255, 255, 255, 0))
+            # bg=cv2.resize(self.video_bg,(W,H))
+            bg=self.video_bg
+            # bg=cv2.cvtColor(bg, cv2.COLOR_BGRA2RGBA)
+            bg=Image.fromarray(bg).convert('RGBA')
+            anime=Image.fromarray(self.animeface)
+            img_clear = Image.new("RGBA", bg.size, (255, 255, 255, 0))
 
-        anime_h, anime_w = anime.size[:2]
-        bg_h, bg_w = bg.size[:2]
+            anime_h, anime_w = anime.size[:2]
+            bg_h, bg_w = bg.size[:2]
 
-        img_clear.paste(anime, (int((bg_h-anime_h)/2), int((bg_w-anime_w)/2)))
-        bg = Image.alpha_composite(bg, img_clear)
-        _frame=np.array(bg)[:,:,:3]#cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
+            img_clear.paste(anime, (int((bg_h-anime_h)/2), int((bg_w-anime_w)/2)))
+            bg = Image.alpha_composite(bg, img_clear)
+            _frame=np.array(bg)[:,:,:3]#cv2.cvtColor(np.array(bg), cv2.COLOR_RGBA2RGB)
 
-        self.cam.send(_frame)
-        elapsed_time = time.time() - start
-        # print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
+            self.cam.send(_frame)
+            elapsed_time = time.time() - start
+            # print(f"\r FPS : {round(1/elapsed_time,2)} [frame/sec]" ,end="")
         ##############################################################################
 
     # チュートリアルポップアップ表示
