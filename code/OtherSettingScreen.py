@@ -99,13 +99,16 @@ class OtherSettingsScreen(Screen):
         super(OtherSettingsScreen, self).__init__(**kwargs)
         self.ids.camera_id.text = "Camera Device ID "+str(DB.CAMERA)
         self.ids.render_mode.text = DB.renderMode
+        self.ids.camera_id.text = str(DB.cameras[0])#str(CAMERA)
 
     def ChangeCamera(self, num):
         if (-1 < DB.CAMERA + num) and (DB.CAMERA + num < 10):
             CAMERA = DB.CAMERA + num
-            self.ids.camera_id.text = "Camera Device ID "+str(CAMERA)
+            if len(DB.cameras)<CAMERA+1:
+                return 
+            self.ids.camera_id.text = str(DB.cameras[CAMERA])#str(CAMERA)
             data = {"Camera":CAMERA, "RenderingMode":DB.renderMode}
-            with open("setting_data.pickle", mode="wb") as f:
+            with open(DB.path_root+"save/setting_data.pickle", mode="wb") as f:
                 pickle.dump(data, f)
 
     def ChangeRenderingMode(self):
@@ -118,7 +121,20 @@ class OtherSettingsScreen(Screen):
             self.ids.render_mode.text = "Low"
 
         data = {"Camera":DB.CAMERA, "RenderingMode":DB.renderMode}
-        with open("setting_data.pickle", mode="wb") as f:
+        with open(DB.path_root+"save/setting_data.pickle", mode="wb") as f:
+            pickle.dump(data, f)
+    
+    def ChangeVirtualCamera(self):
+        if DB.virtual_camera :
+            DB.virtual_camera = False
+            self.ids.virtual_camera.text = "OFF"
+
+        elif not DB.virtual_camera:
+            DB.virtual_camera = True
+            self.ids.virtual_camera.text = "ON"
+
+        data = {"Camera":DB.CAMERA, "RenderingMode":DB.renderMode}
+        with open(DB.path_root+"save/setting_data.pickle", mode="wb") as f:
             pickle.dump(data, f)
 
 
