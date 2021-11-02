@@ -85,9 +85,9 @@ LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 # Kivyファイルの読み込み
 Builder.load_file(path_root+'/component/AvatarGenerateScreen.kv', encoding="utf-8")
 #Difine Init Params
-INITIAL_WIDTH = DB.INITIAL_WIDTH
-INITIAL_HEIGHT = DB.INITIAL_HEIGHT
-Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
+# INITIAL_WIDTH = DB.INITIAL_WIDTH
+# INITIAL_HEIGHT = DB.INITIAL_HEIGHT
+# Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
 
 #TEST REDERING MODE
 # DB.renderMode="Low" # "Low"  or  "High"
@@ -209,5 +209,3 @@ class AvatarGenerateScreen(Screen):
 
             self.event.cancel()
             return False
-
-
