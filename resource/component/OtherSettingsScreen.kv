@@ -159,6 +159,46 @@
                     Label:
                         size_hint_x: 0.4
                         bold: True
+                        text: 'Virtual Camera'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+                    Label:
+                        id: virtual_camera
+                        size_hint_x: 0.4
+                        bold: True
+                        text: 'ON'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+
+                    Button:
+                        size_hint_x: 0.2
+                        text: 'CHANGE'
+                        text_size: self.size
+                        font_size: dp(15)
+                        color: 1,1,1,1
+                        size: self.size
+                        halign: 'center'
+                        valign: 'middle'
+                        background_color: (0.3, 0.3, 0.3, 1.0)
+                        on_release: root.ChangeVirtualCamera()
+                        
+                BoxLayout:
+                    size_hint_y: 0.1
+                    orientation: 'horizontal'
+
+
+                    Label:
+                        size_hint_x: 0.4
+                        bold: True
                         text: 'Rendering Mode'
                         text_size: self.size
                         font_size: dp(15)
