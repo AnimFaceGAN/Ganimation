@@ -82,9 +82,9 @@ LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 # Kivyファイルの読み込み
 Builder.load_file(path_root+'/component/BgSettingsScreen.kv', encoding="utf-8")
 #Difine Init Params
-INITIAL_WIDTH = DB.INITIAL_WIDTH
-INITIAL_HEIGHT = DB.INITIAL_HEIGHT
-Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
+# INITIAL_WIDTH = DB.INITIAL_WIDTH
+# INITIAL_HEIGHT = DB.INITIAL_HEIGHT
+# Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
 
 
 
@@ -222,5 +222,3 @@ class BgSettingsScreen(Screen):
         folders = natsorted(folders)
         DB.output_bg_path=selectFolder+folders[len(folders)-1]+"/bg.png"
         self.drop_area_image.source = DB.output_bg_path
-
-

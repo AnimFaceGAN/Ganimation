@@ -6,15 +6,17 @@
         orientation: 'horizontal'     # 'horizontal'だと横一列
         size: root.size
 
-        BoxLayout:  
+        BoxLayout:
             orientation: 'vertical'
-            size_hint_x: 0.15
+            #size_hint_x: 0.15
+            width: 300
+            size_hint_x: None
+
 
             Image:
                 source: './resource/Images/UI_images/title.png'
                 center_x: self.parent.center_x
                 center_y: self.parent.center_y
-                allow_stretch: True
 
                 canvas.before:
                     Color:
@@ -42,7 +44,7 @@
                 size: self.size
                 halign: 'center'
                 valign: 'middle'
-                background_color: (0.3, 0.3, 0.3, 1.0)
+                background_color:(0.3, 0.3, 0.3, 1.0)
                 on_release: root.to_settings1()
 
             Button:
@@ -91,12 +93,12 @@
 
             BoxLayout:
                 size_hint_y: 0.9
-                canvas.before:
-                    Color:
-                        rgba: 0.1, 0.1, 0.1, 1
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
+                # canvas.before:
+                #     Color:
+                #         rgba: 0.184, 0.192, 0.215, 1
+                #     Rectangle:
+                #         pos: self.pos
+                #         size: self.size
 
                 BoxLayout:
                     orientation: 'vertical'
@@ -128,14 +130,14 @@
                         padding: 0
                         margin : 0
 
-                        Label:
-                            canvas.before:
-                                Color:
-                                    rgba: 0.1, 0.1, 0.1, 1
-                                    #rgba: 0.2, 0.2, 0.2, 0.2
-                                Rectangle:
-                                    pos: self.pos
-                                    size: self.size
+                        # Label:
+                        #     canvas.before:
+                        #         Color:
+                        #             rgba: 0.1, 0.1, 0.1, 1
+                        #             #rgba: 0.2, 0.2, 0.2, 0.2
+                        #         Rectangle:
+                        #             pos: self.pos
+                        #             size: self.size
 
                         Image:
                             id: drop_area_image
@@ -165,6 +167,8 @@
 
                     BoxLayout:
                         orientation: 'vertical'
+                        #width: 600
+                        #size_hint_x: None
 
                         BoxLayout:
                             size_hint_y: 0.08
@@ -193,6 +197,7 @@
                                 halign: 'left'
                                 valign: 'middle'
                                 font_size: dp(15)
+                                shorten: True
 
                                 color: 1,1,1,0.8
                                 canvas.before:
@@ -213,6 +218,7 @@
                                 #font_size: dp(20)
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 canvas.before:
                                     Color:
@@ -230,6 +236,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 color: 1,1,1,0.8
                                 canvas.before:
@@ -248,6 +255,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 color: 1,1,1,0.8
                                 canvas.before:
@@ -284,6 +292,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 color: 1,1,1,0.8
                                 canvas.before:
@@ -303,6 +312,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 canvas.before:
                                     Color:
@@ -321,6 +331,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 canvas.before:
                                     Color:
@@ -339,6 +350,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 canvas.before:
                                     Color:
@@ -357,6 +369,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 canvas.before:
                                     Color:
@@ -368,7 +381,7 @@
                             size_hint_y: 0.08
                             Label:
                                 markup: True
-                                text: '　　[ref=some][color=0088aa]https://www.remove.bg/ja[/color][/ref] （こちらで背景透過）'
+                                text: '　　[ref=some][color=0088aa]https://www.remove.bg/ja[/color][/ref] （こちらで背景透過できます）'
                                 on_ref_press:
                                     import webbrowser
                                     webbrowser.open('https://www.remove.bg/ja')
@@ -378,6 +391,7 @@
                                 size: self.size
                                 halign: 'left'
                                 valign: 'middle'
+                                shorten: True
 
                                 canvas.before:
                                     Color:

@@ -5,7 +5,9 @@
 
         BoxLayout:
             orientation: 'vertical'
-            size_hint_x: 0.15
+            #size_hint_x: 0.15
+            width: 300
+            size_hint_x: None
 
             Image:
                 source: './resource/Images/UI_images/title.png'
@@ -148,7 +150,7 @@
 
                 BoxLayout:
                     size_hint_y: 0.01
-                
+
                 BoxLayout:
                     size_hint_y: 0.1
                     orientation: 'horizontal'
@@ -188,7 +190,7 @@
                         valign: 'middle'
                         background_color: (0.3, 0.3, 0.3, 1.0)
                         on_release: root.ChangeVirtualCamera()
-
+                        
                 BoxLayout:
                     size_hint_y: 0.1
                     orientation: 'horizontal'

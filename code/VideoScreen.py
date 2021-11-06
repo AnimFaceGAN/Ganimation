@@ -102,9 +102,9 @@ LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 # Kivyファイルの読み込み
 Builder.load_file(path_root+'/component/VideoScreen.kv', encoding="utf-8")
 #Difine Init Params
-INITIAL_WIDTH = DB.INITIAL_WIDTH
-INITIAL_HEIGHT = DB.INITIAL_HEIGHT
-Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
+# INITIAL_WIDTH = DB.INITIAL_WIDTH
+# INITIAL_HEIGHT = DB.INITIAL_HEIGHT
+# Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
 
 def StartUp():
     with open(DB.path_root+"save/setting_data.pickle", mode="rb") as f:
@@ -135,7 +135,7 @@ class VideoScreen(Screen):
         _output_bg_path = self.bg_src
 
         self.capture = cv2.VideoCapture(DB.CAMERA)
- 
+
 
         Clock.schedule_interval(self.update, 0.05)
 
@@ -168,7 +168,7 @@ class VideoScreen(Screen):
         print('start video')
 
     def update(self, dt):
-        
+
 
         start=time.time()
         if not DB.playing_video:
@@ -191,7 +191,7 @@ class VideoScreen(Screen):
             return
         self.ids.message.text = ""
 
-        
+
 
         # リアル顔画像をデータベースにセット
         DB.SetRealFaces(self.frame)
@@ -222,7 +222,7 @@ class VideoScreen(Screen):
         if DB.virtual_camera:
             W,H=800,800#pyautogui.size()
 
-            #Change bg if it chenged 
+            #Change bg if it chenged
             if self.video_bg_path!=DB.output_bg_path:
                 print("changed")
                 self.video_bg_path= DB.output_bg_path
@@ -312,9 +312,7 @@ class VideoScreen(Screen):
         self.start_video()
         self.popup.dismiss()
         self.bg.reload() #背景更新
-        
+
         self.capture = cv2.VideoCapture(DB.CAMERA)
         self.popup=None
         # self.capture = cv2.VideoCapture(CAMERA)
-
- 

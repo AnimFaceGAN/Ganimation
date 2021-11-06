@@ -82,9 +82,9 @@ LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 # Kivyファイルの読み込み
 Builder.load_file(path_root+'/component/TutorialScreen.kv', encoding="utf-8")
 #Difine Init Params
-INITIAL_WIDTH = DB.INITIAL_WIDTH
-INITIAL_HEIGHT = DB.INITIAL_HEIGHT
-Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
+# INITIAL_WIDTH = DB.INITIAL_WIDTH
+# INITIAL_HEIGHT = DB.INITIAL_HEIGHT
+# Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
 
 # チュートリアル画面
 class TutorialScreen(Screen):
@@ -130,6 +130,3 @@ class TutorialScreen(Screen):
         self.ids.b4.background_color=(0.3, 0.3, 0.3, 1.0)
         self.ids.b5.background_color=(0.3, 0.3, 0.3, 1.0)
         self.ids.b6.background_color=(0.3, 0.3, 0.3, 1.0)
-
-
-

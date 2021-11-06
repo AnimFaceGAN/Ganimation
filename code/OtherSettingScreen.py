@@ -82,9 +82,9 @@ LabelBase.register(DEFAULT_FONT, 'ipaexg.ttf')
 # Kivyファイルの読み込み
 Builder.load_file(path_root+'/component/OtherSettingsScreen.kv', encoding="utf-8")
 #Difine Init Params
-INITIAL_WIDTH = DB.INITIAL_WIDTH
-INITIAL_HEIGHT = DB.INITIAL_HEIGHT
-Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
+# INITIAL_WIDTH = DB.INITIAL_WIDTH
+# INITIAL_HEIGHT = DB.INITIAL_HEIGHT
+# Window.size = (INITIAL_WIDTH, INITIAL_HEIGHT)
 
 
 # その他設定画面
@@ -105,7 +105,7 @@ class OtherSettingsScreen(Screen):
         if (-1 < DB.CAMERA + num) and (DB.CAMERA + num < 10):
             CAMERA = DB.CAMERA + num
             if len(DB.cameras)<CAMERA+1:
-                return 
+                return
             self.ids.camera_id.text = str(DB.cameras[CAMERA])#str(CAMERA)
             data = {"Camera":CAMERA, "RenderingMode":DB.renderMode}
             with open(DB.path_root+"save/setting_data.pickle", mode="wb") as f:
@@ -123,7 +123,7 @@ class OtherSettingsScreen(Screen):
         data = {"Camera":DB.CAMERA, "RenderingMode":DB.renderMode}
         with open(DB.path_root+"save/setting_data.pickle", mode="wb") as f:
             pickle.dump(data, f)
-    
+
     def ChangeVirtualCamera(self):
         if DB.virtual_camera :
             DB.virtual_camera = False
@@ -136,5 +136,3 @@ class OtherSettingsScreen(Screen):
         data = {"Camera":DB.CAMERA, "RenderingMode":DB.renderMode}
         with open(DB.path_root+"save/setting_data.pickle", mode="wb") as f:
             pickle.dump(data, f)
-
-
